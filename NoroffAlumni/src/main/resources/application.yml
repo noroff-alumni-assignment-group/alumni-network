@@ -1,0 +1,26 @@
+spring:
+  config:
+    import:
+    - optional:file:.env[.properties]
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://lemur-3.cloud-iam.com/auth/realms/experis-alumni-network
+          jwk-set-uri: https://lemur-3.cloud-iam.com/auth/realms/experis-alumni-network/protocol/openid-connect/certs
+  datasource:
+    url: jdbc:postgresql://${POSTGRESQL_HOSTNAME}:${POSTGRESQL_PORT}/${POSTGRESQL_DB_NAME}
+    username: ${POSTGRESQL_DB_USER}
+    password: ${POSTGRESQL_DB_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+server:
+    port: 8080
+keycloak:
+  base-url: ${KEYCLOAK_BASE_URL}
+  realm: ${KEYCLOAK_REALM}
+  client-id: ${KEYCLOAK_CLIENT_ID}
+  client-secret: ${KEYCLOAK_CLIENT_SECRET}
+  admin-username: ${KEYCLOAK_ADMIN_USERNAME}
+  admin-password: ${KEYCLOAK_ADMIN_PASSWORD}
