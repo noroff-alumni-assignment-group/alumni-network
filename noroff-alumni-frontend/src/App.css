@@ -1,3 +1,11 @@
+/* Navigation */
+
+.App {
+  display: flex; 
+  background-color: var(--bluewhite);
+}
+
+
 /* ----- GLOBALS ----- */
 
 :root {
