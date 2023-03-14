@@ -14,6 +14,7 @@
   --green: #7dd3b2;
   --bluewhite: #edeff4;
   --lightgray: #c1c1c1;
+  --lightestgray: #fafbff;
   --orange: #efb060;
 
   --border-radius: 5px;
@@ -61,6 +62,7 @@ REUSABLE COMPONENT STYLING
   font-weight: 800;
   border-radius: 5px;
   cursor: pointer;
+  margin-right: 10px;
 }
 
 .timeline-sort-tag {
@@ -102,6 +104,10 @@ REUSABLE COMPONENT STYLING
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.profilebubble p {
+  line-height: 0;
 }
 
 .activity-btn,
