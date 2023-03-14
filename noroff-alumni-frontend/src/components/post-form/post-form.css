@@ -1,0 +1,29 @@
+.post-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.post-form .post-content {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.post-form .button-row {
+    display: flex;
+    gap: 3%;
+}
+.post-form .submit-row {
+    display: flex;
+    justify-content: right;
+    gap: 5%;
+}
+
+.post-form .input {
+    width: 50%;
+}
+.post-form textarea {
+    width: 100% !important;
+}
