@@ -21,6 +21,45 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap");
 
+
+@media screen and (min-width: 1501px){
+  html {
+    font-size: 20px;
+  }
+  .input {
+    min-height: 50px;
+  }
+  .activity-btn,
+  .cancel-btn {
+    padding: 9px 25px;
+  }
+}
+@media screen and (max-width: 1500px){
+  html {
+    font-size: 16px;
+  }
+  .input {
+    min-height: 40px;
+  }
+  .activity-btn,
+  .cancel-btn {
+    padding: 7px 20px;
+  }
+}
+@media screen and (max-width: 900px){
+  html {
+    font-size: 16px;
+  }
+  .input {
+    min-height: 30px;
+  }
+  .activity-btn,
+  .cancel-btn {
+    padding: 9px 25px;
+  }
+}
+
+
 * {
   padding: 0;
   margin: 0;
@@ -28,17 +67,17 @@
 }
 
 h1 {
-  font-size: 40px;
+  font-size: 2rem;
 }
 
 p {
-  font-size: 20px;
+  font-size: 1rem;
 }
 
 .subtitle {
   font-style: normal;
   font-weight: 600;
-  font-size: 24px;
+  font-size: 1.2rem;
 
   color: #c1c1c1;
 }
@@ -54,7 +93,7 @@ REUSABLE COMPONENT STYLING
 .topic,
 .group {
   padding: 4px 15px;
-  font-size: 16px;
+  font-size: .8rem;
   background-color: var(--green);
   border-style: none;
   color: white;
@@ -69,7 +108,7 @@ REUSABLE COMPONENT STYLING
   border-style: none;
   color: #a4b8e1;
   font-weight: 600;
-  font-size: 18px;
+  font-size: .9rem;
   padding: 0px 15px;
 }
 
@@ -82,13 +121,12 @@ REUSABLE COMPONENT STYLING
 }
 
 .input {
-  min-height: 50px;
   padding: 0px 10px;
   border-style: none;
   border-radius: 5px;
   background-color: var(--bluewhite);
   font-weight: 300;
-  font-size: 20px;
+  font-size: 1rem;
   text-align: start;
 }
 
@@ -98,7 +136,7 @@ REUSABLE COMPONENT STYLING
   border-radius: 50%;
   background-color: var(--blue);
   color: white;
-  font-size: 20px;
+  font-size: 1rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -107,11 +145,10 @@ REUSABLE COMPONENT STYLING
 .activity-btn,
 .cancel-btn {
   border-radius: 9px;
-  padding: 9px 25px;
   border-style: none;
   color: white;
   font-weight: 600;
-  font-size: 18px;
+  font-size: .9rem;
 }
 
 .activity-btn {

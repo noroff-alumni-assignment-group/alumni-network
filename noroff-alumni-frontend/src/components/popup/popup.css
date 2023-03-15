@@ -5,6 +5,8 @@
     }
     .popup .child-container {
         width: 40%;
+        padding: 2%;
+        height: 85vh;
     }
 }
 @media screen and (max-width: 900px){
@@ -13,6 +15,8 @@
     }
     .popup .child-container {
         width: 90%;
+        padding: 5%;
+        height: 90vh;
     }
 }
 
@@ -22,16 +26,13 @@
     justify-content: center;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    min-height: 100%;
     background: rgba(0, 0, 0, .3);
 }
 
 .popup .child-container {
-    position: relative;
     display: flex;
     background: white;
     border-radius: 15px;
-    padding: 2%;
-    height: 90%;
 }

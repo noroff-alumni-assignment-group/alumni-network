@@ -45,7 +45,7 @@ function PostForm (props: PostFormTypes) {
         <form className="post-form">
             <div className="post-content">
                 <h1>{props.editing ? "Edit post" : "Write a new post"}</h1>
-                <input type="text" className="input" onChange={(e => setTitle(e.target.value))}/>
+                <input type="text" className="input" placeholder="Title.." onChange={(e => setTitle(e.target.value))}/>
                 <div>
                     <div className="tab-row">
                         <button type="button" className={"tab-button " + (previewing ? "tab-button-inactive" : "tab-button-active")}
@@ -55,7 +55,7 @@ function PostForm (props: PostFormTypes) {
                     </div>
                     {!previewing
                         ?
-                        <textarea className="input text-content" onChange={(e => setText(e.target.value))} value={text}/>
+                        <textarea className="input text-content" placeholder="Write something.." onChange={(e => setText(e.target.value))} value={text}/>
                         :
                         <div className="input text-content scroll-vertical" dangerouslySetInnerHTML={{__html: toGithubMarkdown(text)}}></div>
                     }
@@ -74,7 +74,7 @@ function PostForm (props: PostFormTypes) {
                         return <button type="button" className="entity-tag topic-tag" key={index}>{topic}</button>
                     })}
                 </div>
-                <input type="text" className="input"/>
+                <input type="text" className="input" placeholder="or create a topic..."/>
             </div>
             <div className="submit-row">
                 <button type="button" className="cancel-btn">Cancel</button>

@@ -1,3 +1,51 @@
+
+@media screen and (min-width: 1501px){
+    .post-form .text-content {
+        height: 275px;
+    }
+    .post-form .tab-button {
+        padding: 4px 25px;
+    }
+    .entity-tag {
+        padding: 4px 20px;
+        border-radius: 9px;
+    }
+    .post-form .post-content {
+        gap: 15px;
+    }
+}
+@media screen and (max-width: 1500px){
+    .post-form .text-content {
+        height: 175px;
+    }
+    .post-form .tab-button {
+        padding: 2px 20px;
+    }
+    .entity-tag {
+        padding: 2px 18px;
+        border-radius: 5px;
+    }
+    .post-form .post-content {
+        gap: 5px;
+    }
+}
+@media screen and (max-width: 900px){
+    .post-form .text-content {
+        height: 250px;
+    }
+    .post-form .tab-button {
+        padding: 4px 25px;
+    }
+    .entity-tag {
+        padding: 2px 16px;
+        border-radius: 7px;
+    }
+    .post-form .post-content {
+        gap: 15px;
+    }
+}
+
+
 .post-form {
     display: flex;
     flex-direction: column;
@@ -8,7 +56,6 @@
 .post-form .post-content {
     display: flex;
     flex-direction: column;
-    gap: 15px;
 }
 
 .post-form .button-row {
@@ -23,14 +70,17 @@
 
 .post-form .input {
     width: 50%;
-    background-color: #dcdbdb;
+    background-color: #e5e5e5;
+}
+.post-form .input::placeholder {
+    color: lightgray;
 }
 .post-form .text-content {
     width: 100% !important;
-    min-height: 200px;
     resize: none;
     border-radius: 0 5px 5px 5px;
-    padding: 5px 15px;
+    padding: 5px 10px;
+    overflow-y: scroll;
 }
 
 .post-form .tab-row {
@@ -41,8 +91,7 @@
     border-radius: 15px 15px 0 0;
     border: none;
     font-weight: 600;
-    font-size: 18px;
-    padding: 4px 25px;
+    font-size: .9rem;
     transition: .1s ease-in-out;
 }
 .post-form .tab-button:hover {
@@ -64,18 +113,15 @@ APP.css
 .subsubtitle {
     font-style: normal;
     font-weight: 600;
-    font-size: 20px;
-
+    font-size: .9rem;
     color: #c1c1c1;
 }
 
 .entity-tag {
-    border-radius: 9px;
-    padding: 4px 20px;
     border-style: none;
     color: white;
     font-weight: 600;
-    font-size: 16px;
+    font-size: .7rem;
 }
 .group-tag {
     background-color: var(--orange);
