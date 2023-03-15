@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import "./post-form.css";
+import snarkdown from "snarkdown";
 
 type PostFormTypes = {
     editing: boolean
@@ -7,8 +8,8 @@ type PostFormTypes = {
 
 function PostForm (props: PostFormTypes) {
 
-    const groups: string[] = ["Group1", "Gro"];
-    const topics: string[] = ["topic1", "tag2", "tag3"];
+    const groups: string[] = ["group1", "group2",];
+    const topics: string[] = ["topic1", "top", "topi2"];
 
     let [title, setTitle] = useState("");
     let [text, setText] = useState("");
@@ -21,7 +22,11 @@ function PostForm (props: PostFormTypes) {
         if(props.editing){
             getPost();
         }
-    }, [])
+    }, [props.editing])
+
+    useEffect(() => {
+        console.log(previewing);
+    }, [previewing])
 
     function getPost() {
         // fetch post
@@ -33,31 +38,40 @@ function PostForm (props: PostFormTypes) {
     }
 
     function toGithubMarkdown(text: string){
-        return text;
+        return snarkdown(text);
     }
 
     return (
         <form className="post-form">
             <div className="post-content">
                 <h1>{props.editing ? "Edit post" : "Write a new post"}</h1>
-                <p className="subtitle">Title</p>
                 <input type="text" className="input" onChange={(e => setTitle(e.target.value))}/>
-                <p className="subtitle">Text</p>
-                <textarea className="input" onChange={(e => setText(e.target.value))} value={previewing ? toGithubMarkdown(text) : text}/>
-            </div>
-            <div className="post-content">
-                <p className="subtitle">Post to your group</p>
-                <div className="button-row">
-                    {groups.map((group, index) => {
-                        return <button className="activity-btn" key={index}>{group}</button>
-                    })}
+                <div>
+                    <div className="tab-row">
+                        <button type="button" className={"tab-button " + (previewing ? "tab-button-inactive" : "tab-button-active")}
+                            onClick={() => setPreviewing(false)}>Text</button>
+                        <button type="button" className={"tab-button " + (previewing ? "tab-button-active" : "tab-button-inactive")}
+                            onClick={() => setPreviewing(true)}>Preview</button>
+                    </div>
+                    {!previewing
+                        ?
+                        <textarea className="input text-content" onChange={(e => setText(e.target.value))} value={text}/>
+                        :
+                        <div className="input text-content scroll-vertical" dangerouslySetInnerHTML={{__html: toGithubMarkdown(text)}}></div>
+                    }
                 </div>
             </div>
             <div className="post-content">
-                <p className="subtitle">Add topics</p>
+                <p className="subsubtitle">Post to your group</p>
+                <div className="button-row">
+                    {groups.map((group, index) => {
+                        return <button type="button" className="entity-tag group-tag" key={index}>{group}</button>
+                    })}
+                </div>
+                <p className="subsubtitle">Add topics</p>
                 <div className="button-row">
                     {topics.map((topic, index) => {
-                        return <button className="activity-btn" key={index}>{topic}</button>
+                        return <button type="button" className="entity-tag topic-tag" key={index}>{topic}</button>
                     })}
                 </div>
                 <input type="text" className="input"/>

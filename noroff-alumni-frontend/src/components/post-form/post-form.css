@@ -13,7 +13,7 @@
 
 .post-form .button-row {
     display: flex;
-    gap: 3%;
+    gap: 1%;
 }
 .post-form .submit-row {
     display: flex;
@@ -23,7 +23,67 @@
 
 .post-form .input {
     width: 50%;
+    background-color: #dcdbdb;
 }
-.post-form textarea {
+.post-form .text-content {
     width: 100% !important;
+    min-height: 200px;
+    resize: none;
+    border-radius: 0 5px 5px 5px;
+    padding: 5px 15px;
+}
+
+.post-form .tab-row {
+    display: flex;
+    justify-content: left;
+}
+.post-form .tab-button {
+    border-radius: 15px 15px 0 0;
+    border: none;
+    font-weight: 600;
+    font-size: 18px;
+    padding: 4px 25px;
+    transition: .1s ease-in-out;
+}
+.post-form .tab-button:hover {
+    cursor: pointer;
+    opacity: .8;
+}
+.post-form .tab-button-active {
+    background: linear-gradient(90deg, #496cda 0%, #6ca5f1 100%);
+    color: white;
+}
+.post-form .tab-button-inactive {
+    color: darkgray;
+    background-color: lightgray;
+}
+
+/**
+APP.css
+ */
+.subsubtitle {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+
+    color: #c1c1c1;
+}
+
+.entity-tag {
+    border-radius: 9px;
+    padding: 4px 20px;
+    border-style: none;
+    color: white;
+    font-weight: 600;
+    font-size: 16px;
+}
+.group-tag {
+    background-color: var(--orange);
+}
+.topic-tag {
+    background-color: var(--green);
+}
+
+.scroll-vertical {
+    overflow-Y: scroll;
 }
