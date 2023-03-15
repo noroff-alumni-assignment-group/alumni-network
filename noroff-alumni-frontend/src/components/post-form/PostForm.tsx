@@ -49,12 +49,6 @@ function PostForm (props: PostFormTypes) {
                 <h1>{props.editing ? "Edit post" : "Write a new post"}</h1>
                 <input type="text" className="input" placeholder="Title.." onChange={(e => setTitle(e.target.value))}/>
                 <div className="text-content-container">
-                    {/*<div className="tab-row">
-                        <button type="button" className={"tab-button " + (previewing ? "tab-button-inactive" : "tab-button-active")}
-                            onClick={() => setPreviewing(false)}>Text</button>
-                        <button type="button" className={"tab-button " + (previewing ? "tab-button-active" : "tab-button-inactive")}
-                            onClick={() => setPreviewing(true)}>Preview</button>
-                    </div>*/}
                     <button type="button" className={"round-toggle " + (previewing ? "button-active" : "button-inactive")}
                             onClick={() => setPreviewing(!previewing)}><FontAwesomeIcon icon={faEye}/></button>
                     {!previewing
