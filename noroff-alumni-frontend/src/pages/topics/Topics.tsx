@@ -3,31 +3,20 @@ import "./Topics.css";
 import TopicListItemDTO from "../../models/TopicListItemDTO";
 import TopicListItem from "../../components/TopicListItem/TopicListItem";
 import {AiOutlineSearch} from "react-icons/ai";
+import { getTopics } from "../../services/topicService";
 
 function Topics() {
   const [topics, setTopics] = useState<Array<TopicListItemDTO>>(
     [] as Array<TopicListItemDTO>
   );
+  const [pageNumber,setPageNumber] = useState<number>(0);
 
  useEffect(()=>{
-  setTopics([
-    { id:1,name: "Cars", numberOfPosts: 200734, subscribers: 100000 },
-    { id:2,name: "Code", numberOfPosts: 52000, subscribers: 14000 },
-    { id:3,name: "Food", numberOfPosts: 142, subscribers: 20 },
-    { id:4,name: "Summer", numberOfPosts: 3489, subscribers: 946 },
-    { id:5,name: "Job", numberOfPosts: 2000, subscribers: 395 },
-    { id:5,name: "Job", numberOfPosts: 2000, subscribers: 395 },
-    { id:5,name: "Job", numberOfPosts: 2000, subscribers: 395 },
-    { id:5,name: "Job", numberOfPosts: 2000, subscribers: 395 },
-    { id:5,name: "Job", numberOfPosts: 2000, subscribers: 395 },
-    { id:5,name: "Job", numberOfPosts: 2000, subscribers: 395 },
-    { id:5,name: "Job", numberOfPosts: 2000, subscribers: 395 },
-    { id:5,name: "Job", numberOfPosts: 2000, subscribers: 395 },
-    { id:5,name: "Job", numberOfPosts: 2000, subscribers: 395 },
-    { id:5,name: "Job", numberOfPosts: 2000, subscribers: 395 },
-    { id:5,name: "Job", numberOfPosts: 2000, subscribers: 395 },
-  ]);
- },[])
+  async function getPageOfTopics(){
+    setTopics(await getTopics(pageNumber,10));
+  }
+  getPageOfTopics();
+ },[pageNumber])
   return (
     <div className="topics-page">
       <div className="topics-page-header">
