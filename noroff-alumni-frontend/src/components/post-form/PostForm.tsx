@@ -19,6 +19,7 @@ function PostForm (props: PostFormTypes) {
     let [selectedTopic, setSelectedTopic] = useState(-1);
 
     let [previewing, setPreviewing] = useState(false);
+    let [erroneous, setErroneous] = useState(false);
 
     useEffect(() => {
         if(props.editing){
@@ -36,7 +37,13 @@ function PostForm (props: PostFormTypes) {
     }
 
     function handleSubmit(){
-        return;
+        if((title === "" || text === "") && !erroneous){
+            setErroneous(true)
+            setTimeout(() => {
+                setErroneous(false)
+            }, 1000)
+        }
+        return false;
     }
 
     function toGithubMarkdown(text: string){
@@ -44,18 +51,18 @@ function PostForm (props: PostFormTypes) {
     }
 
     return (
-        <form className="post-form">
+        <div className="post-form">
             <div className="post-content">
                 <h1>{props.editing ? "Edit post" : "Write a new post"}</h1>
-                <input type="text" className="input" placeholder="Title.." onChange={(e => setTitle(e.target.value))}/>
+                <input type="text" className={"input " + (erroneous && title === "" ? "border-blink" : "")} placeholder="Title.." onChange={(e => setTitle(e.target.value))}/>
                 <div className="text-content-container">
                     <button type="button" className={"round-toggle " + (previewing ? "button-active" : "button-inactive")}
                             onClick={() => setPreviewing(!previewing)}><FontAwesomeIcon icon={faEye}/></button>
                     {!previewing
                         ?
-                        <textarea className="input text-content" placeholder="Write something.." onChange={(e => setText(e.target.value))} value={text}/>
+                        <textarea className={"input text-content " + (erroneous && text === "" ? "border-blink" : "")} placeholder="Write something.." onChange={(e => setText(e.target.value))} value={text}/>
                         :
-                        <div className="input text-content scroll-vertical" dangerouslySetInnerHTML={{__html: toGithubMarkdown(text)}}></div>
+                        <div className={"input text-content scroll vertical " + (erroneous && text === "" ? "border-blink" : "")} dangerouslySetInnerHTML={{__html: toGithubMarkdown(text)}}></div>
                     }
                 </div>
             </div>
@@ -80,9 +87,9 @@ function PostForm (props: PostFormTypes) {
             </div>
             <div className="submit-row">
                 <button type="button" className="cancel-btn">Cancel</button>
-                <button type="submit" className="activity-btn">Publish</button>
+                <button type="button" className="activity-btn" onClick={() => handleSubmit()}>Publish</button>
             </div>
-        </form>
+        </div>
     )
 }
 
