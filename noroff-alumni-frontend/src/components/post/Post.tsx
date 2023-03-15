@@ -72,12 +72,14 @@ function Post({
         <div>
           <h2 className="all-comments-h2">All comments</h2>
           {comments.map((comment) => (
-            <PostResponse
-              author={comment.author}
-              text={comment.response}
-              initials={comment.authorInitials}
-              key={comment.author + comment.response}
-            />
+            <div className="post-elem-profile">
+              <PostResponse
+                author={comment.author}
+                text={comment.response}
+                initials={comment.authorInitials}
+                key={comment.author + comment.response}
+              />
+            </div>
           ))}
           <input
             className="post-response-input"

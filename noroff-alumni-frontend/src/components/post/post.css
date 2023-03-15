@@ -1,6 +1,6 @@
 .post {
   background-color: white;
-  width: 60vw;
+  max-width: 60vw;
   padding: 35px 50px;
   border-radius: 20px;
   margin-bottom: 20px;

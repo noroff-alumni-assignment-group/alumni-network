@@ -5,6 +5,8 @@ import search from "../../assets/icons/Search.png";
 import "./timeline.css";
 import Search from "../../components/search/Search";
 
+import { postList } from "../../components/post/postList";
+
 interface PostData {
   title: string;
   date: string;
@@ -21,82 +23,9 @@ interface PostData {
 }
 
 const Timeline = () => {
-  const posts: PostData[] = [
-    {
-      title: "Lorem Ipsum",
-      date: "2h ago",
-      body: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-      topics: ["TOPIC 1"],
-      groups: ["GROUP 1"],
-      author: "Anders A.",
-      profileInitials: "AA",
-      comments: [
-        {
-          author: "Marcus B",
-          authorInitials: "MB",
-          response: "Lorem Ipsum is simply dummy text of the printin",
-        },
-        {
-          author: "Aleksander R",
-          authorInitials: "AR",
-          response: "Yes sui!",
-        },
-      ],
-    },
-    {
-      title: "Lorem Ipsum",
-      date: "2h ago",
-      body: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-      topics: ["TOPIC 2"],
-      groups: ["GROUP 1"],
-      author: "Anders A.",
-      profileInitials: "AA",
-      comments: [
-        {
-          author: "Marcus B",
-          authorInitials: "MB",
-          response: "Lorem Ipsum is simply dummy text of the printin",
-        },
-        {
-          author: "Aleksander R",
-          authorInitials: "AR",
-          response: "Yes sui!",
-        },
-        {
-          author: "Marcus B",
-          authorInitials: "MB",
-          response: "Lorem Ipsum is simply dummy text of the printin",
-        },
-        {
-          author: "Aleksander R",
-          authorInitials: "AR",
-          response: "Yes sui!",
-        },
-        {
-          author: "Marcus B",
-          authorInitials: "MB",
-          response: "Lorem Ipsum is simply dummy text of the printin",
-        },
-        {
-          author: "Aleksander R",
-          authorInitials: "AR",
-          response: "Yes sui!",
-        },
-        {
-          author: "Marcus B",
-          authorInitials: "MB",
-          response: "Lorem Ipsum is simply dummy text of the printin",
-        },
-        {
-          author: "Aleksander R",
-          authorInitials: "AR",
-          response: "Yes sui!",
-        },
-      ],
-    },
-  ];
+  const posts: PostData[] = postList
 
-  const [filteredPosts, setFilteredPosts] = useState<PostData[]>(posts);
+  const [filteredPosts, setFilteredPosts] = useState(posts);
   const [selectedTopics, setSelectedTopics] = useState<string[]>([]);
   const myGroups = ["GROUP 1", "GROUP 2"];
   const myTopics = ["TOPIC 1", "TOPIC 2", "TOPICTOPIC 2"];
