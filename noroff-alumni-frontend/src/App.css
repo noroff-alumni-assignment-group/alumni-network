@@ -14,9 +14,10 @@
   --green: #7dd3b2;
   --bluewhite: #edeff4;
   --lightgray: #c1c1c1;
+  --offwhite: #f4f4f4;
   --orange: #efb060;
 
-  --border-radius: 5px;
+  --box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
 }
 
 @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap");
@@ -24,11 +25,12 @@
 * {
   padding: 0;
   margin: 0;
-  font-family: "Mansrope", sans-serif;
+  font-family: "Manrope", sans-serif;
 }
 
 h1 {
   font-size: 40px;
+  font-weight: 800;
 }
 
 p {
@@ -61,6 +63,9 @@ REUSABLE COMPONENT STYLING
   font-weight: 800;
   border-radius: 5px;
   cursor: pointer;
+  margin-right: 10px;
+
+  box-shadow: var(--box-shadow);
 }
 
 .timeline-sort-tag {
@@ -71,6 +76,18 @@ REUSABLE COMPONENT STYLING
   font-weight: 600;
   font-size: 18px;
   padding: 0px 15px;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 20px;
+  cursor: pointer;
+  box-shadow: var(--box-shadow);
+}
+
+.timeline-sort-tag.active {
+  background-color: var(--green);
+  color: white;
 }
 
 .group {
@@ -102,6 +119,7 @@ REUSABLE COMPONENT STYLING
   display: flex;
   justify-content: center;
   align-items: center;
+  box-shadow: var(--box-shadow);
 }
 
 .activity-btn,
@@ -112,6 +130,8 @@ REUSABLE COMPONENT STYLING
   color: white;
   font-weight: 600;
   font-size: 18px;
+  cursor: pointer;
+  box-shadow: var(--box-shadow);
 }
 
 .activity-btn {
