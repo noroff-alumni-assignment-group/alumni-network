@@ -1,6 +1,6 @@
 
 @media screen and (min-width: 1501px){
-    .post-form .text-content {
+    .post-form .text-content,.text-content-container {
         height: 275px;
     }
     .post-form .tab-button {
@@ -8,14 +8,14 @@
     }
     .entity-tag {
         padding: 4px 20px;
-        border-radius: 9px;
+        border-radius: 7px;
     }
     .post-form .post-content {
         gap: 15px;
     }
 }
 @media screen and (max-width: 1500px){
-    .post-form .text-content {
+    .post-form .text-content, .text-content-container {
         height: 175px;
     }
     .post-form .tab-button {
@@ -30,7 +30,7 @@
     }
 }
 @media screen and (max-width: 900px){
-    .post-form .text-content {
+    .post-form .text-content, .text-content-container {
         height: 250px;
     }
     .post-form .tab-button {
@@ -70,10 +70,13 @@
 
 .post-form .input {
     width: 50%;
-    background-color: #e5e5e5;
 }
 .post-form .input::placeholder {
     color: lightgray;
+}
+
+.post-form .text-content-container {
+    position: relative;
 }
 .post-form .text-content {
     width: 100% !important;
@@ -82,27 +85,25 @@
     padding: 5px 10px;
     overflow-y: scroll;
 }
-
-.post-form .tab-row {
-    display: flex;
-    justify-content: left;
-}
-.post-form .tab-button {
-    border-radius: 15px 15px 0 0;
+.post-form .round-toggle {
+    position: absolute;
+    top: 10px;
+    right: 30px;
+    border-radius: 100%;
+    width: 35px;
+    height: 35px;
     border: none;
-    font-weight: 600;
-    font-size: .9rem;
-    transition: .1s ease-in-out;
+    transition: .2s ease-in-out all;
 }
-.post-form .tab-button:hover {
+.post-form .round-toggle:hover {
     cursor: pointer;
     opacity: .8;
 }
-.post-form .tab-button-active {
+.post-form .button-active {
     background: linear-gradient(90deg, #496cda 0%, #6ca5f1 100%);
     color: white;
 }
-.post-form .tab-button-inactive {
+.post-form .button-inactive {
     color: darkgray;
     background-color: lightgray;
 }
@@ -119,15 +120,31 @@ APP.css
 
 .entity-tag {
     border-style: none;
-    color: white;
     font-weight: 600;
     font-size: .7rem;
+    transition: opacity .1s ease-in-out;
 }
-.group-tag {
+.entity-tag:hover {
+    cursor: pointer;
+    opacity: .8;
+}
+.group-tag-active {
+    color: var(--orange);
+    background-color: white;
+    border: solid 2px var(--orange);
+}
+.topic-tag-active {
+    color: var(--green);
+    background-color: white;
+    border: solid 2px var(--green);
+}
+.group-tag-inactive {
     background-color: var(--orange);
+    color: white;
 }
-.topic-tag {
+.topic-tag-inactive {
     background-color: var(--green);
+    color: white;
 }
 
 .scroll-vertical {
