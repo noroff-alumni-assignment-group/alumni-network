@@ -72,7 +72,7 @@ public class AuthService {
       map.add("client_id", this.clientId);
       map.add("client_secret", this.clientSecret);
       map.add("grant_type", "password");
-      map.add("username", loginRequest.getEmail());
+      map.add("username", loginRequest.getUsername());
       map.add("password", loginRequest.getPassword());
 
       HttpEntity<MultiValueMap<String, String>> httpEntity = new HttpEntity<>(map, headers);

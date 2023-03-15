@@ -1,8 +1,11 @@
-import React, { useState } from "react";
 import "./login.css";
 import axios from "axios";
+import {useDispatch} from "react-redux";
+import { setAuth } from "../../store/authSlice";
+import Auth from "../../models/Auth";
 
 export default function LoginForm(props: any) {
+  const dispatch = useDispatch();
 
      const signIn = (event: any) => {
        event.preventDefault();
@@ -12,10 +15,10 @@ export default function LoginForm(props: any) {
        const password = event.target.elements.password.value;
 
        axios
-         .post("https://your-api-url.com/login", { username, password })
+         .post(process.env.REACT_APP_API_URL+"authenticate", { username, password })
          .then((response) => {
            // Handle the response from the API here
-           console.log(response.data);
+           dispatch(setAuth(response.data as Auth));
          })
          .catch((error) => {
            // Handle any errors that occur during the API request here
@@ -37,6 +40,7 @@ export default function LoginForm(props: any) {
             <p>Password</p>
             <input type="password" name="password" />
           </div>
+          <input type="submit" />
           <p className="signup-tag">
             Dont have an account?
             <span onClick={(event) => signIn(event)}> Sign up</span>

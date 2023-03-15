@@ -1,9 +1,9 @@
 type User = {
-   email:string;
-   username: string;
-   firstName:string;
-   lastName:string;
-   topics:Array<String>;
+   email?:string;
+   username?: string;
+   firstName?:string;
+   lastName?:string;
+   topics?:Array<String>;
    
 };
 
