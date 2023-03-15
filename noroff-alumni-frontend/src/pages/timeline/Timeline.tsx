@@ -6,7 +6,7 @@ function Timeline() {
   return (
     <div>
       Timeline
-      <Popup child={<PostForm title={"Write a new post"} editing={false}/>}></Popup>
+      <Popup child={<PostForm editing={true}/>}></Popup>
     </div>
   )
 }
