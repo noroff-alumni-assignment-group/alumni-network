@@ -1,0 +1,21 @@
+
+.groups-actions {
+    width: fit-content;
+    float: right;
+    margin: auto;
+}
+
+.groupslist {
+    height: fit-content;
+    margin-top: 20px;
+}
+
+.group-container {
+    margin-left: 40px;
+}
+
+.group-container h3 {
+    padding: 10px;
+    width: 200px;
+    margin-left: 5px;
+}
