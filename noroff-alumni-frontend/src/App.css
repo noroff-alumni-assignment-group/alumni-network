@@ -15,6 +15,9 @@
   --bluewhite: #edeff4;
   --lightgray: #c1c1c1;
   --orange: #efb060;
+  --alert-green: #67c528;
+  --alert-red: #de3222;
+  --alert-blue: #3aa0e8;
 
   --border-radius: 5px;
 }

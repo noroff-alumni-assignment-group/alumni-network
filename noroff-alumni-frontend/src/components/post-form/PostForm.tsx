@@ -3,6 +3,7 @@ import "./post-form.css";
 import snarkdown from "snarkdown";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
+import {useAlert} from "react-alert";
 
 type PostFormTypes = {
     editing: boolean
@@ -20,6 +21,8 @@ function PostForm (props: PostFormTypes) {
 
     let [previewing, setPreviewing] = useState(false);
     let [erroneous, setErroneous] = useState(false);
+
+    let alert = useAlert();
 
     useEffect(() => {
         if(props.editing){
@@ -42,6 +45,8 @@ function PostForm (props: PostFormTypes) {
             setTimeout(() => {
                 setErroneous(false)
             }, 1000)
+        } else {
+            alert.success("Published successfully");
         }
         return false;
     }

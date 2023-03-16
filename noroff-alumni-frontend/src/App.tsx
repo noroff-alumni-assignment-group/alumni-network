@@ -12,8 +12,6 @@ import Login from "./pages/login/Login";
 import Profile from "./pages/profile/Profile";
 import Timeline from "./pages/timeline/Timeline";
 import Topics from "./pages/topics/Topics";
-import PostForm from "./components/post-form/PostForm";
-import Popup from "./components/popup/Popup";
 
 function App() {
   return (
