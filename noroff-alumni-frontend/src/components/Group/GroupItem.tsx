@@ -1,12 +1,11 @@
-import './group-item.css';
+import './group-comps.css';
 import { Group } from '../../models/Group';
 
-type props = {
+type propsGroup = {
     group: Group
 }
 
-const GroupItem = ({ group }: props) => {
-
+const GroupItem = ({ group }: propsGroup) => {
 
 
     return (

@@ -1,14 +1,13 @@
 .group-item {
     width: 600px;
-    margin: 15px;
+    margin-bottom: 12px;
     padding: 15px;
     background-color: white;
     border-style: none;
     border-radius: 15px;
     cursor: pointer;
-    text-align: left;
-    display: grid;
-    box-shadow: 5px 5px 5px rgb(204, 206, 207);
+    display: flex;
+    box-shadow: var(--box-shadow);
   }
 
 .group-name {
@@ -22,8 +21,6 @@
   border-radius: 50%;
   background-color: var(--blue);
   color: white;
-  grid-column-start: 8;
-  grid-column-end: 9;
   margin: 5px;
 }
 

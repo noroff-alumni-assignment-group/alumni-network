@@ -1,7 +1,7 @@
 import GroupItem from "../../components/Group/GroupItem"
-import './groups.css';
-import { Group } from "../../models/Group";
-import { useEffect, useState } from "react";
+import './groups.css'
+import { Group } from "../../models/Group"
+import { useEffect, useState } from "react"
 import { useNavigate } from 'react-router-dom'
 
 function Groups() {
@@ -27,9 +27,9 @@ function Groups() {
     fetchGroups() */
 
     setGroups([
-      { id: 1, name: "Alumni" },
-      { id: 2, name: "Golfers" },
-      { id: 3, name: "Noroff" },
+      { id: 1, name: "Alumni", members: [] },
+      { id: 2, name: "Golfers", members: [] },
+      { id: 3, name: "Noroff", members: [] },
       
     ]);
 
@@ -51,10 +51,12 @@ function Groups() {
           <div className="groupslist">
 
               <div className="groups-actions">
+                <div className="group-list-header">
+                  <h3>All groups</h3>
+                </div>
                 <button className="activity-btn" onClick={handleNewGroupClick}>NEW GROUP</button>
               </div>
 
-              <h3>All groups</h3>
                 {groups.map(group => (
                   <div key={group.id} onClick={() => handleGroupClick(group)}>
                     <GroupItem key={group.id} group={group} />
@@ -63,7 +65,9 @@ function Groups() {
           </div>
 
           <div className="groupslist">
+            <div className="group-list-header">
               <h3>My groups</h3>
+            </div>
               {groups.map(group => (
                   <div key={group.id} onClick={() => handleGroupClick(group)}>
                     <GroupItem key={group.id} group={group} />
