@@ -1,4 +1,3 @@
-// Timeline.tsx
 import React, { useState } from "react";
 import Post from "../../components/post/Post";
 import search from "../../assets/icons/Search.png";
@@ -15,15 +14,17 @@ interface PostData {
   groups: string[];
   author: string;
   profileInitials: string;
+  lastActivity: string;
   comments: {
     author: string;
     authorInitials: string;
     response: string;
+    date: string;
   }[];
 }
 
 const Timeline = () => {
-  const posts: PostData[] = postList
+  const posts: PostData[] = postList;
 
   const [filteredPosts, setFilteredPosts] = useState(posts);
   const [selectedTopics, setSelectedTopics] = useState<string[]>([]);
@@ -31,17 +32,21 @@ const Timeline = () => {
   const myTopics = ["TOPIC 1", "TOPIC 2", "TOPICTOPIC 2"];
   const [activeTopic, setActiveTopic] = useState("");
 
-  // Add state variable for search field visibility
   const [showSearchField, setShowSearchField] = useState(false);
 
-  // Function to handle search icon click
   const handleSearchIconClick = () => {
     setShowSearchField((prevState) => !prevState);
   };
 
-  const postsToRender = filteredPosts.filter((post) => {
+  const sortedFilteredPosts = filteredPosts.sort((a, b) => {
+    return (
+      new Date(b.lastActivity).getTime() - new Date(a.lastActivity).getTime()
+    );
+  });
+
+  const postsToRender = sortedFilteredPosts.filter((post) => {
     if (selectedTopics.length === 0) {
-      return true; // if no topics are selected, show all posts
+      return true;
     }
     return post.topics.some((topic) => selectedTopics.includes(topic));
   });
@@ -55,7 +60,6 @@ const Timeline = () => {
     }
     setSelectedTopics(newSelectedTopics);
 
-    // Set the active topic to the last selected topic
     setActiveTopic(newSelectedTopics[newSelectedTopics.length - 1]);
   };
 
@@ -121,3 +125,4 @@ const Timeline = () => {
 };
 
 export default Timeline;
+

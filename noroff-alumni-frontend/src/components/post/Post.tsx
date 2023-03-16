@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import "./post.css";
-// import comment from "../../assets/icons/Comments.png";
-import PostResponse from "./PostResponse";
 import Profilepicture from "../profilepicture/Profilepicure";
+import "./post.css";
+import PostResponse from "./PostResponse";
 
 interface Props {
   title: string;
@@ -16,6 +15,7 @@ interface Props {
     author: string;
     authorInitials: string;
     response: string;
+    date: string;
   }[];
 }
 
@@ -78,6 +78,7 @@ function Post({
                 text={comment.response}
                 initials={comment.authorInitials}
                 key={comment.author + comment.response}
+                date={date}
               />
             </div>
           ))}

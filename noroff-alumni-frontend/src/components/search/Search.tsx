@@ -9,10 +9,12 @@ interface PostData {
   groups: string[];
   author: string;
   profileInitials: string;
+  lastActivity: string;
   comments: {
     author: string;
     authorInitials: string;
     response: string;
+    date: string;
   }[];
 }
 

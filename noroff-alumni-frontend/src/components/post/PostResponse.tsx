@@ -4,15 +4,16 @@ interface Props {
   author: string;
   text: string;
   initials: string;
+  date: string;
 }
 
-function PostResponse({ author, text, initials }: Props) {
+function PostResponse({ author, text, initials, date }: Props) {
   return (
     <div className="post-response">
       <div className="post-author-cnt">
         <div className="profilebubble post-profile-pic">{initials}</div>
         <div className="response-author">
-          <p className="post-time">1h ago</p>
+          <p className="post-time">{date}</p>
           <div className="post-response-author">
             <p>{author}</p>
           </div>
