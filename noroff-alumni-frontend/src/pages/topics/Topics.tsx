@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./Topics.css";
 import TopicListItemDTO from "../../models/TopicListItemDTO";
 import TopicListItem from "../../components/TopicListItem/TopicListItem";
 import {AiOutlineSearch} from "react-icons/ai";
 import { getTopics } from "../../services/topicService";
+import {useSelector} from "react-redux";
+import { RootState } from "../../store/store";
 
 function Topics() {
+  const auth = useSelector((state:RootState) => state.auth);
   const [topics, setTopics] = useState<Array<TopicListItemDTO>>(
     [] as Array<TopicListItemDTO>
   );
@@ -13,7 +16,7 @@ function Topics() {
 
  useEffect(()=>{
   async function getPageOfTopics(){
-    setTopics(await getTopics(pageNumber,10));
+    setTopics(await getTopics(pageNumber,10,auth.access_token!));
   }
   getPageOfTopics();
  },[pageNumber])
