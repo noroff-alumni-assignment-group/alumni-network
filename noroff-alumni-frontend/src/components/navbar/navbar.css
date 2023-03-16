@@ -1,16 +1,62 @@
-.navbar {
+
+
+@media screen and (min-width: 1501px){
+    .navbar-toggle-btn {
+        width: 75px;
+        height: 75px;
+    }
+}
+@media screen and (max-width: 1500px){
+    .navbar-toggle-btn {
+        width: 60px;
+        height: 60px;
+    }
+}
+@media screen and (max-width: 900px){
+    .navbar-toggle-btn {
+        width: 60px;
+        height: 60px;
+    }
 }
 
 .navbar {
-  height: 100vh;
-  background-color: var(--blue);
-  position: sticky;
-  top: 0;
-  border-radius: 20px;
-  width: 370px;
-  margin-left: -20px;
-  padding-top: 50px;
-  
+    height: 100vh;
+    background-color: var(--blue);
+    position: fixed;
+    top: 0;
+    left: 0;
+    border-radius: 20px;
+    width: 370px;
+    margin-left: -20px;
+    padding-top: 50px;
+    overflow-x: hidden;
+    transition: width .2s ease-in-out;
+}
+
+.navbar-toggle-btn {
+    display: flex;
+    color: white;
+    background-color: var(--blue);
+    font-size: 2rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    border: none;
+    border-radius: 0 0 75% 0;
+    transition: .1s ease-in-out;
+}
+.navbar-toggle-btn * {
+    margin: 0 auto auto 0;
+    padding: 10px 0 0 10px;
+}
+.navbar-toggle-btn:hover {
+    cursor: pointer;
+    background-color: var(--hover-blue);
+}
+
+.navbar-collapsed {
+    width: 0 !important;
 }
 
 .nav-profile-cnt {

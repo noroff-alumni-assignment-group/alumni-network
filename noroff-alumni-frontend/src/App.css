@@ -1,9 +1,14 @@
 /* Navigation */
 
 .App {
-  display: flex; 
+  /*display: grid;
+  grid-template-columns: 20% 80%;*/
   background-color: var(--bluewhite);
 }
+
+/*.App > div {
+  grid-column: 2;
+}*/
 
 
 /* ----- GLOBALS ----- */
