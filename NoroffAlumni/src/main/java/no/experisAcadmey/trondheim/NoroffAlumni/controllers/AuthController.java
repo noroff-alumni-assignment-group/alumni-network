@@ -1,6 +1,5 @@
 package no.experisAcadmey.trondheim.NoroffAlumni.controllers;
 
-import javax.management.InvalidAttributeValueException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
