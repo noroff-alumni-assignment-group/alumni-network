@@ -1,17 +1,21 @@
 import axios from "axios";
-import Auth from "../models/Auth";
 import LoginRequest from "../models/LoginRequest";
 
 export default class UserService {
 
-   constructor(){}
+   constructor(){
+   }
 
    static async login(loginData:LoginRequest) {
-      return await axios({
+      
+      const response = await axios({
          method:"post",
          url: process.env.REACT_APP_API_URL + "authenticate",
          data: loginData
       });
+
+
+      return response;
    }
 
    static async logout(refreshToken:string){
@@ -21,6 +25,16 @@ export default class UserService {
          data: {
             token: refreshToken
          }
+      });
+   }
+
+   static async getUser(authToken:string){
+      return await axios({
+         method:"get",
+         headers:{
+            "Authorization":"Bearer "+authToken
+         },
+         url: process.env.REACT_APP_API_URL + "user",
       });
    }
 }

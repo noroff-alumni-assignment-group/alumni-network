@@ -47,3 +47,22 @@
 .topics-page::-webkit-scrollbar {
   display: none;
 }
+
+.topic-list-page-nav-wrapper{
+  display: flex;
+  min-width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  margin: 2rem 0rem;
+}
+.topic-list-page-nav-arrow{
+ width: 2rem;
+ height: auto;
+}
+
+.topic-list-page-nav-item{
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+}

@@ -13,11 +13,21 @@ import java.util.stream.Collectors;
 @Mapper(componentModel = "spring")
 public abstract class UserMapper {
 
+    /**
+     * Maps a user to the userDTO.
+     * @param user user to map
+     * @return mapped userDTO
+     */
     @Mapping(target = "topics", qualifiedByName = "mapTopicToTopicId", source = "topics")
     public abstract UserDto toUserDto(User user);
 
+    /**
+     * Defines how to map topics
+     * @param topics topics to map
+     * @return mapped topics
+     */
     @Named("mapTopicToTopicId")
-    public Set<Long> mapTopicToTopicId(Set<Topic> topics){
-        return topics.stream().map(Topic::getId).collect(Collectors.toSet());
+    public Set<String> mapTopicToTopicId(Set<Topic> topics){
+        return topics.stream().map(Topic::getName).collect(Collectors.toSet());
     }
 }

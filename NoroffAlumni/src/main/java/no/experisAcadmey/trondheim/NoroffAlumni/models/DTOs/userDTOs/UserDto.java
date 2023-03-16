@@ -6,6 +6,9 @@ import no.experisAcadmey.trondheim.NoroffAlumni.models.Topic;
 
 import java.util.Set;
 
+/**
+ * Data transfer representation for User entity
+ */
 @Data
 public class UserDto {
 
@@ -15,5 +18,5 @@ public class UserDto {
     private String firstName;
     private String lastName;
 
-    private Set<Long> topics;
+    private Set<String> topics;
 }
