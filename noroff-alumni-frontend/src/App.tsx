@@ -4,6 +4,7 @@ import {
   Routes,
   BrowserRouter,
 } from "react-router-dom";
+import {useSelector} from "react-redux";
 import "./App.css";
 import Navbar from "./components/navbar/Navbar";
 import Event from "./pages/event/Event";
@@ -12,21 +13,30 @@ import Login from "./pages/login/Login";
 import Profile from "./pages/profile/Profile";
 import Timeline from "./pages/timeline/Timeline";
 import Topics from "./pages/topics/Topics";
+import { RootState } from "./store/store";
 
 function App() {
+  const auth = useSelector((state:RootState) => state.auth);
   return (
     <div className="App">
       <BrowserRouter>
-        <Navbar />
 
+      {
+        !auth.access_token ?
+        <Login />
+        :
+        <>
+        <Navbar />
         <Routes>
-          <Route path="/login" element={<Login />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/events" element={<Event />} />
           <Route path="/groups" element={<Groups />} />
           <Route path="/topics" element={<Topics />} />
           <Route path="/" element={<Timeline />}/>
         </Routes>
+        </>
+      }
+        
       </BrowserRouter>
     </div>
   );
