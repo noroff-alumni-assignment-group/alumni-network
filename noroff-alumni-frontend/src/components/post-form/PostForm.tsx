@@ -6,7 +6,8 @@ import { faEye } from "@fortawesome/free-solid-svg-icons";
 import {useAlert} from "react-alert";
 
 type PostFormTypes = {
-    editing: boolean
+    editing: boolean,
+    handler: any
 }
 
 function PostForm (props: PostFormTypes) {
@@ -91,7 +92,7 @@ function PostForm (props: PostFormTypes) {
                 <input type="text" className="input" placeholder="or create a topic..."/>
             </div>
             <div className="submit-row">
-                <button type="button" className="cancel-btn">Cancel</button>
+                <button type="button" className="cancel-btn" onClick={() => props.handler(false)}>Cancel</button>
                 <button type="button" className="activity-btn" onClick={() => handleSubmit()}>Publish</button>
             </div>
         </div>
