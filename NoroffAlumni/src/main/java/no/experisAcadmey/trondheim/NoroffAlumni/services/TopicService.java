@@ -86,9 +86,9 @@ public class TopicService {
     * Join topic based on current user and topic id.
     * @param topicId id of the topic to join.
     */
-   public void joinTopic(Long topicId){
+   public Topic joinTopic(Long topicId){
       Topic topic = topicRepository.findById(topicId).orElseThrow(TopicNotFoundException::new);
       topic.addSubscriber(userService.getCurrentUser());
-      topicRepository.save(topic);
+      return topicRepository.save(topic);
    }
 }

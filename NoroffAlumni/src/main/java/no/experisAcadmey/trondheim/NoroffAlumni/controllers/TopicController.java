@@ -122,8 +122,8 @@ public class TopicController {
     })
     public ResponseEntity subscribeToTopic(@PathVariable("topic_id") Long topicId){
         try{
-            topicService.joinTopic(topicId);
-            return ResponseEntity.ok().build();
+
+            return ResponseEntity.ok(topicMapper.topicToTopicListItem(topicService.joinTopic(topicId)));
         }catch (TopicNotFoundException e){
             return ResponseEntity.notFound().build();
         } catch(Exception e){
