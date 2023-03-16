@@ -2,8 +2,11 @@ package no.experisAcadmey.trondheim.NoroffAlumni.services;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -36,6 +39,10 @@ public class AuthService {
    private RestTemplate restTemplate;
    @Autowired
    private UserRepository userRepository;
+   @Autowired
+   private JwtDecoder jwtDecoder;
+   @Autowired
+   private UserService userService;
 
    @Value("${keycloak.base-url}")
    private String baseUrl;
@@ -71,6 +78,11 @@ public class AuthService {
       HttpEntity<MultiValueMap<String, String>> httpEntity = new HttpEntity<>(map, headers);
       String loginUrl = this.baseUrl + "auth/realms/" + this.realm + "/protocol/openid-connect/token";
       ResponseEntity<LoginResponse> response = restTemplate.postForEntity(loginUrl, httpEntity, LoginResponse.class);
+      Jwt jwt = jwtDecoder.decode(Objects.requireNonNull(response.getBody()).getAccess_token());
+
+      if(!userRepository.existsById(jwt.getClaim("sub"))){
+         userService.createFromJwt(jwt);
+      }
 
       return response.getBody();
    }
