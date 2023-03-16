@@ -8,7 +8,7 @@ import events from "../../assets/icons/Calendar.png";
 import { Link, NavLink, Outlet, Routes } from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 function Navbar() {
 
@@ -17,7 +17,7 @@ function Navbar() {
   return (
       <div className="navbar-container">
           <button className="navbar-toggle-btn" onClick={() => setCollapsed(!collapsed)}>
-              {collapsed ? <FontAwesomeIcon icon={faBars}/> : <FontAwesomeIcon icon={faTimes}/>}
+              {collapsed ? <FontAwesomeIcon icon={faBars}/> : <FontAwesomeIcon icon={faArrowLeft}/>}
           </button>
         <div className={"navbar " + (collapsed ? "navbar-collapsed" : "")}>
           <div className="nav-profile-cnt">
