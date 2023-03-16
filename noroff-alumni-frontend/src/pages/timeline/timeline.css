@@ -5,10 +5,17 @@
         flex-direction: row;
         justify-content: space-between;
     }
+    .timeline-action-btn-cnt {
+        flex-direction: row;
+    }
 }
 
 @media screen and (max-width: 800px) {
     .timeline-head {
+        flex-direction: column;
+        justify-content: right;
+    }
+    .timeline-action-btn-cnt {
         flex-direction: column;
         justify-content: right;
     }
@@ -61,14 +68,6 @@
     border-radius: 9px;
     margin-right: 10px;
   
-}
-
-.search-input {
-    background-color: white;
-    padding-left: 10px;
-    border-style: none;
-    border-radius: 9px;
-    
 }
 
 .search-cnt-active {
