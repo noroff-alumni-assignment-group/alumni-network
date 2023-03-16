@@ -19,6 +19,9 @@ spring:
     defer-datasource-initialization: true
     hibernate:
       ddl-auto: create-drop
+logging:
+  level:
+    root: DEBUG
 server:
     port: 8080
 keycloak:

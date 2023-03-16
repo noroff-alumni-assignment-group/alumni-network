@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import "./Topics.css";
+import "./topics.css";
 import TopicListItemDTO from "../../models/TopicListItemDTO";
 import TopicListItem from "../../components/TopicListItem/TopicListItem";
 import {AiOutlineSearch} from "react-icons/ai";
 import { getTopics } from "../../services/topicService";
-import {useSelector} from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 
 function Topics() {

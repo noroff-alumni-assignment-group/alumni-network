@@ -13,6 +13,7 @@ export default function LoginForm(props: any) {
 
        const username = event.target.elements.username.value;
        const password = event.target.elements.password.value;
+       console.log(process.env.REACT_APP_API_URL+"authenticate");
 
        axios
          .post(process.env.REACT_APP_API_URL+"authenticate", { username, password })
