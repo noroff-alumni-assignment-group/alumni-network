@@ -1,7 +1,10 @@
 package no.experisAcadmey.trondheim.NoroffAlumni.models;
 
+import java.util.Set;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,4 +23,6 @@ public class User {
    private String email;
    private String firstName;
    private String lastName;
+   @ManyToMany(mappedBy = "subscribers")
+   private Set<Topic> topics;
 }

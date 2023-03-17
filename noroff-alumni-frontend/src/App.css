@@ -1,6 +1,9 @@
 /* Navigation */
 
 .App {
+  display: flex;
+  overflow: hidden;
+  max-height: 100vh;
   /*display: grid;
   grid-template-columns: 20% 80%;*/
   background-color: var(--bluewhite);
@@ -189,6 +192,8 @@ REUSABLE COMPONENT STYLING
 .activity-btn,
 .cancel-btn {
   border-radius: 9px;
+  white-space: nowrap;
+  padding: 9px 25px;
   border-style: none;
   color: white;
   font-weight: 600;

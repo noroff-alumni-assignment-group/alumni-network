@@ -1,4 +1,7 @@
 spring:
+  sql:
+    init:
+      mode: always
   config:
     import:
     - optional:file:.env[.properties]
@@ -13,8 +16,12 @@ spring:
     username: ${POSTGRESQL_DB_USER}
     password: ${POSTGRESQL_DB_PASSWORD}
   jpa:
+    defer-datasource-initialization: true
     hibernate:
       ddl-auto: create-drop
+logging:
+  level:
+    root: DEBUG
 server:
     port: 8080
 keycloak:
