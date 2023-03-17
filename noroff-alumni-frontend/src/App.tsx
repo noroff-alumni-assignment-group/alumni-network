@@ -29,20 +29,24 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        {!user.username && !tokenService.getLocalAccessToken() ? (
-          <Login />
-        ) : (
-          <>
-            <Navbar />
-            <Routes>
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/events" element={<Event />} />
-              <Route path="/groups" element={<Groups />} />
-              <Route path="/topics" element={<Topics />} />
-              <Route path="/" element={<Timeline />} />
-            </Routes>
-          </>
-        )}
+      {
+        !user.username && !tokenService.getLocalAccessToken() ?
+        <Login />
+        :
+        <>
+        <Navbar />
+        <div className="page-container">
+          <Routes>
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/events" element={<Event />} />
+            <Route path="/groups" element={<Groups />} />
+            <Route path="/topics" element={<Topics />} />
+            <Route path="/" element={<Timeline />}/>
+          </Routes>
+        </div>
+        </>
+      }
+        
       </BrowserRouter>
     </div>
   );

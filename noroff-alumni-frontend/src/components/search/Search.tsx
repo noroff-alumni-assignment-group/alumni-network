@@ -1,5 +1,6 @@
 // Search.tsx
 import React, { useState } from "react";
+import './search.css';
 
 interface PostData {
   title: string;

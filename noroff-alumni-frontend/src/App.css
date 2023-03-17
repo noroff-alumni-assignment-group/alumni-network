@@ -1,10 +1,17 @@
 /* Navigation */
 
 .App {
-  display: flex;
-  overflow: hidden;
-  max-height: 100vh;
-  background-color: var(--bluewhite);
+  display: grid;
+}
+
+
+.page-container {
+  display: grid;
+  padding-top: 100px;
+  padding-bottom: 100px;
+}
+.page-container > div {
+  grid-column: 2;
 }
 
 
@@ -18,11 +25,81 @@
   --lightgray: #c1c1c1;
   --offwhite: #f4f4f4;
   --orange: #efb060;
+  --alert-green: #67c528;
+  --alert-red: #de3222;
+  --alert-blue: #3aa0e8;
 
   --box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
 }
 
 @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap");
+
+
+@media screen and (min-width: 1501px){
+  html {
+    font-size: 20px;
+  }
+  .input {
+    min-height: 50px;
+  }
+  .activity-btn,
+  .cancel-btn {
+    padding: 9px 25px;
+  }
+  .page-container {
+    grid-template-columns: 15% 70% 15%;
+  }
+  .App {
+    grid-template-columns: 16% 84%;
+  }
+  .App > div {
+    grid-column: 2;
+  }
+}
+@media screen and (max-width: 1500px){
+  html {
+    font-size: 16px;
+  }
+  .input {
+    min-height: 40px;
+  }
+  .activity-btn,
+  .cancel-btn {
+    padding: 7px 20px;
+  }
+  .page-container {
+    grid-template-columns: 15% 70% 15%;
+  }
+  .App {
+    grid-template-columns: 16% 84%;
+  }
+  .App > div {
+    grid-column: 2;
+  }
+}
+@media screen and (max-width: 1100px){
+  html {
+    font-size: 16px;
+  }
+  .input {
+    min-height: 30px;
+  }
+  .activity-btn,
+  .cancel-btn {
+    padding: 9px 25px;
+  }
+  .page-container {
+    grid-template-columns: 5% 90% 5%;
+  }
+  .App {
+    grid-template-columns: 100%;
+  }
+
+  .App > div {
+    grid-column: 1;
+  }
+}
+
 
 * {
   padding: 0;
@@ -31,18 +108,18 @@
 }
 
 h1 {
-  font-size: 40px;
+  font-size: 2rem;
   font-weight: 800;
 }
 
 p {
-  font-size: 20px;
+  font-size: 1rem;
 }
 
 .subtitle {
   font-style: normal;
   font-weight: 600;
-  font-size: 24px;
+  font-size: 1.2rem;
 
   color: #c1c1c1;
 }
@@ -58,7 +135,7 @@ REUSABLE COMPONENT STYLING
 .topic,
 .group {
   padding: 4px 15px;
-  font-size: 16px;
+  font-size: .8rem;
   background-color: var(--green);
   border-style: none;
   color: white;
@@ -76,7 +153,7 @@ REUSABLE COMPONENT STYLING
   border-style: none;
   color: #a4b8e1;
   font-weight: 600;
-  font-size: 18px;
+  font-size: .9rem;
   padding: 0px 15px;
   background-color: white;
   display: flex;
@@ -101,13 +178,12 @@ REUSABLE COMPONENT STYLING
 }
 
 .input {
-  min-height: 50px;
   padding: 0px 10px;
   border-style: none;
   border-radius: 5px;
   background-color: var(--bluewhite);
   font-weight: 300;
-  font-size: 20px;
+  font-size: 1rem;
   text-align: start;
 }
 
@@ -117,7 +193,7 @@ REUSABLE COMPONENT STYLING
   border-radius: 50%;
   background-color: var(--blue);
   color: white;
-  font-size: 20px;
+  font-size: 1rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -132,7 +208,7 @@ REUSABLE COMPONENT STYLING
   border-style: none;
   color: white;
   font-weight: 600;
-  font-size: 18px;
+  font-size: .9rem;
   cursor: pointer;
   box-shadow: var(--box-shadow);
 }

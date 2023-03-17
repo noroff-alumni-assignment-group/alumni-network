@@ -1,5 +1,4 @@
 import "./login.css";
-import axios from "axios";
 import {useDispatch} from "react-redux";
 import Auth from "../../models/Auth";
 import { setUser } from "../../store/userSlice";
@@ -33,7 +32,7 @@ export default function LoginForm(props: any) {
             <p>Password</p>
             <input type="password" name="password" />
           </div>
-          <input type="submit" />
+          <input type="submit" className="submit-btn" />
           <p className="signup-tag">
             Dont have an account?
             <span onClick={(event) => signIn(event)}> Sign up</span>

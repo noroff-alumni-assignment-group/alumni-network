@@ -1,0 +1,47 @@
+
+
+@media screen and (min-width: 1501px){
+    .alert {
+        max-width: 25vw;
+    }
+}
+@media screen and (max-width: 1500px){
+    .alert {
+        max-width: 25vw;
+    }
+}
+@media screen and (max-width: 900px){
+    .alert {
+        max-width: 80vw;
+    }
+}
+
+
+.alert {
+    display: flex;
+    gap: 20px;
+    color: white;
+    padding: 20px 25px;
+    border-radius: 5px;
+    margin-top: 5%;
+}
+.alert-icon {
+    font-size: 1.75rem;
+    margin: auto 0;
+}
+.alert-message {
+    font-size: 1rem;
+    margin: auto 0;
+    border-left: solid 3px white;
+    padding-left: 20px;
+}
+
+.alert-success {
+    background-color: var(--alert-green);
+}
+.alert-error {
+    background-color: var(--alert-red);
+}
+.alert-info {
+    background-color: var(--alert-blue);
+}
