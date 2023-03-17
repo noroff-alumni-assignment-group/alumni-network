@@ -11,8 +11,14 @@ import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import {useWindowSize} from "../../hooks/useWindowSize";
+import {useSelector} from "react-redux";
+import { RootState } from "../../store/store";
+import User from "../../models/User";
+import UserService from "../../services/UserService";
 
 function Navbar() {
+
+  const user:User = useSelector((state:RootState)=>state.user);
 
     const [collapsed, setCollapsed] = useState(window.innerWidth < 1100);
     const windowSize = useWindowSize();
@@ -32,6 +38,10 @@ function Navbar() {
         }
     }
 
+    function handleLogout(){
+      UserService.logout();
+    }
+
 
   return (
       <div className="navbar-container">
@@ -42,10 +52,10 @@ function Navbar() {
           <div className="nav-profile-cnt">
 
                 <div className="circleprofile">
-                    AA
+                    {user.firstName?.charAt(0).toUpperCase()+user.lastName!.charAt(0).toUpperCase()}
                 </div>
 
-                <p>Navn Navnesen</p>
+                <p>{user.firstName} {user.lastName}</p>
 
 
           </div>
@@ -100,7 +110,7 @@ function Navbar() {
             <div className="tag-cnt logout-btn">
                 <FontAwesomeIcon icon={faSignOutAlt} className={"nav-icon"}/>
                 <h1>
-                    <NavLink to="/" onClick={() => handleClick()}>Sign out</NavLink>
+                    <NavLink to="/" onClick={handleLogout}>Sign out</NavLink>
                 </h1>
             </div>
         </div>

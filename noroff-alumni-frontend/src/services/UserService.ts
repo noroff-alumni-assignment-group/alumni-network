@@ -2,6 +2,8 @@
 import LoginRequest from "../models/LoginRequest";
 import tokenService from "./tokenService";
 import api from "./api";
+import store from "../store/store";
+import { removeUser } from "../store/userSlice";
 
 class UserService {
 
@@ -10,9 +12,10 @@ class UserService {
       tokenService.setAuth(response.data);
    }
 
-   async logout(refreshToken:string){
+   async logout(){
       tokenService.removeAuth();
-      return await api.post("/authenticate/signout",{token: refreshToken});
+      store.dispatch(removeUser({}));
+      return await api.post("/authenticate/signout",{token: tokenService.getLocalRefreshToken()});
    }
 
    async getUser(){

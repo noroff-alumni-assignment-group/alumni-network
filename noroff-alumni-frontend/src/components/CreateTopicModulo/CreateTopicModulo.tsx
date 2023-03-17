@@ -23,7 +23,10 @@ export default function CreateTopicModulo({setHideModulo}:CreateTopicModuloProps
             <h3>Create new topic</h3>
             <input type="text" className="input" placeholder="Topic name" onChange={(event)=>setName(event.target.value)}/>
             <textarea className="create-topic-description" placeholder="Description..." onChange={(event)=>setDescription(event.target.value)}></textarea>
+            <div className="create-topic-button-wrapper">
+            <button className="cancel-btn" onClick={()=>setHideModulo(false)}>cancel</button>
             <button className="activity-btn" onClick={submitNewTopic}>Create</button>
+            </div>
          </div>
       </div>
    );
