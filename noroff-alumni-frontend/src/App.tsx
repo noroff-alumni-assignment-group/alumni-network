@@ -21,13 +21,11 @@ function App() {
     <div className="App">
       <BrowserRouter>
 
-          {/*
       {
         !auth.access_token ?
         <Login />
         :
         <>
-        */}
         <Navbar />
         <div className="page-container">
           <Routes>
@@ -38,9 +36,8 @@ function App() {
             <Route path="/" element={<Timeline />}/>
           </Routes>
         </div>
-          {/*
         </>
-      }*/}
+      }
         
       </BrowserRouter>
     </div>

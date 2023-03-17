@@ -5,7 +5,7 @@ import timeline from "../../assets/icons/Activity Feed.png";
 import groups from "../../assets/icons/People.png";
 import topics from "../../assets/icons/Speech Bubble.png";
 import events from "../../assets/icons/Calendar.png";
-import { Link, NavLink, Outlet, Routes } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
@@ -18,7 +18,7 @@ function Navbar() {
     const windowSize = useWindowSize();
 
     useEffect(() => {
-      if(window.innerWidth > 1100 && collapsed){
+      if(window.innerWidth > 1100){
           setCollapsed(false)
       } else if (window.innerWidth <= 1100) {
           setCollapsed(true)

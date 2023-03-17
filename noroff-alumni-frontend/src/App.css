@@ -50,7 +50,7 @@
     grid-template-columns: 15% 70% 15%;
   }
   .App {
-    grid-template-columns: 20% 80%;
+    grid-template-columns: 16% 84%;
   }
   .App > div {
     grid-column: 2;
@@ -71,7 +71,7 @@
     grid-template-columns: 15% 70% 15%;
   }
   .App {
-    grid-template-columns: 20% 80%;
+    grid-template-columns: 16% 84%;
   }
   .App > div {
     grid-column: 2;
