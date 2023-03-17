@@ -2,8 +2,7 @@
 
 .App {
   display: flex;
-  overflow: hidden;
-  max-height: 100vh;
+
   background-color: var(--bluewhite);
 }
 
