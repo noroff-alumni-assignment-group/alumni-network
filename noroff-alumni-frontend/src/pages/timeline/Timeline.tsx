@@ -144,7 +144,6 @@ const Timeline = () => {
         <h1>Timeline</h1>
 
         <div className="timeline-head">
-          <div className="timeline-tags">
             <div className="timeline-tags">
               {myTopics.map((topic, i) => (
                 <div
@@ -158,7 +157,6 @@ const Timeline = () => {
                 </div>
               ))}
             </div>
-          </div>
           <div className="timeline-action-btn-cnt">
             <div
               className={`search-cnt ${

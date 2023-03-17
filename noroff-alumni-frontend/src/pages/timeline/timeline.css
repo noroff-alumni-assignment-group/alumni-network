@@ -14,10 +14,12 @@
     .timeline-head {
         flex-direction: column;
         justify-content: right;
+        gap: 15px;
     }
     .timeline-action-btn-cnt {
         flex-direction: column;
         justify-content: right;
+        gap: 15px;
     }
 }
 
@@ -69,6 +71,10 @@
 .search-cnt-active {
     background-color: white;
     box-shadow: var(--box-shadow);
+}
+
+.searchimg {
+    margin-left: auto;
 }
 
 @keyframes searchfield {
