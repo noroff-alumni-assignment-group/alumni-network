@@ -1,6 +1,5 @@
 import "./login.css";
 import {useDispatch} from "react-redux";
-import { setAuth } from "../../store/authSlice";
 import Auth from "../../models/Auth";
 import { setUser } from "../../store/userSlice";
 import UserService from "../../services/UserService";
@@ -14,9 +13,9 @@ export default function LoginForm(props: any) {
 
        const username = event.target.elements.username.value;
        const password = event.target.elements.password.value;
-       const auth:Auth = (await UserService.login({username:username,password:password})).data;
-       dispatch(setAuth(auth));
-       dispatch(setUser((await UserService.getUser(auth.access_token!)).data));
+       await UserService.login({username:username,password:password});
+
+       dispatch(setUser((await UserService.getUser()).data));
      };
 
 
