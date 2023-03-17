@@ -10,14 +10,20 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
+import {useWindowSize} from "../../hooks/useWindowSize";
 
 function Navbar() {
 
     const [collapsed, setCollapsed] = useState(window.innerWidth < 1100);
+    const windowSize = useWindowSize();
 
     useEffect(() => {
-      if(window.innerWidth > 1100 && collapsed){setCollapsed(false)}
-    })
+      if(window.innerWidth > 1100 && collapsed){
+          setCollapsed(false)
+      } else if (window.innerWidth <= 1100) {
+          setCollapsed(true)
+      }
+    }, [windowSize])
 
 
     function handleClick() {
