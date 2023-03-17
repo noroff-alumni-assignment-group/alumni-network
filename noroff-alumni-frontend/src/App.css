@@ -1,17 +1,9 @@
 /* Navigation */
 
 .App {
-  display: flex;
-  overflow: hidden;
-  max-height: 100vh;
-  /*display: grid;
-  grid-template-columns: 20% 80%;*/
-  background-color: var(--bluewhite);
+  display: grid;
 }
 
-/*.App > div {
-  grid-column: 2;
-}*/
 
 .page-container {
   display: grid;
@@ -55,7 +47,13 @@
     padding: 9px 25px;
   }
   .page-container {
-    grid-template-columns: 20% 60% 20%;
+    grid-template-columns: 15% 70% 15%;
+  }
+  .App {
+    grid-template-columns: 20% 80%;
+  }
+  .App > div {
+    grid-column: 2;
   }
 }
 @media screen and (max-width: 1500px){
@@ -72,8 +70,14 @@
   .page-container {
     grid-template-columns: 15% 70% 15%;
   }
+  .App {
+    grid-template-columns: 20% 80%;
+  }
+  .App > div {
+    grid-column: 2;
+  }
 }
-@media screen and (max-width: 900px){
+@media screen and (max-width: 1100px){
   html {
     font-size: 16px;
   }
@@ -86,6 +90,13 @@
   }
   .page-container {
     grid-template-columns: 5% 90% 5%;
+  }
+  .App {
+    grid-template-columns: 100%;
+  }
+
+  .App > div {
+    grid-column: 1;
   }
 }
 

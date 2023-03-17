@@ -29,10 +29,6 @@
   width: 100%;
 }
 
-.timeline-content {
-    min-width: 60vw;
-}
-
 .timeline-content h1 {
   font-size: 2rem;
 }

@@ -4,9 +4,10 @@
     .navbar-toggle-btn {
         width: 75px;
         height: 75px;
+        visibility: hidden;
     }
     .navbar {
-        width: 370px;
+        width: 20%;
     }
     .circleprofile {
         width: 100px;
@@ -17,22 +18,38 @@
     .navbar-toggle-btn {
         width: 60px;
         height: 60px;
+        visibility: hidden;
     }
     .navbar {
-        width: 280px;
+        width: 20%;
     }
     .circleprofile {
         width: 75px;
         height: 75px;
     }
 }
-@media screen and (max-width: 900px){
+@media screen and (max-width: 1100px){
     .navbar-toggle-btn {
         width: 60px;
         height: 60px;
+        visibility: visible;
     }
     .navbar {
-        width: 280px;
+        width: 35%;
+    }
+    .circleprofile {
+        width: 100px;
+        height: 100px;
+    }
+}
+@media screen and (max-width: 800px){
+    .navbar-toggle-btn {
+        width: 60px;
+        height: 60px;
+        visibility: visible;
+    }
+    .navbar {
+        width: 80%;
     }
     .circleprofile {
         width: 100px;
@@ -41,6 +58,8 @@
 }
 
 .navbar {
+    display: flex;
+    flex-direction: column;
     height: 100vh;
     background-color: var(--blue);
     position: fixed;
@@ -149,6 +168,16 @@
 
 .nav-events p, .nav-groups p {
     margin-bottom: 10px;
+}
+
+.logout-btn {
+    margin-top: auto;
+    white-space: nowrap;
+}
+.nav-icon {
+    font-size: 1.6rem;
+    color: white;
+    margin-right: 15px;
 }
 
 

@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import "./navbar.css";
 import people from "../../assets/icons/User.png";
 import timeline from "../../assets/icons/Activity Feed.png";
@@ -9,10 +9,23 @@ import { Link, NavLink, Outlet, Routes } from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 
 function Navbar() {
 
-    const [collapsed, setCollapsed] = useState(true);
+    const [collapsed, setCollapsed] = useState(window.innerWidth < 1100);
+
+    useEffect(() => {
+      if(window.innerWidth > 1100 && collapsed){setCollapsed(false)}
+    })
+
+
+    function handleClick() {
+        if(window.innerWidth <= 1100) {
+            setCollapsed(true);
+        }
+    }
+
 
   return (
       <div className="navbar-container">
@@ -35,31 +48,31 @@ function Navbar() {
             <div className="tag-cnt">
               <img src={people} alt="profile" />
               <h1>
-                <NavLink to="/profile">Profile</NavLink>
+                <NavLink to="/profile" onClick={() => handleClick()}>Profile</NavLink>
               </h1>
             </div>
             <div className="tag-cnt">
               <img src={timeline} alt="timeline" />
               <h1>
-                <NavLink to="/">Timeline</NavLink>
+                <NavLink to="/" onClick={() => handleClick()}>Timeline</NavLink>
               </h1>
             </div>
             <div className="tag-cnt">
               <img src={groups} alt="groups" />
               <h1>
-                <NavLink to="/groups">Groups</NavLink>
+                <NavLink to="/groups" onClick={() => handleClick()}>Groups</NavLink>
               </h1>
             </div>
             <div className="tag-cnt">
               <img src={topics} alt="topics" />
               <h1>
-                <NavLink to="/topics">Topics</NavLink>
+                <NavLink to="/topics" onClick={() => handleClick()}>Topics</NavLink>
               </h1>
             </div>
             <div className="tag-cnt">
               <img src={events} alt="events" />
               <h1>
-                <NavLink to="/events">Events</NavLink>
+                <NavLink to="/events" onClick={() => handleClick()}>Events</NavLink>
               </h1>
             </div>
           </div>
@@ -77,6 +90,13 @@ function Navbar() {
             <p>Group Lorem</p>
             <p>Group Ipsum </p>
           </div>
+
+            <div className="tag-cnt logout-btn">
+                <FontAwesomeIcon icon={faSignOutAlt} className={"nav-icon"}/>
+                <h1>
+                    <NavLink to="/" onClick={() => handleClick()}>Sign out</NavLink>
+                </h1>
+            </div>
         </div>
       </div>
   );
