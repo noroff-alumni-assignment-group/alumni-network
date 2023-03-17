@@ -30,3 +30,9 @@
   border-radius: 5px;
   background-color: var(--bluewhite);
 }
+
+.create-topic-button-wrapper{
+  min-width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
