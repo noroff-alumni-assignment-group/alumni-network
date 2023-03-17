@@ -3,7 +3,7 @@ type User = {
    username?: string;
    firstName?:string;
    lastName?:string;
-   topics?:Array<String>;
+   topics?:Array<string>;
    
 };
 
