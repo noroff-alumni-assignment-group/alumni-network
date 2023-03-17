@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import MeshGradient from "../../assets/pictures/mesh-gradient.png";
 import "./login.css";
-import axios from "axios";
 import LoginForm from "./LoginForm";
 import SignupForm from "./SignupForm";
 
@@ -12,12 +11,14 @@ function Login() {
 
   return (
     <div className="login-page">
+      <div className="login-page-forms">
       <LoginForm setAnimateMesh={setAnimateMesh} animateMesh={animateMesh} />
       <SignupForm setAnimateMesh={setAnimateMesh} animateMesh={animateMesh} />
+      </div>
 
       <div className={`login-mesh-gradient ${animateMesh ? "animate" : ""}`}>
         <img src={MeshGradient} alt="" className="gradient-img" />
-      </div>
+      </div> 
     </div>
   );
 }

@@ -52,10 +52,10 @@ function Navbar() {
           <div className="nav-profile-cnt">
 
                 <div className="circleprofile">
-                    {user.firstName?.charAt(0).toUpperCase()+user.lastName!.charAt(0).toUpperCase()}
+                    {(user.firstName ?? "").charAt(0).toUpperCase()+(user.lastName ??"") .charAt(0).toUpperCase()}
                 </div>
 
-                <p>{user.firstName} {user.lastName}</p>
+                <p>{user.firstName ?? ""} {user.lastName ?? ""}</p>
 
 
           </div>
