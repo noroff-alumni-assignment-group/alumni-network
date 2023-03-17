@@ -1,6 +1,4 @@
-import { useSelector } from "react-redux";
 import "./CreateTopicModulo.css";
-import { RootState } from "../../store/store";
 import { useState } from "react";
 import { createTopic } from "../../services/topicService";
 
@@ -9,13 +7,12 @@ type CreateTopicModuloProps = {
 }
 
 export default function CreateTopicModulo({setHideModulo}:CreateTopicModuloProps){
-   const auth = useSelector((state:RootState)=>state.auth);
    const [name,setName] = useState("");
    const [description,setDescription] = useState("");
 
    async function submitNewTopic(){
       if(name && description){
-         createTopic({name:name,description:description},auth.access_token!);
+         createTopic({name:name,description:description});
          setHideModulo(false)
       }
    }
