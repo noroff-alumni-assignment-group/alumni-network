@@ -21,17 +21,23 @@ function App() {
     <div className="App">
       <BrowserRouter>
 
-       <Navbar />
-        <Routes>
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/events" element={<Event />} />
-          <Route path="/groups" element={<Groups />} />
-          <Route path="/topics" element={<Topics />} />
-          <Route path="/" element={<Timeline />}/>
-        </Routes>
-        
-
-      
+      {
+        !auth.access_token ?
+        <Login />
+        :
+        <>
+        <Navbar />
+        <div className="page-container">
+          <Routes>
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/events" element={<Event />} />
+            <Route path="/groups" element={<Groups />} />
+            <Route path="/topics" element={<Topics />} />
+            <Route path="/" element={<Timeline />}/>
+          </Routes>
+        </div>
+        </>
+      }
         
       </BrowserRouter>
     </div>

@@ -3,6 +3,8 @@ import Post from "../../components/post/Post";
 import search from "../../assets/icons/Search.png";
 import "./timeline.css";
 import Search from "../../components/search/Search";
+import PostForm from "../../components/post-form/PostForm";
+import Popup from "../../components/popup/Popup";
 
 import { postList } from "../../components/post/postList";
 
@@ -34,6 +36,10 @@ const Timeline = () => {
 
   const [showSearchField, setShowSearchField] = useState(false);
 
+  // Add state variable for post form popup visibility
+  const [showPostForm, setShowPostForm] = useState(false);
+
+  // Function to handle search icon click
   const handleSearchIconClick = () => {
     setShowSearchField((prevState) => !prevState);
   };
@@ -65,11 +71,13 @@ const Timeline = () => {
 
   return (
     <div className="timeline">
+
+      {showPostForm && <Popup child={<PostForm editing={false} handler={setShowPostForm}/>}/>}
+
       <div className="timeline-content">
         <h1>Timeline</h1>
 
         <div className="timeline-head">
-          <div className="timeline-tags">
             <div className="timeline-tags">
               {myTopics.map((topic, i) => (
                 <div
@@ -83,7 +91,6 @@ const Timeline = () => {
                 </div>
               ))}
             </div>
-          </div>
           <div className="timeline-action-btn-cnt">
             <div
               className={`search-cnt ${
@@ -101,7 +108,7 @@ const Timeline = () => {
               />
             </div>
 
-            <button className="activity-btn">NEW POST</button>
+            <button className="activity-btn" onClick={() => setShowPostForm(true)}>NEW POST</button>
           </div>
         </div>
         <div className="timeline-feed">

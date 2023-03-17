@@ -1,9 +1,7 @@
 .post {
   background-color: white;
-  max-width: 60vw;
   padding: 35px 50px;
   border-radius: 20px;
-  margin-bottom: 20px;
   box-shadow: var(--box-shadow);
 
 }
