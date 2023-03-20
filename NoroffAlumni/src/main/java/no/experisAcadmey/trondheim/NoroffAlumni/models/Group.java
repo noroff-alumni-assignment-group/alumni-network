@@ -32,5 +32,7 @@ public class Group {
     )
     private Set<User> members;
 
-
+    public void addMember(User user){
+        members.add(user);
+    }
 }

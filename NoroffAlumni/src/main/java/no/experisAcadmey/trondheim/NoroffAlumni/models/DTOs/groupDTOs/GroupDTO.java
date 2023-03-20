@@ -14,6 +14,6 @@ public class GroupDTO {
     private String name;
     private String description;
     private Boolean is_private;
-    private Set<Integer> members;
+    private Set<String> members;
 
 }

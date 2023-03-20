@@ -1,25 +1,30 @@
 package no.experisAcadmey.trondheim.NoroffAlumni.services;
 
+import no.experisAcadmey.trondheim.NoroffAlumni.exceptions.GroupNotFoundException;
 import no.experisAcadmey.trondheim.NoroffAlumni.models.DTOs.groupDTOs.GroupPostDTO;
 import no.experisAcadmey.trondheim.NoroffAlumni.models.Group;
 import no.experisAcadmey.trondheim.NoroffAlumni.repositories.GroupRepository;
-import no.experisAcadmey.trondheim.NoroffAlumni.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+
 
 @Service
 public class GroupService {
 
-    private final GroupRepository groupRepository;
-    private final UserRepository userRepository;
 
-    public GroupService(GroupRepository groupRepository, UserRepository userRepository) {
+    private final GroupRepository groupRepository;
+    private final UserService userService;
+
+
+    public GroupService(GroupRepository groupRepository, UserService userService) {
         this.groupRepository = groupRepository;
-        this.userRepository = userRepository;
+        this.userService = userService;
     }
+
+    // Groups that are marked as private that the requesting user is not a member of should
+    //be filtered out of the search results before returning.
 
     /**
      * Retrieves all the groups that currently exist.
@@ -29,13 +34,14 @@ public class GroupService {
         return new ArrayList<>();
     }
 
+    // If group is private --
     /**
      * Retrieves a group based on the group ID provided.
      * @param group_id the group ID
      * @return the group with the matching ID
      */
-    public Optional<Group> findGroupById(Integer group_id) {
-        return groupRepository.findById(group_id);
+    public Group findGroupById(int group_id) {
+        return groupRepository.findById(group_id).get();
     }
 
     /**
@@ -54,15 +60,15 @@ public class GroupService {
         return g;
     }
 
-    // To do
-
     /**
      * Assigns a new member to a group.
      * @param group_id the ID of the group the member is to be assigned to
      * @return
      */
     public Group joinGroup(int group_id) {
-        return
+        Group group = groupRepository.findById(group_id).orElseThrow(GroupNotFoundException::new);
+        group.addMember(userService.getCurrentUser());
+        return groupRepository.save(group);
     }
 
 }
