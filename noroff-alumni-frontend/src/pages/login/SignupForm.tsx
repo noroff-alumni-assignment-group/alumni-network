@@ -5,7 +5,7 @@ import axios from "axios";
 export default function SignupForm(props: any) {
   const signUp = (event: any) => {
     event.preventDefault();
-    props.setAnimateMesh(true);
+    
 
     const username = event.target.elements.username.value;
     const password = event.target.elements.password.value;
@@ -27,7 +27,7 @@ export default function SignupForm(props: any) {
       });
   };
   return (
-    <div className={`signup-form ${props.animateMesh ? "animate" : ""}`}>
+    <div className={`signup-form`}>
       <div className="form-cnt">
         <h1>Sign up</h1>
         <form onSubmit={signUp}>
@@ -43,9 +43,10 @@ export default function SignupForm(props: any) {
             <p>Confirm Password</p>
             <input type="password" name="confirmPassword" />
           </div>
+          <input type="submit" className="submit-btn" />
           <p className="signup-tag">
             Already have an account?
-            <span onClick={(event) => signUp(event)}> Sign in</span>
+            <span onClick={(event) => props.setAnimateMesh(!props.animateMesh)}> Sign in</span>
           </p>
         </form>
       </div>

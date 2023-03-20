@@ -48,8 +48,6 @@ instance.interceptors.response.use(
             }
          }
       }
-      tokenService.removeAuth();
-      store.dispatch(removeUser({}));
       return Promise.reject(err);
    }
 );
