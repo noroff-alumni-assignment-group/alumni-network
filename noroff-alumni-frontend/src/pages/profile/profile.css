@@ -1,28 +1,28 @@
 .profilepage {
-    display: flex;
+   
+    padding: 0 !important;
 }
-
 .profiledata-cnt {
     background-color: white;
     border-radius: 20px;
-    min-width: 500px;
-    max-width: 500px
-    ;
-    min-height: 100vh;
-    margin-left: -50px;
-    padding-left: 50px;
     box-shadow: var(--box-shadow);
-    position: static;
-    top: 0;
+    display: flex;
+    padding: 100px 50px;
 }
 
 .profiledata-head {
-    width: 100%;
+   width: 50%;
     display: flex;
     justify-content: center;
-    padding-top: 50px;
+  
     align-items: center;
     flex-direction: column;
+}
+
+.profile-data {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .profilepicture-profile {
@@ -54,6 +54,10 @@
     
 }
 
+.profile-post {
+    margin-bottom: 20px;
+}
+
 .profile-posts h1 {
     font-size: 35px;
     
@@ -71,8 +75,7 @@
 }
 
 .profile-data {
-    margin-top: 60px;
-    padding: 0 50px;
+
 }
 
 .biography {

@@ -20,12 +20,6 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-
-      {
-        !auth.access_token ?
-        <Login />
-        :
-        <>
         <Navbar />
         <div className="page-container">
           <Routes>
@@ -33,12 +27,11 @@ function App() {
             <Route path="/events" element={<Event />} />
             <Route path="/groups" element={<Groups />} />
             <Route path="/topics" element={<Topics />} />
-            <Route path="/" element={<Timeline />}/>
+            <Route path="/" element={<Timeline />} />
           </Routes>
         </div>
-        </>
-      }
-        
+
+      
       </BrowserRouter>
     </div>
   );

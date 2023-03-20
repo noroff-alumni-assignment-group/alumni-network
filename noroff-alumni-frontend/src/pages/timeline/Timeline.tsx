@@ -5,7 +5,6 @@ import "./timeline.css";
 import Search from "../../components/search/Search";
 import PostForm from "../../components/post-form/PostForm";
 import Popup from "../../components/popup/Popup";
-
 import { postList } from "../../components/post/postList";
 
 interface PostData {

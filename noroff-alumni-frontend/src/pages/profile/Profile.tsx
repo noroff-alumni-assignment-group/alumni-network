@@ -4,6 +4,7 @@ import { postList } from "../../components/post/postList";
 import Post from '../../components/post/Post';
 import Search from '../../components/search/Search';
 import search from "../../assets/icons/Search.png";
+import { useParams } from 'react-router-dom';
 
 function Profile() {
   const [filteredPosts, setFilteredPosts] = useState(postList);
@@ -13,6 +14,12 @@ function Profile() {
   const handleSearchIconClick = () => {
     setShowSearchField((prevState) => !prevState);
   };
+
+  let name = window.location.pathname.replace("/", "");
+  console.log(name);
+
+  
+  
 
   return (
     <div className="profilepage">
@@ -61,17 +68,19 @@ function Profile() {
 
         <div className="all-posts">
           {filteredPosts.map((post, i) => (
-            <Post
-              key={`post-${i}`}
-              title={post.title}
-              date={post.date}
-              body={post.body}
-              topics={post.topics}
-              groups={post.groups}
-              author={post.author}
-              profileInitials={post.profileInitials}
-              comments={post.comments}
-            />
+            <div className="profile-post">
+              <Post
+                key={`post-${i}`}
+                title={post.title}
+                date={post.date}
+                body={post.body}
+                topics={post.topics}
+                groups={post.groups}
+                author={post.author}
+                profileInitials={post.profileInitials}
+                comments={post.comments}
+              />
+            </div>
           ))}
         </div>
       </div>

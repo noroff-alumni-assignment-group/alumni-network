@@ -30,6 +30,25 @@ function Post({
   comments,
 }: Props) {
   const [showComments, setShowComments] = useState(false);
+  // Inside the Post component
+  const [newCommentText, setNewCommentText] = useState("");
+  
+
+  const handleAddComment = (e: any) => {
+    e.preventDefault();
+
+    // Add new comment to the comments state
+    const newComment = {
+      author: "Your Name", // Replace with the current user's name
+      authorInitials: "YN", // Replace with the current user's initials
+      response: newCommentText,
+      date: new Date().toISOString(),
+    };
+
+    // Reset the newCommentText state
+    setNewCommentText("");
+  };
+
 
   const handleToggleComments = () => {
     setShowComments(!showComments);

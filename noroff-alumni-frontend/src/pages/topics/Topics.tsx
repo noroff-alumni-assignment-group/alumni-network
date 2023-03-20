@@ -52,7 +52,7 @@ function Topics() {
         <CreateTopicModulo setHideModulo={setShowNewTopicModulo} />
       ) : null}
       <div className="topics-page-header">
-        <h2>All Topics</h2>
+        <h1>All Topics</h1>
         <div className="topics-page-header-right">
           <AiOutlineSearch
             className="topics-header-search-icon"
