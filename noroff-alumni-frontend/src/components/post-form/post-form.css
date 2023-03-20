@@ -1,0 +1,194 @@
+
+@media screen and (min-width: 1501px){
+    .post-form .text-content,.text-content-container {
+        height: 275px;
+    }
+    .post-form .tab-button {
+        padding: 4px 25px;
+    }
+    .entity-tag {
+        padding: 4px 20px;
+        border-radius: 7px;
+    }
+    .post-form .post-content {
+        gap: 15px;
+    }
+}
+@media screen and (max-width: 1500px){
+    .post-form .text-content, .text-content-container {
+        height: 175px;
+    }
+    .post-form .tab-button {
+        padding: 2px 20px;
+    }
+    .entity-tag {
+        padding: 2px 18px;
+        border-radius: 5px;
+    }
+    .post-form .post-content {
+        gap: 5px;
+    }
+}
+@media screen and (max-width: 900px){
+    .post-form .text-content, .text-content-container {
+        height: 250px;
+    }
+    .post-form .tab-button {
+        padding: 4px 25px;
+    }
+    .entity-tag {
+        padding: 2px 16px;
+        border-radius: 7px;
+    }
+    .post-form .post-content {
+        gap: 15px;
+    }
+}
+
+
+.post-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.post-form .post-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.post-form .button-row {
+    display: flex;
+    gap: 1%;
+}
+.post-form .submit-row {
+    display: flex;
+    justify-content: right;
+    gap: 5%;
+}
+
+.post-form .input {
+    width: 50%;
+}
+.post-form .input::placeholder {
+    color: lightgray;
+}
+
+.post-form .text-content-container {
+    position: relative;
+}
+.post-form .text-content {
+    width: 100% !important;
+    resize: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    overflow-y: scroll;
+}
+.post-form .round-toggle {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border-radius: 100%;
+    width: 35px;
+    height: 35px;
+    border: none;
+    transition: .2s ease-in-out all;
+}
+.post-form .round-toggle:hover {
+    cursor: pointer;
+    opacity: .8;
+}
+.post-form .button-active {
+    background: linear-gradient(90deg, #496cda 0%, #6ca5f1 100%);
+    color: white;
+}
+.post-form .button-inactive {
+    color: darkgray;
+    background-color: lightgray;
+}
+
+/**
+APP.css
+ */
+.subsubtitle {
+    font-style: normal;
+    font-weight: 600;
+    font-size: .9rem;
+    color: #c1c1c1;
+}
+
+.entity-tag {
+    border-style: none;
+    font-weight: 600;
+    font-size: .7rem;
+    transition: opacity .1s ease-in-out;
+}
+.entity-tag:hover {
+    cursor: pointer;
+    opacity: .8;
+}
+.group-tag-active {
+    color: var(--orange);
+    background-color: white;
+    border: solid 2px var(--orange);
+}
+.topic-tag-active {
+    color: var(--green);
+    background-color: white;
+    border: solid 2px var(--green);
+}
+.group-tag-inactive {
+    background-color: var(--orange);
+    color: white;
+    border: solid 2px var(--orange);
+}
+.topic-tag-inactive {
+    background-color: var(--green);
+    color: white;
+    border: solid 2px var(--green);
+}
+
+.scroll-vertical {
+    overflow-Y: scroll;
+}
+::-webkit-scrollbar {
+    width: 0;
+}
+
+
+@keyframes border-blink {
+    from, to {
+        outline-color: transparent
+    }
+    0% {
+        outline-color: #ff3434
+    }
+    30% {
+        outline-color: #ff3232
+    }
+    40% {
+        outline-color: #ff4343
+    }
+    50% {
+        outline-color: #ff5757
+    }
+    60% {
+        outline-color: #f86161
+    }
+    70% {
+        outline-color: #fd9292
+    }
+    80% {
+        outline-color: #fdaaaa
+    }
+    90% {
+        outline-color: #fdd2d2
+    }
+}
+.border-blink{
+    outline:2px solid transparent;
+    -webkit-animation: border-blink 1s step-end;
+    animation: border-blink 1s step-end;
+    /* add 'border-color: transparent' if you wish no border to show initially */
+}

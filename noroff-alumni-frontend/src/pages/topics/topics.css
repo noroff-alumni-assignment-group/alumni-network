@@ -1,9 +1,7 @@
 .topics-page {
   flex-grow: 1;
-  padding: 3rem 5rem;
   display: flex;
   flex-direction: column;
-  overflow-y:scroll;
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
@@ -31,7 +29,7 @@
 }
 
 .topics-header-search-icon {
-  width: 25;
+  width: 25px;
   height: auto;
   cursor: pointer;
 }
@@ -46,4 +44,23 @@
 
 .topics-page::-webkit-scrollbar {
   display: none;
+}
+
+.topic-list-page-nav-wrapper{
+  display: flex;
+  min-width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  margin: 2rem 0rem;
+}
+.topic-list-page-nav-arrow{
+ width: 2rem;
+ height: auto;
+}
+
+.topic-list-page-nav-item{
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
 }

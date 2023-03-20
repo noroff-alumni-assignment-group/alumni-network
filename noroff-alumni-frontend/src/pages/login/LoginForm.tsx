@@ -1,29 +1,21 @@
 import "./login.css";
-import axios from "axios";
 import {useDispatch} from "react-redux";
-import { setAuth } from "../../store/authSlice";
 import Auth from "../../models/Auth";
+import { setUser } from "../../store/userSlice";
+import UserService from "../../services/UserService";
 
 export default function LoginForm(props: any) {
   const dispatch = useDispatch();
 
-     const signIn = (event: any) => {
+     const signIn = async (event: any) => {
        event.preventDefault();
        props.setAnimateMesh(true);
 
        const username = event.target.elements.username.value;
        const password = event.target.elements.password.value;
+       await UserService.login({username:username,password:password});
 
-       axios
-         .post(process.env.REACT_APP_API_URL+"authenticate", { username, password })
-         .then((response) => {
-           // Handle the response from the API here
-           dispatch(setAuth(response.data as Auth));
-         })
-         .catch((error) => {
-           // Handle any errors that occur during the API request here
-           console.error(error);
-         });
+       dispatch(setUser((await UserService.getUser()).data));
      };
 
 
@@ -40,7 +32,7 @@ export default function LoginForm(props: any) {
             <p>Password</p>
             <input type="password" name="password" />
           </div>
-          <input type="submit" />
+          <input type="submit" className="submit-btn" />
           <p className="signup-tag">
             Dont have an account?
             <span onClick={(event) => signIn(event)}> Sign up</span>
