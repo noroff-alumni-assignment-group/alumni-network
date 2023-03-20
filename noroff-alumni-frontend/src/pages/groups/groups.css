@@ -1,18 +1,15 @@
 /* Groups */
 
-.group-container {
-    margin-left: 60px;
-    margin-top: 30px;
-}
-
 .groupslist {
     margin-bottom: 30px;
+    width: fit-content;
 }
 
 .group-list-header {
-    font-size: 18px;
+    font-size: 20px;
     padding-top: 10px;
     padding-bottom: 20px;
+    width: fit-content;
 }
 
 .groups-actions {
@@ -22,25 +19,16 @@
 
 .groups-actions button {
     height: 50px;
-    margin: 10px;
 }
 
 /* Group page */
 
-.group-page {
-    margin-left: 60px;
-}
-
 .page-header {
-    margin-top: 15px;
-    padding-top: 20px;
     padding-bottom: 20px;
-    padding-left: 5px;
     font-size: 25px;
 }
 
 .member-card {
-    width: 60vw;
     margin-bottom: 10px;
     padding: 15px;
     background-color: white;
@@ -59,7 +47,7 @@
 }
 
 .members-count {
-    padding: 5px;
+    margin: 10px;
 }
 
 .member-card-right {
@@ -71,7 +59,6 @@
     padding: 8px;
     margin-right: 8px;
     border-style: none;
-    font-weight: 300;
     font-size: 17px;
     cursor: pointer;
     background-color: white;
@@ -81,7 +68,7 @@
     display: flex;
     justify-content: space-between;
     padding-top: 20px;
-    padding-bottom: 20px;
+    padding-bottom: 10px;
 }
 
 .feed-actions button {

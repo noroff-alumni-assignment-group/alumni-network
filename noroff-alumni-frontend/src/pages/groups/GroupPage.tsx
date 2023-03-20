@@ -4,6 +4,7 @@ import MemberIcon from "../../components/Group/MemberIcon"
 import Post from "../../components/post/Post"
 import { Group } from "../../models/Group"
 import './groups.css'
+import api from "../../services/api"
 
 interface PostData {
     title: string;
@@ -53,28 +54,23 @@ const GroupPage = () => {
     const [group, setGroup] = useState<Group>()
     const { groupId } = useParams<params>()
 
-    /*
+    
     useEffect(() => {
-
-        
-        const fetchGroup = async () => {
-            try {
-                const response = await fetch(`URL/groups/${groupId}`)
-                if (!response.ok) {
-                    throw new Error('Could not fetch group')
-                }
-                const data = await response.json()
-                setGroup(data)
-            } catch (error) {
-                console.error(error)
-            }
+        async function getGroup() {
+            return await api
+            .get("/group/${groupId}")
+            .then((response) => {
+            return response.data;
+            });
         }
-
-        fetchGroup()
-        
-       
+        getGroup()
+          
     }, [groupId])
 
+    /*
+    if (!group) {
+        return null;
+      } 
     */
 
     return (

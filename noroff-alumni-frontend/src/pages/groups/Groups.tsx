@@ -3,6 +3,7 @@ import './groups.css'
 import { Group } from "../../models/Group"
 import { useEffect, useState } from "react"
 import { useNavigate } from 'react-router-dom'
+import api from "../../services/api"
 
 function Groups() {
 
@@ -10,21 +11,14 @@ function Groups() {
   const navigate = useNavigate()
 
   useEffect(() => {
-
-    /*
-    const fetchGroups = async () => {
-      try {
-        const response = await fetch('')
-          if (!response.ok) {
-            throw new Error("Could not find groups")
-          }
-          const data = await response.json()
-          setGroups(data)
-        } catch (error) {
-            console.error(error)
-        } 
+    async function getGroups() {
+      return await api
+        .get("/group")
+        .then((response) => {
+          return response.data;
+        });
     }
-    fetchGroups() */
+    getGroups()
 
     setGroups([
       { id: 1, name: "Alumni", members: [] },
@@ -37,11 +31,12 @@ function Groups() {
 
 
   const handleNewGroupClick = () => {
-
   }
 
+  // change to group id
   const handleGroupClick = (group: Group) => {
-    navigate(`groups/${group.id}`)
+    let page = `/groups/grouppage`
+    navigate(page)
   }
 
   return (

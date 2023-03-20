@@ -13,6 +13,7 @@ import { useSelector, useDispatch } from "react-redux";
 import tokenService from "./services/tokenService";
 import { setUser } from "./store/userSlice";
 import UserService from "./services/UserService";
+import GroupPage from "./pages/groups/GroupPage";
 
 function App() {
   const user = useSelector((state: RootState) => state.user);
@@ -32,7 +33,7 @@ function App() {
       {
         !user.username && !tokenService.getLocalAccessToken() ?
         <Login />
-        :
+        : 
         <>
         <Navbar />
         <div className="page-container">
@@ -40,6 +41,7 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/events" element={<Event />} />
             <Route path="/groups" element={<Groups />} />
+            <Route path="/groups/grouppage" element={<GroupPage />} />
             <Route path="/topics" element={<Topics />} />
             <Route path="/" element={<Timeline />}/>
           </Routes>
