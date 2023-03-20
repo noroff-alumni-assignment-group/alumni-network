@@ -8,8 +8,13 @@ import { removeUser } from "../store/userSlice";
 class UserService {
 
    async login(loginData:LoginRequest) {
-      const response = await api.post("/authenticate",loginData).catch((error)=> error);
-      tokenService.setAuth(response.data);
+      await api.post("/authenticate",loginData).then((response)=>{
+         console.log(response.status);
+      if(response.status === 200){
+         tokenService.setAuth(response.data);
+      }
+      }).catch((error)=> error);
+      
    }
 
    async logout(){

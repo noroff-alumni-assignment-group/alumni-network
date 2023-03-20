@@ -23,7 +23,6 @@ class TokenService {
    }
  
    setAuth(auth:Auth) {
-     console.log(auth);
      localStorage.setItem("auth", JSON.stringify(auth));
    }
  
