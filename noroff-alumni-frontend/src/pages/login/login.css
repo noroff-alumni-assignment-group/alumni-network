@@ -1,18 +1,28 @@
 .login-page {
-  display: flex;
+  width: 100vw;
+  height: 100vh;
   grid-column: 1 / 3 !important;
   background-color: white;
 }
+.login-page-forms{
+  display: grid;
+  grid-template-columns: 50% 50%;
+}
 
 .login-form {
-  width: 50vw;
+  width: 100%;
   display: flex;
   align-items: center;
   padding-left: 100px;
 }
 
 .login-mesh-gradient {
+  position: absolute;
+  top: 0;
+  left: 50%;
   width: 50vw;
+  z-index: 50;
+  transition: 0.5s all ease-in-out;
 }
 
 .login-mesh-gradient img {
@@ -28,9 +38,9 @@
 .username-cnt p {
   font-weight: 100;
   font-size: 16px;
-  margin-top: 40px;
+  margin-top: 2rem;
   color: rgb(122, 122, 122);
-  margin-bottom: 10px;
+  margin-bottom: .5rem;
 }
 
 .login-form input,
@@ -39,8 +49,14 @@
   border-bottom: 1px solid black;
   width: 20vw;
   padding-top: 10px;
+  padding-left: 5px;
   padding-bottom: 5px;
   font-size: 16px;
+}
+
+.signup-form input[type=submit],
+.login-form input[type=submit]{
+  cursor: pointer;
 }
 
 .signup-tag {
@@ -48,15 +64,15 @@
   font-size: 16px;
   font-weight: 100;
   color: rgb(122, 122, 122);
+  cursor: pointer;
 }
 
 .signup-form {
+  width: 100%;
   height: 100vh;
   display: flex;
   align-items: center;
-  position: absolute;
-  margin-left: calc(50vw + 100px);
-  opacity: 0;
+  justify-content: center;
 }
 
 .submit-btn {
@@ -65,69 +81,7 @@
 
 
 .login-mesh-gradient.animate {
-  animation: mesh-animation 0.4s forwards ease-in-out;
-}
-
-.login-form.animate {
-  animation: form-animation 0.4s forwards ease-in-out;
-}
-
-.signup-form.animate {
-  animation: signup-animation 0.4s forwards ease-in-out;
-  opacity: 1;
-  margin-left: 0;
+  transform: translateX(-100%);
 }
 
 
-@keyframes mesh-animation {
-  0% {
-    position: absolute;
-    margin-left: 50vw;
-  }
-
-  100% {
-    position: absolute;
-    margin-left: 0;
-  }
-}
-
-@keyframes form-animation {
-  0% {
-    opacity: 1;
-    height: 100vh;
-    margin-left: 0;
-  }
-
-  50% {
-    opacity: 0;
-  }
-
-  99% {
-    opacity: 0;
-    margin-left: 50vw;
-    height: 100vh;
-  }
-
-  100% {
-    display: none;
-  }
-}
-
-@keyframes signup-animation {
-  0% {
-    opacity: 0;
-    height: 100vh;
-    display: flex;
-  }
-
-  70% {
-    opacity: 0;
-  }
-
-  100% {
-    position: absolute;
-    display: flex;
-    opacity: 1;
-    margin-left: calc(50vw + 100px);
-  }
-}

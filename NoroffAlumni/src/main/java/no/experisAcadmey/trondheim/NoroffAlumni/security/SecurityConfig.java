@@ -50,9 +50,10 @@ public class SecurityConfig {
                 .csrf().disable()
                 .authorizeHttpRequests(authorize -> authorize
                         // Specify paths where public access is allowed
+                        .requestMatchers("/api/v1/authenticate/refresh").permitAll()
                         .requestMatchers("/api/v1/authenticate").permitAll()
                         .requestMatchers("/api/v1/authenticate/register").permitAll()
-                
+
                         .anyRequest().authenticated())
                 .oauth2ResourceServer()
                 .jwt()
