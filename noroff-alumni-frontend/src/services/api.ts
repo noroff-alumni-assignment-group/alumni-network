@@ -5,9 +5,7 @@ import { removeUser } from "../store/userSlice";
 
 const instance = axios.create({
    baseURL: process.env.REACT_APP_API_URL,
-   headers:{
-      "Content-Type":"application/json",
-   }
+
 });
 
 instance.interceptors.request.use(
@@ -26,6 +24,7 @@ instance.interceptors.response.use(
       return res
    },
    async (err)=>{
+      console.log(err.config);
       const originalConfig = err.config;
 
       if((originalConfig.url !== "/authenticate" && originalConfig.url !== "/authenticate/refresh") && err.response){
