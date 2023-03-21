@@ -8,10 +8,12 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import no.experisAcadmey.trondheim.NoroffAlumni.exceptions.GroupNotFoundException;
 import no.experisAcadmey.trondheim.NoroffAlumni.mappers.GroupMapper;
+import no.experisAcadmey.trondheim.NoroffAlumni.mappers.TopicMapper;
 import no.experisAcadmey.trondheim.NoroffAlumni.models.DTOs.groupDTOs.GroupDTO;
 import no.experisAcadmey.trondheim.NoroffAlumni.models.DTOs.groupDTOs.GroupPostDTO;
 import no.experisAcadmey.trondheim.NoroffAlumni.models.Group;
 import no.experisAcadmey.trondheim.NoroffAlumni.services.GroupService;
+import org.mapstruct.factory.Mappers;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -26,11 +28,10 @@ import java.util.Collection;
 public class GroupController {
 
     private final GroupService groupService;
-    private final GroupMapper groupMapper;
+    private final GroupMapper groupMapper = Mappers.getMapper(GroupMapper.class);
 
-    public GroupController(GroupService groupService, GroupMapper groupMapper) {
+    public GroupController(GroupService groupService) {
         this.groupService = groupService;
-        this.groupMapper = groupMapper;
     }
 
 
@@ -60,7 +61,7 @@ public class GroupController {
                     }
             )
     })
-    public ResponseEntity findGroups() {
+    public ResponseEntity getGroups() {
         try {
             Collection<GroupDTO> groups = groupMapper.groupsToGroupDTO(groupService.findGroups());
             return ResponseEntity.ok(groups);
@@ -102,7 +103,7 @@ public class GroupController {
                     }
             )
     })
-    public ResponseEntity findGroupById(@PathVariable int group_id) {
+    public ResponseEntity getGroupById(@PathVariable int group_id) {
         try {
             return ResponseEntity.ok(groupMapper.groupToGroupDTO(groupService.findGroupById(group_id)));
         } catch (GroupNotFoundException e) {

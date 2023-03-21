@@ -2,13 +2,7 @@ package no.experisAcadmey.trondheim.NoroffAlumni.models;
 
 import java.util.Set;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.*;
 import lombok.Data;
 
 
@@ -18,11 +12,13 @@ public class Group {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int group_id;
+    private Integer group_id;
 
     private String name;
+
     private String description;
-    private Boolean is_private;
+
+    private Boolean isPrivate;
 
     @ManyToMany
     @JoinTable(
@@ -34,5 +30,9 @@ public class Group {
 
     public void addMember(User user){
         members.add(user);
+    }
+
+    public void setIsPrivate(Boolean isPrivate) {
+        this.isPrivate = isPrivate;
     }
 }

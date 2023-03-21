@@ -3,11 +3,13 @@ package no.experisAcadmey.trondheim.NoroffAlumni.services;
 import no.experisAcadmey.trondheim.NoroffAlumni.exceptions.GroupNotFoundException;
 import no.experisAcadmey.trondheim.NoroffAlumni.models.DTOs.groupDTOs.GroupPostDTO;
 import no.experisAcadmey.trondheim.NoroffAlumni.models.Group;
+import no.experisAcadmey.trondheim.NoroffAlumni.models.User;
 import no.experisAcadmey.trondheim.NoroffAlumni.repositories.GroupRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -23,25 +25,24 @@ public class GroupService {
         this.userService = userService;
     }
 
-    // Groups that are marked as private that the requesting user is not a member of should
-    //be filtered out of the search results before returning.
-
     /**
      * Retrieves all the groups that currently exist.
      * @return A list of groups
      */
     public List<Group> findGroups(){
-        return new ArrayList<>();
+        User currentUser = userService.getCurrentUser();
+        return groupRepository.findByIsPrivateFalseOrMembersContains(currentUser);
     }
 
-    // If group is private --
     /**
      * Retrieves a group based on the group ID provided.
      * @param group_id the group ID
      * @return the group with the matching ID
      */
     public Group findGroupById(int group_id) {
-        return groupRepository.findById(group_id).get();
+        User currentUser = userService.getCurrentUser();
+        Optional<Group> group = groupRepository.findByIdAndIsPrivateFalseOrMembersContains(group_id, currentUser);
+        return group.orElse(null);
     }
 
     /**
@@ -54,7 +55,7 @@ public class GroupService {
         Group g = new Group();
         g.setName(newGroup.getName());
         g.setDescription(newGroup.getDescription());
-        g.setIs_private(newGroup.getIs_private());
+        g.setIsPrivate(newGroup.getIs_private());
         groupRepository.save(g);
 
         return g;

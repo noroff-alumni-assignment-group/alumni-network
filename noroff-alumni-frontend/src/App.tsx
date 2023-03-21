@@ -41,7 +41,7 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/events" element={<Event />} />
             <Route path="/groups" element={<Groups />} />
-            <Route path="/groups/grouppage" element={<GroupPage />} />
+            <Route path="/groups/:groupId" element={<GroupPage />} />
             <Route path="/topics" element={<Topics />} />
             <Route path="/" element={<Timeline />}/>
           </Routes>

@@ -8,34 +8,32 @@ import api from "../../services/api"
 function Groups() {
 
   const [groups, setGroups] = useState<Group[]>([])
+  const [myGroups, setMyGroups] = useState<Group[]>([])
   const navigate = useNavigate()
 
   useEffect(() => {
     async function getGroups() {
-      return await api
-        .get("/group")
-        .then((response) => {
-          return response.data;
-        });
+      const response = await api.get("/group")
+        setGroups(response.data)
     }
     getGroups()
 
-    setGroups([
-      { id: 1, name: "Alumni", members: [] },
-      { id: 2, name: "Golfers", members: [] },
-      { id: 3, name: "Noroff", members: [] },
-      
-    ]);
+  }, [])
 
+  useEffect(() => {
+    async function getMyGroups() {
+      const response = await api.get("/user/groups")
+      setMyGroups(response.data)
+    }
+    getMyGroups()
   }, [])
 
 
   const handleNewGroupClick = () => {
   }
 
-  // change to group id
   const handleGroupClick = (group: Group) => {
-    let page = `/groups/grouppage`
+    let page = `/groups/${group.id}`
     navigate(page)
   }
 
@@ -43,15 +41,13 @@ function Groups() {
       <>
         <div className="group-container">
 
-          <div className="groupslist">
-
-              <div className="groups-actions">
+          <div className="groups-actions">
                 <div className="group-list-header">
                   <h3>All groups</h3>
                 </div>
                 <button className="activity-btn" onClick={handleNewGroupClick}>NEW GROUP</button>
-              </div>
-
+          </div>
+          <div className="groupslist">
                 {groups.map(group => (
                   <div key={group.id} onClick={() => handleGroupClick(group)}>
                     <GroupItem key={group.id} group={group} />
@@ -59,11 +55,11 @@ function Groups() {
                 ))}
           </div>
 
-          <div className="groupslist">
-            <div className="group-list-header">
+          <div className="group-list-header">
               <h3>My groups</h3>
-            </div>
-              {groups.map(group => (
+          </div>
+          <div className="groupslist">
+              {myGroups.map(group => (
                   <div key={group.id} onClick={() => handleGroupClick(group)}>
                     <GroupItem key={group.id} group={group} />
                   </div>
