@@ -11,6 +11,8 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class SignupKeycloakRequest {
+
+  private String username;
   private String email;
   private boolean enabled;
   private boolean emailVerified;
