@@ -13,6 +13,7 @@ import { useSelector, useDispatch } from "react-redux";
 import tokenService from "./services/tokenService";
 import { setUser } from "./store/userSlice";
 import UserService from "./services/UserService";
+import TopicFeed from "./pages/TopicFeed/TopicFeed";
 
 function App() {
   const user = useSelector((state: RootState) => state.user);
@@ -41,6 +42,7 @@ function App() {
             <Route path="/events" element={<Event />} />
             <Route path="/groups" element={<Groups />} />
             <Route path="/topics" element={<Topics />} />
+            <Route path="/topics/:id" element={<TopicFeed />} />
             <Route path="/" element={<Timeline />}/>
           </Routes>
         </div>
