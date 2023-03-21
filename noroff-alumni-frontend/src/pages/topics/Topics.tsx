@@ -4,11 +4,7 @@ import TopicListItemDTO from "../../models/TopicListItemDTO";
 import TopicListItem from "../../components/TopicListItem/TopicListItem";
 import { AiOutlineSearch } from "react-icons/ai";
 import { FaArrowCircleLeft, FaArrowCircleRight } from "react-icons/fa";
-import {
-  getTopics,
-  joinTopic,
-  searchTopics,
-} from "../../services/topicService";
+import topicService from "../../services/topicService";
 import CreateTopicModulo from "../../components/CreateTopicModulo/CreateTopicModulo";
 
 function Topics() {
@@ -22,18 +18,18 @@ function Topics() {
 
   useEffect(() => {
     async function getPageOfTopics() {
-      setTopics(await getTopics(pageNumber, pageSize));
+      setTopics(await topicService.getTopics(pageNumber, pageSize));
     }
     getPageOfTopics();
   }, [pageNumber]);
 
   async function subscribeToTopic(topicId: number) {
-    return await joinTopic(topicId);
+    return await topicService.joinTopic(topicId);
   }
 
   async function onSearch() {
     setPageNumber(0);
-    setTopics(await searchTopics(searchWord,0,pageSize));
+    setTopics(await topicService.searchTopics(searchWord,0,pageSize));
   }
 
   function toNextPage() {

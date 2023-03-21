@@ -72,7 +72,9 @@ public class TopicController {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class))
             }),
     })
-    public ResponseEntity getTopic(@PathVariable("topic_id") Long topicId){
+    public ResponseEntity getTopic(@PathVariable("topic_id") Long topicId,@RequestParam("search") Optional<String> searchWord,
+                                   @RequestParam("page") Optional<Integer> page,
+                                   @RequestParam("pageSize") Optional<Integer> pageSize){
         try{
             return ResponseEntity.ok(topicMapper.topicToTopicDto(topicService.getTopic(topicId)));
         }catch (TopicNotFoundException e){

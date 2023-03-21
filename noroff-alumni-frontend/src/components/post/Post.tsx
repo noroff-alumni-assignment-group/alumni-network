@@ -3,32 +3,13 @@ import "./post.css";
 // import comment from "../../assets/icons/Comments.png";
 import PostResponse from "./PostResponse";
 import Profilepicture from "../profilepicture/Profilepicure";
+import PostModel from "../../models/PostModel";
 
 interface Props {
-  title: string;
-  date: string;
-  body: string;
-  topics: string[];
-  groups: string[];
-  author: string;
-  profileInitials: string;
-  comments: {
-    author: string;
-    authorInitials: string;
-    response: string;
-  }[];
+  post:PostModel
 }
 
-function Post({
-  title,
-  date,
-  body,
-  topics,
-  groups,
-  author,
-  profileInitials,
-  comments,
-}: Props) {
+function Post({post}: Props) {
   const [showComments, setShowComments] = useState(false);
 
   const handleToggleComments = () => {
@@ -39,31 +20,31 @@ function Post({
     <div className="post">
       <div className="post-cnt" onClick={handleToggleComments}>
         <div className="post-head">
-          <h2>{title}</h2>
-          <p>{date}</p>
+          <h2>{post.title}</h2>
+          <p>{post.date}</p>
         </div>
         <div className="post-body">
-          <p>{body}</p>
+          <p>{post.body}</p>
         </div>
         <div className="post-comments">
-          <p>{comments.length} comments</p>
+          <p>{post.comments.length} comments</p>
         </div>
 
         <div className="post-footer">
           <div className="post-tags">
-            {topics.map((topic) => (
+            {post.topics.map((topic) => (
               <div className="topic" key={topic}>
                 {topic}
               </div>
             ))}
-            {groups.map((group) => (
+            {post.groups.map((group) => (
               <div className="group" key={group}>
                 {group}
               </div>
             ))}
           </div>
           <div className="post-author">
-            <Profilepicture initials={profileInitials} author={author} />
+            <Profilepicture initials={post.profileInitials} author={post.author} />
           </div>
         </div>
       </div>
@@ -71,7 +52,7 @@ function Post({
       {showComments && (
         <div>
           <h2 className="all-comments-h2">All comments</h2>
-          {comments.map((comment) => (
+          {post.comments.map((comment) => (
             <PostResponse
               author={comment.author}
               text={comment.response}

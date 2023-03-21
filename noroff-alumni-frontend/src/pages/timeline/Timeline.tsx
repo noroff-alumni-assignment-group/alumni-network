@@ -6,24 +6,10 @@ import "./timeline.css";
 import Search from "../../components/search/Search";
 import PostForm from "../../components/post-form/PostForm";
 import Popup from "../../components/popup/Popup";
-
-interface PostData {
-  title: string;
-  date: string;
-  body: string;
-  topics: string[];
-  groups: string[];
-  author: string;
-  profileInitials: string;
-  comments: {
-    author: string;
-    authorInitials: string;
-    response: string;
-  }[];
-}
+import PostModel from "../../models/PostModel";
 
 const Timeline = () => {
-  const posts: PostData[] = [
+  const posts: PostModel[] = [
     {
       title: "Lorem Ipsum",
       date: "2h ago",
@@ -98,7 +84,7 @@ const Timeline = () => {
     },
   ];
 
-  const [filteredPosts, setFilteredPosts] = useState<PostData[]>(posts);
+  const [filteredPosts, setFilteredPosts] = useState<PostModel[]>(posts);
   const [selectedTopics, setSelectedTopics] = useState<string[]>([]);
   const myGroups = ["GROUP 1", "GROUP 2"];
   const myTopics = ["TOPIC 1", "TOPIC 2", "TOPICTOPIC 2"];
@@ -181,14 +167,7 @@ const Timeline = () => {
           {postsToRender.map((post, i) => (
             <Post
               key={`post-${i}`}
-              title={post.title}
-              date={post.date}
-              body={post.body}
-              topics={post.topics}
-              groups={post.groups}
-              author={post.author}
-              profileInitials={post.profileInitials}
-              comments={post.comments}
+              post={post}
             />
           ))}
         </div>
