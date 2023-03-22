@@ -30,6 +30,9 @@
   align-items: center;
   width: 100%;
 }
+.timeline-content {
+    width: 100%;
+}
 
 .timeline-content h1 {
   font-size: 2rem;

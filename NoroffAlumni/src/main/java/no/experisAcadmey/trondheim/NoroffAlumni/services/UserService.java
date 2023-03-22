@@ -28,6 +28,10 @@ public class UserService {
         return userRepository.findById(auth.getName()).orElseThrow(UserNotFoundException::new);
     }
 
+    public User getUser(String name){
+        return userRepository.findById(name).orElseThrow(UserNotFoundException::new);
+    }
+
     /**
      * Creates user based on the jwt-token data.
      *
