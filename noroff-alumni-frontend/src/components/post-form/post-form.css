@@ -61,7 +61,19 @@
 .post-form .button-row {
     display: flex;
     gap: 1%;
+    overflow-x: scroll;
+    width: 100%;
+    padding-bottom: 8px;
 }
+.post-form .button-row::-webkit-scrollbar-thumb {
+    background-color: lightgray;
+    border: solid 3px transparent;
+    height: 5px;
+}
+.post-form .button-row::-webkit-scrollbar {
+    height: 5px;
+}
+
 .post-form .submit-row {
     display: flex;
     justify-content: right;
@@ -123,6 +135,7 @@ APP.css
     font-weight: 600;
     font-size: .7rem;
     transition: opacity .1s ease-in-out;
+    white-space: nowrap;
 }
 .entity-tag:hover {
     cursor: pointer;
