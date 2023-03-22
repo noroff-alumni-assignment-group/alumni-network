@@ -1,27 +1,34 @@
 import "./login.css";
 import {useDispatch} from "react-redux";
-import { setAuth } from "../../store/authSlice";
-import Auth from "../../models/Auth";
 import { setUser } from "../../store/userSlice";
 import UserService from "../../services/UserService";
+import { useState } from "react";
+import LoadingIndicator from "../../components/LoadingIndicator/LoadingIndicator";
 
 export default function LoginForm(props: any) {
   const dispatch = useDispatch();
+  const [loading,setLoading] = useState(false);
 
      const signIn = async (event: any) => {
        event.preventDefault();
-       props.setAnimateMesh(true);
-
+       setLoading(true);
        const username = event.target.elements.username.value;
        const password = event.target.elements.password.value;
-       const auth:Auth = (await UserService.login({username:username,password:password})).data;
-       dispatch(setAuth(auth));
-       dispatch(setUser((await UserService.getUser(auth.access_token!)).data));
+       await UserService.login({username:username,password:password});
+       try{
+         const response = await UserService.getUser();
+         dispatch(setUser(response.data));
+
+       }catch(_error){
+        console.error(_error);
+       }
+       setLoading(false);
      };
 
 
   return (
-    <div className={`login-form ${props.animateMesh ? "animate" : ""}`}>
+    <div className={`login-form`}>
+      {loading ? <LoadingIndicator/>: null}
       <div className="form-cnt">
         <h1>Sign in</h1>
         <form onSubmit={signIn}>
@@ -36,7 +43,7 @@ export default function LoginForm(props: any) {
           <input type="submit" className="submit-btn" />
           <p className="signup-tag">
             Dont have an account?
-            <span onClick={(event) => signIn(event)}> Sign up</span>
+            <span onClick={(event) => props.setAnimateMesh(!props.animateMesh)}> Sign up</span>
           </p>
         </form>
       </div>

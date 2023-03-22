@@ -69,7 +69,13 @@ public class AuthController {
    public ResponseEntity refreshToken(@RequestBody TokenRequest token){
       try{
          return ResponseEntity.ok(authService.refresh(token));
-      }catch(Exception e){
+      }catch(HttpClientErrorException e){
+         if(e.getResponseBodyAsString().toLowerCase().contains("token is not active")){
+            return ResponseEntity.status(401).build();
+         }
+         return ResponseEntity.status(e.getStatusCode()).build();
+      }
+      catch(Exception e){
          return ResponseEntity.badRequest().build();
       }
    }

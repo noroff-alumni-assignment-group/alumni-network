@@ -9,12 +9,9 @@ import {
   joinTopic,
   searchTopics,
 } from "../../services/topicService";
-import { useSelector } from "react-redux";
-import { RootState } from "../../store/store";
 import CreateTopicModulo from "../../components/CreateTopicModulo/CreateTopicModulo";
 
 function Topics() {
-  const auth = useSelector((state: RootState) => state.auth);
   const pageSize = 10;
   const [pageNumber, setPageNumber] = useState<number>(0);
   const [searchWord, setSearchWord] = useState("");
@@ -25,18 +22,18 @@ function Topics() {
 
   useEffect(() => {
     async function getPageOfTopics() {
-      setTopics(await getTopics(pageNumber, pageSize, auth.access_token!));
+      setTopics(await getTopics(pageNumber, pageSize));
     }
     getPageOfTopics();
   }, [pageNumber]);
 
   async function subscribeToTopic(topicId: number) {
-    return await joinTopic(topicId, auth.access_token!);
+    return await joinTopic(topicId);
   }
 
   async function onSearch() {
     setPageNumber(0);
-    setTopics(await searchTopics(searchWord,0,pageSize,auth.access_token!));
+    setTopics(await searchTopics(searchWord,0,pageSize));
   }
 
   function toNextPage() {
