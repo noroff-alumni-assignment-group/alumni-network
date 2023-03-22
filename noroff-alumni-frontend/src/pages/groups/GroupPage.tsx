@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import MemberIcon from "../../components/Group/MemberIcon"
-import { Group } from "../../models/Group"
+import { Group } from "../../models/Group/Group"
 import './groups.css'
 import api from "../../services/api"
 

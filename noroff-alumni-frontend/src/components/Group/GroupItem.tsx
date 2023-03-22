@@ -1,5 +1,5 @@
 import './group-comps.css';
-import { Group } from '../../models/Group';
+import { Group } from '../../models/Group/Group';
 import MemberIcon from './MemberIcon';
 
 
