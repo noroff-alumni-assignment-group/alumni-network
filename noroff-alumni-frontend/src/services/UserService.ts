@@ -4,6 +4,8 @@ import tokenService from "./tokenService";
 import api from "./api";
 import store from "../store/store";
 import { removeUser } from "../store/userSlice";
+import SignupRequest from "../models/SignupRequest";
+import axios from "axios";
 
 class UserService {
 
@@ -31,6 +33,10 @@ class UserService {
 
    async getUser(){
       return await api.get("http://localhost:8080/api/v1/user");
+   }
+
+   async registerUser(signupRequest:SignupRequest){
+      return await api.post("/authenticate/register",signupRequest);
    }
 }
 

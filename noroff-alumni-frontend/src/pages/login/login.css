@@ -38,9 +38,9 @@
 .username-cnt p {
   font-weight: 100;
   font-size: 16px;
-  margin-top: 40px;
+  margin-top: 2rem;
   color: rgb(122, 122, 122);
-  margin-bottom: 10px;
+  margin-bottom: .5rem;
 }
 
 .login-form input,
@@ -49,8 +49,14 @@
   border-bottom: 1px solid black;
   width: 20vw;
   padding-top: 10px;
+  padding-left: 5px;
   padding-bottom: 5px;
   font-size: 16px;
+}
+
+.signup-form input[type=submit],
+.login-form input[type=submit]{
+  cursor: pointer;
 }
 
 .signup-tag {
@@ -58,6 +64,7 @@
   font-size: 16px;
   font-weight: 100;
   color: rgb(122, 122, 122);
+  cursor: pointer;
 }
 
 .signup-form {
@@ -66,7 +73,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  opacity: 1;
 }
 
 .submit-btn {

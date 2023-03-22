@@ -104,6 +104,7 @@ public class AuthService {
       headers.set("Authorization", "Bearer " + adminLogin.getAccess_token());
 
       SignupKeycloakRequest body = new SignupKeycloakRequest(
+              signUpRequest.getUsername(),
             signUpRequest.getEmail(),
             true,
             true,

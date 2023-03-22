@@ -2,6 +2,7 @@ package no.experisAcadmey.trondheim.NoroffAlumni.models;
 
 import java.util.Set;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
@@ -19,7 +20,9 @@ import lombok.Setter;
 public class User {
    @Id
    private String id;
+   @Column(unique = true)
    private String username;
+   @Column(unique = true)
    private String email;
    private String firstName;
    private String lastName;
