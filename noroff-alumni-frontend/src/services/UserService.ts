@@ -29,6 +29,15 @@ class UserService {
       return await api.get("/user");
    }
 
+   async getUsers(searchWord: string){
+      return await api.get("/user/search", {
+               params: {
+                  search: searchWord
+               }
+            })
+          .then(response =>  response.data);
+   }
+
    async registerUser(signupRequest:SignupRequest){
       return await api.post("/authenticate/register",signupRequest);
    }
