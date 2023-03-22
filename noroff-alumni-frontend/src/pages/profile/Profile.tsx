@@ -46,7 +46,7 @@ function Profile() {
   return (
     <div className="profilepage">
       {showEditProfile ? (
-        <EditProfile setShowEditProfile={setShowEditProfile} user={user}/>
+        <EditProfile setShowEditProfile={setShowEditProfile} user={user} />
       ) : null}
 
       <div className="profiledata-cnt">
@@ -63,7 +63,12 @@ function Profile() {
             <div className="profilebubble profilepicture-profile">
               {user.initials}
             </div>
-            <h2 className="profile-name">{user.firstName} {user.lastName}</h2>
+            <h2 className="profile-name">
+              {user.firstName.slice(0, 1).toUpperCase()}
+              {user.firstName.slice(1)}{" "}
+              {user.lastName.slice(0, 1).toUpperCase()}
+              {user.lastName.slice(1)}
+            </h2>
             <div className="profile-title">{user.title}</div>
           </div>
           <div className="profile-data">
