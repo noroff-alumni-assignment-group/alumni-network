@@ -8,6 +8,7 @@ import Popup from "../../components/popup/Popup";
 import { postList } from "../../components/post/postList";
 
 interface PostData {
+  id: string;
   title: string;
   date: string;
   body: string;
@@ -70,26 +71,28 @@ const Timeline = () => {
 
   return (
     <div className="timeline">
-
-      {showPostForm && <Popup child={<PostForm editing={false} handler={setShowPostForm}/>}/>}
+      {showPostForm && (
+        <Popup child={<PostForm editing={false} handler={setShowPostForm} />} />
+      )}
 
       <div className="timeline-content">
         <h1>Timeline</h1>
-
+  
         <div className="timeline-head">
-            <div className="timeline-tags">
-              {myTopics.map((topic, i) => (
-                <div
-                  key={`topic-${i}`}
-                  className={`timeline-sort-tag ${
-                    selectedTopics.includes(topic) ? "active" : ""
-                  }`}
-                  onClick={() => handleTopicClick(topic)}
-                >
-                  {topic}
-                </div>
-              ))}
-            </div>
+          <div className="timeline-tags">
+            {myTopics.map((topic, i) => (
+              
+              <div
+                key={`topic-${i}`}
+                className={`timeline-sort-tag ${
+                  selectedTopics.includes(topic) ? "active" : ""
+                }`}
+                onClick={() => handleTopicClick(topic)}
+              >
+                {topic}
+              </div>
+            ))}
+          </div>
           <div className="timeline-action-btn-cnt">
             <div
               className={`search-cnt ${
@@ -107,13 +110,19 @@ const Timeline = () => {
               />
             </div>
 
-            <button className="activity-btn" onClick={() => setShowPostForm(true)}>NEW POST</button>
+            <button
+              className="activity-btn"
+              onClick={() => setShowPostForm(true)}
+            >
+              NEW POST
+            </button>
           </div>
         </div>
         <div className="timeline-feed">
           {postsToRender.map((post, i) => (
             <Post
               key={`post-${i}`}
+              id={post.id}
               title={post.title}
               date={post.date}
               body={post.body}

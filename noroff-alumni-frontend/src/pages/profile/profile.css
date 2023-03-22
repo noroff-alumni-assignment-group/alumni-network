@@ -1,95 +1,235 @@
+@media screen and (max-width: 900px){
+
+}
+
+
 .profilepage {
-   
-    padding: 0 !important;
+  padding: 0 !important;
 }
 .profiledata-cnt {
-    background-color: white;
-    border-radius: 20px;
-    box-shadow: var(--box-shadow);
-    display: flex;
-    padding: 100px 50px;
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: var(--box-shadow);
+  display: flex;
+  flex-direction: column;
+  padding: 30px 50px 80px 50px;
 }
 
 .profiledata-head {
-   width: 50%;
-    display: flex;
-    justify-content: center;
-  
-    align-items: center;
-    flex-direction: column;
+  width: 50%;
+  display: flex;
+  justify-content: center;
+    margin-right: 50px;
+  align-items: center;
+  flex-direction: column;
 }
 
 .profile-data {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .profilepicture-profile {
-    width: 100px;
-    height: 100px;
-    font-size: 40px;
-    background-color: var(--green);
-    font-weight: 800;
+  width: 100px;
+  height: 100px;
+  font-size: 2rem;
+  background-color: var(--green);
+  font-weight: 800;
 }
 
 .profile-name {
-    font-weight: 800;
-    font-size: 30px;
-    margin-top: 20px;
-    margin-bottom: 5px;
+  font-weight: 800;
+  font-size: 1.5rem;
+  margin-top: 20px;
+  margin-bottom: 5px;
 }
 
 .profile-title {
-
-    color: var(--blue);
-
+  color: var(--blue);
 }
 
-
-
 .profile-posts {
-
-    padding: 100px 100px;
-    
+  padding: 100px 100px;
 }
 
 .profile-post {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 .profile-posts h1 {
-    font-size: 35px;
-    
+  font-size: 1.8rem;
 }
 
 .profile-search {
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
 }
 
 .profile-search img {
-    width: 50px;
+  width: 50px;
 }
 
 .profile-data {
-
 }
 
 .biography {
-    margin-bottom: 30px;
+  margin-bottom: 30px;
 }
 
-.bio-p, .funfact-p {
-    color: lightgray;
-    font-weight: 500;
-    font-size: 16px;
+.bio-p,
+.funfact-p {
+  color: lightgray;
+  font-weight: 500;
+  font-size: 0.8rem;
 }
 
-.funfact-text, .bio-text {
-    font-weight: 600;
-    margin-top: 5px;
-    
+.funfact-text,
+.bio-text {
+  font-weight: 600;
+  margin-top: 5px;
+}
+
+.edit-profile-cnt {
+  display: flex;
+  justify-content: flex-end;
+  text-align: right;
+}
+
+.edit-profile-cnt img {
+  width: 2rem;
+}
+
+.profiledata-head-cnt {
+  display: flex;
+}
+
+.no-post-found-cnt {
+  margin-top: 20px;
+  width: 100%;
+  background-color: white;
+  box-shadow: var(--box-shadow);
+  padding: 40px 100px;
+  border-radius: 20px;
+  text-align: center;
+}
+
+/** EDIT PROFILE **/
+
+.editprofile-cnt {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  
+ 
+}
+
+.edit-profile-img {
+  cursor: pointer;
+}
+
+.edit {
+ background-color: white;
+  border-radius: 20px;
+padding: 50px 50px;
+z-index: 10;
+min-width: 700px;
+}
+
+.edit p {
+  color: rgb(172, 172, 172);
+  font-size: .9rem;
+  margin-bottom: 5px;
+  margin-top: 10px;
+}
+
+.p-pic-cnt {
+  margin-top: 20px;
+}
+
+.editform {
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.backgroundcolor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  opacity: 0.1;
+}
+
+.profile-theme {
+  height: 80px;
+  width: 80px;
+  border-radius: 50%;
+  font-size: 1.6rem;
+  color: white;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0px;
+}
+
+.themes {
+  display: flex;
+  justify-content: space-between;
+  
+}
+
+.option1 {
+  background-color: var(--blue);
+}
+
+.option5 {
+  background: rgb(0,255,147);
+background: linear-gradient(270deg, rgba(0,255,147,1) 0%, rgba(0,255,216,1) 100%);
+}
+
+.option3 {
+  
+background-color: var(--orange);
+}
+
+.option4 {
+background-color: red;
+}
+
+.option2 {
+  background-color: var(--green);
+}
+
+.work-input, .bio-input, .funfact-input{
+  width: 100%;
+  padding-top: 5px;
+}
+
+.bio-input, .funfact-input {
+  padding-bottom: 50px;
+}
+
+.editprofile-buttons {
+  width: 100%;
+  text-align: end;
+  margin-top: 50px;
+}
+
+.editprofile-buttons button {
+  margin-left: 20px;
 }

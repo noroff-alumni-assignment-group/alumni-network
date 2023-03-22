@@ -3,7 +3,7 @@ import api from "./api";
 
 export async function getTopics(pageNum: number, pageSize: number) {
   return await api
-    .get("/topic", {
+    .get("http://localhost:8080/api/v1/topic", {
       params: {
         page: pageNum,
         pageSize: pageSize,
@@ -15,10 +15,12 @@ export async function getTopics(pageNum: number, pageSize: number) {
 }
 
 export async function joinTopic(topicId: number) {
-  return await api.post("/topic/" + topicId + "/join").then((response) => {
-    console.log(response.data);
-    return response.data;
-  });
+  return await api
+    .post("http://localhost:8080/api/v1/topic/" + topicId + "/join")
+    .then((response) => {
+      console.log(response.data);
+      return response.data;
+    });
 }
 
 export async function searchTopics(
@@ -27,7 +29,7 @@ export async function searchTopics(
   pageSize: number
 ) {
   return await api
-    .get("/topic", {
+    .get("http://localhost:8080/api/v1/topic", {
       params: {
         page: pageNum,
         pageSize: pageSize,
@@ -40,5 +42,5 @@ export async function searchTopics(
 }
 
 export async function createTopic(newTopic: NewTopic) {
-  await api.post("/topic", newTopic);
+  await api.post("http://localhost:8080/api/v1/topic", newTopic);
 }

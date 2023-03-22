@@ -30,12 +30,22 @@
   min-width: 100%;
 }
 
+.sub-topics {
+    color: rgb(88, 88, 88);
+    font-size: 0.9rem;
+    margin-top: 50px;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+
+
 .timeline-content h1 {
   font-size: 2rem;
 }
 
 .timeline-head {
-  margin-top: 60px;
+    margin-top: 60px;
   display: flex;
   min-width: 100%;
 }

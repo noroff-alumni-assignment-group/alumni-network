@@ -15,6 +15,7 @@ import {useSelector} from "react-redux";
 import { RootState } from "../../store/store";
 import User from "../../models/User";
 import UserService from "../../services/UserService";
+import api from "../../services/api";
 
 function Navbar() {
 
@@ -41,6 +42,12 @@ function Navbar() {
     function handleLogout(){
       UserService.logout();
     }
+
+    useEffect(() => {
+      //
+    }, []);
+
+    
 
 
   return (
@@ -95,14 +102,12 @@ function Navbar() {
 
           <div className="nav-events">
             <h1 className="subtitle">Your upcoming events</h1>
-
             <p>Event 1 - Trondheim</p>
             <p>Event 2 - Oslo</p>
           </div>
 
           <div className="nav-groups">
             <h1 className="subtitle">Your groups</h1>
-
             <p>Group Lorem</p>
             <p>Group Ipsum </p>
           </div>

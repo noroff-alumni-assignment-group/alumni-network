@@ -23,7 +23,7 @@
 
 .post-head h2 {
   font-weight: 800;
-  font-size: 30px;
+  font-size: 1.5rem;
 }
 
 .post-head p {
@@ -67,6 +67,7 @@
   font-size: 1rem;
   margin-top: 30px;
   margin-bottom: 10px;
+  margin-right: 20px;
 }
 
 /** THREAD **/
@@ -92,6 +93,7 @@
 
 .post-profile-pic {
   margin-right: 10px;
+  min-width: 50px;
 }
 
 .response-author {
@@ -99,7 +101,8 @@
   display: flex;
   flex-direction: column;
   margin-left: 10px;
-  margin-right: 50px;
+  margin-right: 20px;
+  min-width: 80px;
 }
 
 .post-response-author p {
@@ -133,3 +136,8 @@
   box-shadow: var(--box-shadow);
   font-size: 1rem;
 }
+
+.editimg {
+  width: 30px;
+}
+

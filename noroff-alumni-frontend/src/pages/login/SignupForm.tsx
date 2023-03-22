@@ -43,11 +43,18 @@ export default function SignupForm(props: any) {
             <p>Confirm Password</p>
             <input type="password" name="confirmPassword" />
           </div>
-          <input type="submit" className="submit-btn" />
           <p className="signup-tag">
             Already have an account?
-            <span onClick={(event) => props.setAnimateMesh(!props.animateMesh)}> Sign in</span>
+            <span onClick={(event) => props.setAnimateMesh(!props.animateMesh)}>
+              {" "}
+              Sign in
+            </span>
           </p>
+          <div className="signin-btn-cnt">
+            <button type="submit" className="submit-btn">
+              Sign in
+            </button>
+          </div>
         </form>
       </div>
     </div>

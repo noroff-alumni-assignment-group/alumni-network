@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import './search.css';
 
 interface PostData {
+  id: string;
   title: string;
   date: string;
   body: string;

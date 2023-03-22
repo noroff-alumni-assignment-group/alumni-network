@@ -1,9 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import User from "../../models/User";
 import Profilepicture from "../profilepicture/Profilepicure";
+import Group from "../tags/Group";
+import Topic from "../tags/Topic";
 import "./post.css";
 import PostResponse from "./PostResponse";
+import edit from "../../assets/icons/Ellipsis.png";
 
 interface Props {
+  id: string;
   title: string;
   date: string;
   body: string;
@@ -20,6 +26,7 @@ interface Props {
 }
 
 function Post({
+  id,
   title,
   date,
   body,
@@ -30,25 +37,55 @@ function Post({
   comments,
 }: Props) {
   const [showComments, setShowComments] = useState(false);
-  // Inside the Post component
   const [newCommentText, setNewCommentText] = useState("");
-  
+
+  const user = useSelector((state: any) => state.user);
+  const [localComments, setLocalComments] = useState(comments);
 
   const handleAddComment = (e: any) => {
     e.preventDefault();
 
-    // Add new comment to the comments state
-    const newComment = {
-      author: "Your Name", // Replace with the current user's name
-      authorInitials: "YN", // Replace with the current user's initials
-      response: newCommentText,
-      date: new Date().toISOString(),
-    };
+    // Send the comment to the API and update the local state
+    sendCommentToAPI(id, newCommentText);
 
     // Reset the newCommentText state
     setNewCommentText("");
   };
 
+
+  const sendCommentToAPI = async (postId: string, commentText: string) => {
+    try {
+      const response = await fetch(
+        `https://your-api-url.com/posts/${postId}/comments`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            author: "Your Name", // Replace with the current user's name
+            authorInitials: "YN", // Replace with the current user's initials
+            response: commentText,
+            date: new Date().toISOString(),
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to send comment to the API");
+      }
+
+      // You can update the local state with the new comment data received from the API
+      const newComment = await response.json();
+      setLocalComments((prevState) => [...prevState, newComment]);
+    } catch (error) {
+      console.error("Error sending comment to the API:", error);
+    }
+  };
+
+
+
+  // Replace the comments prop with the new localComments state variable
 
   const handleToggleComments = () => {
     setShowComments(!showComments);
@@ -59,7 +96,11 @@ function Post({
       <div className="post-cnt" onClick={handleToggleComments}>
         <div className="post-head">
           <h2>{title}</h2>
-          <p>{date}</p>
+          {author === user.author ? (
+            <img className="editimg" alt="edit" src={edit} />
+          ) : (
+            <p>{date}</p>
+          )}
         </div>
         <div className="post-body">
           <p>{body}</p>
@@ -71,14 +112,10 @@ function Post({
         <div className="post-footer">
           <div className="post-tags">
             {topics.map((topic) => (
-              <div className="topic" key={topic}>
-                {topic}
-              </div>
+              <Topic topic={topic} />
             ))}
             {groups.map((group) => (
-              <div className="group" key={group}>
-                {group}
-              </div>
+              <Group group={group} />
             ))}
           </div>
           <div className="post-author">
@@ -90,7 +127,7 @@ function Post({
       {showComments && (
         <div>
           <h2 className="all-comments-h2">All comments</h2>
-          {comments.map((comment) => (
+          {localComments.map((comment) => (
             <div className="post-elem-profile">
               <PostResponse
                 author={comment.author}
@@ -101,11 +138,18 @@ function Post({
               />
             </div>
           ))}
-          <input
-            className="post-response-input"
-            type="text"
-            placeholder="Write your comment..."
-          />
+          <form onSubmit={handleAddComment} className="post-response-form">
+            <input
+              className="post-response-input"
+              type="text"
+              placeholder="Write your comment..."
+              value={newCommentText}
+              onChange={(e) => setNewCommentText(e.target.value)}
+            />
+            <button type="submit" className="post-response-submit">
+              Submit
+            </button>
+          </form>
         </div>
       )}
     </div>
