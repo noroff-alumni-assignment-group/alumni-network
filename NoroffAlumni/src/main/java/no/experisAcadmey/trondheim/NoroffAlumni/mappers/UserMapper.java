@@ -1,5 +1,6 @@
 package no.experisAcadmey.trondheim.NoroffAlumni.mappers;
 
+import no.experisAcadmey.trondheim.NoroffAlumni.models.DTOs.userDTOs.UserDisplayDto;
 import no.experisAcadmey.trondheim.NoroffAlumni.models.DTOs.userDTOs.UserDto;
 import no.experisAcadmey.trondheim.NoroffAlumni.models.Topic;
 import no.experisAcadmey.trondheim.NoroffAlumni.models.User;
@@ -20,6 +21,8 @@ public abstract class UserMapper {
      */
     @Mapping(target = "topics", qualifiedByName = "mapTopicToTopicId", source = "topics")
     public abstract UserDto toUserDto(User user);
+
+    public abstract UserDisplayDto toUserDisplayDto(User user);
 
     /**
      * Defines how to map topics
