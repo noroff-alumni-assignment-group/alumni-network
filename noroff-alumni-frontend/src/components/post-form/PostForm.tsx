@@ -5,6 +5,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import {useAlert} from "react-alert";
 import {createPost, editPost, getPost} from "../../services/postService";
+import {getSubscribedTopics} from "../../services/topicService";
+import TopicListItem from "../../models/TopicListItemDTO";
 
 type PostFormTypes = {
     editing: boolean,
@@ -13,14 +15,14 @@ type PostFormTypes = {
 
 function PostForm (props: PostFormTypes) {
 
-    const groups: string[] = ["group1", "group2",];
-    const topics: string[] = ["topic1", "top", "topi2"];
-    const postId: number = 3;
+    let groups: string[] = ["group1", "group2",];
+    let postId: number = 3;
 
     let [title, setTitle] = useState("");
     let [text, setText] = useState("");
-    let [selectedGroup, setSelectedGroup] = useState(-1);
-    let [selectedTopic, setSelectedTopic] = useState(-1);
+    let [topics, setTopics] = useState([]);
+    let [selectedGroup, setSelectedGroup] = useState("");
+    let [selectedTopic, setSelectedTopic] = useState("");
 
     let [previewing, setPreviewing] = useState(false);
     let [erroneous, setErroneous] = useState(false);
@@ -31,20 +33,21 @@ function PostForm (props: PostFormTypes) {
         if(props.editing){
             fetchPost();
         }
-    }, [props.editing])
-
-    useEffect(() => {
-        console.log(previewing);
-    }, [previewing])
+        fetchSubscriptions();
+    }, [])
 
     function fetchPost() {
-        // fetch post
-        console.log("fetched post");
-
         getPost(postId)
             .then(data => {
                 setTitle(data.title)
                 setText(data.body)
+            })
+    }
+
+    function fetchSubscriptions(){
+        getSubscribedTopics()
+            .then(data => {
+                setTopics(data.map((topic: TopicListItem) => topic.name));
             })
     }
 
@@ -59,7 +62,7 @@ function PostForm (props: PostFormTypes) {
                 title: title,
                 body: text,
                 target_user: "",
-                target_topic: "Summer",
+                target_topic: selectedTopic,
                 target_group: ""
             }
             if(!props.editing) {
@@ -104,16 +107,16 @@ function PostForm (props: PostFormTypes) {
                 <div className="button-row">
                     {groups.map((group, index) => {
                         return <button type="button" className={"entity-tag " +
-                            (selectedGroup === index ? "group-tag-active" : "group-tag-inactive")} key={index}
-                               onClick={() => setSelectedGroup(index)}>{group}</button>
+                            (selectedGroup === group ? "group-tag-active" : "group-tag-inactive")} key={index}
+                               onClick={() => setSelectedGroup(group)}>{group}</button>
                     })}
                 </div>
                 <p className="subsubtitle">Add topics</p>
                 <div className="button-row">
                     {topics.map((topic, index) => {
                         return <button type="button" className={"entity-tag " +
-                            (selectedTopic === index ? "topic-tag-active" : "topic-tag-inactive")} key={index}
-                                       onClick={() => setSelectedTopic(index)}>{topic}</button>
+                            (selectedTopic === topic ? "topic-tag-active" : "topic-tag-inactive")} key={index}
+                                       onClick={() => setSelectedTopic(topic)}>{topic}</button>
                     })}
                 </div>
                 <input type="text" className="input" placeholder="or create a topic..."/>

@@ -14,6 +14,11 @@ export async function getTopics(pageNum: number, pageSize: number) {
     });
 }
 
+export async function getSubscribedTopics(){
+  return await api.get("/topic/subscribed")
+      .then(response => response.data);
+}
+
 export async function joinTopic(topicId: number) {
   return await api.post("/topic/" + topicId + "/join").then((response) => {
     console.log(response.data);
