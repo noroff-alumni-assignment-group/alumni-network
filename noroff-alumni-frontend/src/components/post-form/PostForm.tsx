@@ -4,6 +4,7 @@ import snarkdown from "snarkdown";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import {useAlert} from "react-alert";
+import { createPost } from "../../services/postService";
 
 type PostFormTypes = {
     editing: boolean,
@@ -47,7 +48,14 @@ function PostForm (props: PostFormTypes) {
                 setErroneous(false)
             }, 1000)
         } else {
+            createPost({
+                title: title,
+                body: text,
+                target_topic: "Summer",
+                target_group: ""
+            });
             alert.success("Published successfully");
+            props.handler(false);
         }
         return false;
     }
