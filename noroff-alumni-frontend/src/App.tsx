@@ -13,6 +13,7 @@ import { useSelector, useDispatch } from "react-redux";
 import tokenService from "./services/tokenService";
 import { setUser } from "./store/userSlice";
 import UserService from "./services/UserService";
+import NotfoundPage from "./pages/404/NotfoundPage";
 
 function App() {
   const user = useSelector((state: RootState) => state.user);
@@ -37,10 +38,12 @@ function App() {
             <div className="page-container">
               <Routes>
                 <Route path="/profile" element={<Profile />} />
+                <Route path="/profile/*" element={<Profile />} />
                 <Route path="/events" element={<Event />} />
                 <Route path="/groups" element={<Groups />} />
                 <Route path="/topics" element={<Topics />} />
                 <Route path="/" element={<Timeline />} />
+                <Route path="/*" element={<NotfoundPage />} />
               </Routes>
             </div>
           </div>

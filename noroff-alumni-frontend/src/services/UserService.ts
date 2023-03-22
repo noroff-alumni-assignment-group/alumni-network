@@ -36,7 +36,10 @@ class UserService {
    }
 
    async registerUser(signupRequest:SignupRequest){
-      return await api.post("/authenticate/register",signupRequest);
+      return await api.post(
+        "http://localhost:8080/api/v1/authenticate/register",
+        signupRequest
+      );
    }
 }
 

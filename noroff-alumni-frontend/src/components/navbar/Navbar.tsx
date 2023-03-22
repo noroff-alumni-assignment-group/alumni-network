@@ -81,7 +81,7 @@ function Navbar() {
           <div className="tag-cnt">
             <img src={people} alt="profile" />
             <h1>
-              <NavLink to="/profile" onClick={() => handleClick()}>
+              <NavLink to={`/profile/${user.username}`} onClick={() => handleClick()}>
                 Profile
               </NavLink>
             </h1>

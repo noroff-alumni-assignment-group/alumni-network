@@ -4,91 +4,128 @@ import { postList } from "../../components/post/postList";
 import Post from "../../components/post/Post";
 import Search from "../../components/search/Search";
 import search from "../../assets/icons/Search.png";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import api from "../../services/api";
 import { useSelector } from "react-redux";
 import edit from "../../assets/icons/Ellipsis.png";
 import EditProfile from "./EditProfile";
+import { setUser } from "../../store/userSlice";
 
 function Profile() {
   const [filteredPosts, setFilteredPosts] = useState(postList);
   const [showSearchField, setShowSearchField] = useState(false);
+  const [showEditProfile, setShowEditProfile] = useState(false);
+  const navigate = useNavigate();
+
   let name = window.location.pathname.replace("/profile/", "");
   name = name.replace("/profile", "");
-  const [userProfile, setUserProfile] = useState("");
   const user = useSelector((state: any) => state.user);
+  console.log("user", user);
 
-  console.log(user);
-
-  useEffect(() => {
-    api
-      .get(`http://localhost:8080/api/v1/profile/${user.id}`)
-      .then((response) => {
-        setFilteredPosts(response.data);
-        console.log("test");
-      })
-      .catch((error) => {
-        console.error("Error fetching posts:", error);
-      });
-  }, [name]);
+  const [userProfile, setUserProfile] = useState({
+    title: "",
+    biography: "",
+    funfact: "",
+    firstName: "",
+    lastName: "",
+  });
 
   // Function to handle search icon click
   const handleSearchIconClick = () => {
     setShowSearchField((prevState) => !prevState);
   };
 
-  const [showEditProfile, setShowEditProfile] = useState(false);
   // Function to handle search icon click
   const handleEditProfile = () => {
     setShowEditProfile((prevState) => !prevState);
   };
 
+  // In your frontend useEffect function
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await api.get(
+          `http://localhost:8080/api/v1/user/find/${name}`
+        );
+
+       
+
+        const userData = response.data;
+        setUserProfile({
+          title: userData.title,
+          biography: userData.biography,
+          funfact: userData.funfact,
+          firstName: userData.firstName,
+          lastName: userData.lastName,
+        });
+
+        console.log("res", response.data);
+      } catch (error) {
+        navigate("/404");
+      }
+    };
+
+    fetchUserData();
+  }, [name]);
+
   return (
     <div className="profilepage">
       {showEditProfile ? (
-        <EditProfile setShowEditProfile={setShowEditProfile} user={user} />
+        <EditProfile
+          setShowEditProfile={setShowEditProfile}
+          user={user}
+          username={name}
+        />
       ) : null}
 
       <div className="profiledata-cnt">
         <div className="edit-profile-cnt">
-          <img
-            src={edit}
-            alt=""
-            className="edit-profile-img"
-            onClick={handleEditProfile}
-          />
+          {user?.username === name && (
+            <img
+              src={edit}
+              alt=""
+              className="edit-profile-img"
+              onClick={handleEditProfile}
+            />
+          )}
         </div>
         <div className="profiledata-head-cnt">
           <div className="profiledata-head">
             <div className="profilebubble profilepicture-profile">
-              {user.initials}
+              {userProfile?.firstName?.slice(0, 1).toUpperCase()}
+              {userProfile?.lastName?.slice(0, 1).toUpperCase()}
             </div>
             <h2 className="profile-name">
-              {user?.firstName?.slice(0, 1).toUpperCase()}
-              {user?.firstName?.slice(1)}{" "}
-              {user?.lastName?.slice(0, 1).toUpperCase()}
-              {user?.lastName?.slice(1)}
+              {userProfile?.firstName?.slice(0, 1).toUpperCase()}
+              {userProfile?.firstName?.slice(1)}{" "}
+              {userProfile?.lastName?.slice(0, 1).toUpperCase()}
+              {userProfile?.lastName?.slice(1)}
             </h2>
 
-            <div className="profile-title">{user.title}</div>
+            <div className="profile-title">
+              {userProfile.title ? (
+                <p className="bio-text">{userProfile.title}</p>
+              ) : (
+                <p>There is no title 💀</p>
+              )}
+            </div>
           </div>
           <div className="profile-data">
             <div className="biography">
               <p className="bio-p">Biography</p>
-
-              {user.biography !== null ? (
-                <p>You dont have a bio 💀</p>
+              {userProfile.biography ? (
+                <p className="bio-text">{userProfile.biography}</p>
               ) : (
-                <p className="bio-text">{user.biography}</p>
+                <p>There is no bio 💀</p>
               )}
             </div>
 
             <div className="funfact">
               <p className="funfact-p">Funfact</p>
-              {user.funfact !== null ? (
-                <p>You dont have a funfact 💀</p>
+              {userProfile.funfact ? (
+                <p className="funfact-text">{userProfile.funfact}</p>
               ) : (
-                <p className="funfact-text">{user.funfact}</p>
+                <p>There is no funfact 💀</p>
               )}
             </div>
           </div>
@@ -97,9 +134,9 @@ function Profile() {
 
       <div className="profile-posts">
         <h1>Posts</h1>
-        {filteredPosts.length !== 0 ? (
+        {filteredPosts.length === 0 ? (
           <div className="no-post-found-cnt">
-            <p>You dont have any posts 💀</p>
+            <p>No posts 💀</p>
           </div>
         ) : (
           <div>

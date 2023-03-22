@@ -1,7 +1,8 @@
-import React, { useState } from "react";
-import axios from "axios";
+import { useState } from "react";
+import api from "../../services/api";
 
-function EditProfile(props: any) {
+export default function EditProfile(props: any) {
+
   const [userData, setUserData] = useState(props.user);
 
   // Handle function for the Save button click
@@ -10,29 +11,28 @@ function EditProfile(props: any) {
     // Create an object with the updated user data
     const updatedUserData = {
       ...props.user,
-      workstatus: userData.workstatus,
-      bio: userData.bio,
-      funfact: userData.funfact,
+      title: userData.title, // Update title
+      biography: userData.biography, // Update biography
+      funfact: userData.funfact, // Update funfact
     };
 
-    console.log(updatedUserData);
-    
+    console.log("updated", updatedUserData);
+
     // Send the updated user data to the API
-    axios
-      .put("http://localhost:8080/api/v1/user", updatedUserData, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("access_token")}`, // BYTT UT
-        },
-      })
+    api
+      .put(
+        `http://localhost:8080/api/v1/user/${props.user.id}`,
+        updatedUserData
+      )
       .then((response) => {
         console.log(response);
-        // Close the EditProfile component
-        props.setShowEditProfile(false);
-      })
-      .catch((error) => {
-        console.error(error);
+        // Hide EditProfile component after successful API call
+        props.setShowEditProfile(false); // Add this line to close the EditProfile component
+        window.location.reload();
       });
   };
+
+
 
   return (
     <div className="editprofile-cnt">
@@ -51,14 +51,15 @@ function EditProfile(props: any) {
               <div className="profile-theme option5">AA</div>
             </div>
           </div>
-          <div className="edit-work-status-cnt">
-            <p>Work status</p>
-            <textarea
-              className="input work-input"
-              placeholder={userData.workstatus}
-              value={userData.workstatus}
+          <div className="edit-title-cnt">
+            <p>Title</p>
+            <input
+              className="input title-input"
+              type="text"
+              placeholder={userData.title}
+              value={userData.title}
               onChange={(event) =>
-                setUserData({ ...userData, workstatus: event.target.value })
+                setUserData({ ...userData, title: event.target.value })
               }
             />
           </div>
@@ -66,10 +67,10 @@ function EditProfile(props: any) {
             <p>Biography</p>
             <textarea
               className="input bio-input"
-              placeholder={userData.bio}
-              value={userData.bio}
+              placeholder={userData.biography}
+              value={userData.biography}
               onChange={(event) =>
-                setUserData({ ...userData, bio: event.target.value })
+                setUserData({ ...userData, biography: event.target.value })
               }
             />
           </div>
@@ -85,7 +86,13 @@ function EditProfile(props: any) {
             />
           </div>
           <div className="editprofile-buttons">
-            <button className="activity-btn" onClick={props.setShowEditProfile}>
+            <button
+              className="activity-btn"
+              onClick={(event) => {
+                event.preventDefault();
+                props.setShowEditProfile(false);
+              }}
+            >
               CANCEL
             </button>
             <button className="activity-btn" onClick={handleSaveClick}>
@@ -99,5 +106,3 @@ function EditProfile(props: any) {
     </div>
   );
 }
-
-export default EditProfile;
