@@ -12,6 +12,10 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import lombok.Data;
 
+/**
+ * Data model for the Topic entity
+ * stored in the database.
+ */
 @Entity
 @Data
 public class Topic {
