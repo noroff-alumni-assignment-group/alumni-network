@@ -22,7 +22,7 @@ function Profile() {
 
   useEffect(() => {
     api
-      .get("localhost:8080/api/v1/posts")
+      .get(`http://localhost:8080/api/v1/profile/${user.id}`)
       .then((response) => {
         setFilteredPosts(response.data);
         console.log("test");
@@ -64,11 +64,12 @@ function Profile() {
               {user.initials}
             </div>
             <h2 className="profile-name">
-              {user.firstName.slice(0, 1).toUpperCase()}
-              {user.firstName.slice(1)}{" "}
-              {user.lastName.slice(0, 1).toUpperCase()}
-              {user.lastName.slice(1)}
+              {user?.firstName?.slice(0, 1).toUpperCase()}
+              {user?.firstName?.slice(1)}{" "}
+              {user?.lastName?.slice(0, 1).toUpperCase()}
+              {user?.lastName?.slice(1)}
             </h2>
+
             <div className="profile-title">{user.title}</div>
           </div>
           <div className="profile-data">
