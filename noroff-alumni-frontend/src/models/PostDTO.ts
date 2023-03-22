@@ -6,6 +6,7 @@ type PostDTO = {
     body: string,
     last_updated: Date,
     author: UserDisplayDTO,
+    target_user: UserDisplayDTO,
     target_topic: string,
     target_group: string
 }

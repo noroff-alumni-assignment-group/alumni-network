@@ -13,6 +13,7 @@ public class PostDto {
     private String body;
     private Date last_updated;
     private UserDisplayDto author;
+    private UserDisplayDto target_user;
     private String target_topic;
     private String target_group;
 }

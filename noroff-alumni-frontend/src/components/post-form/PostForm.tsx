@@ -58,6 +58,7 @@ function PostForm (props: PostFormTypes) {
             let newPost = {
                 title: title,
                 body: text,
+                target_user: "",
                 target_topic: "Summer",
                 target_group: ""
             }

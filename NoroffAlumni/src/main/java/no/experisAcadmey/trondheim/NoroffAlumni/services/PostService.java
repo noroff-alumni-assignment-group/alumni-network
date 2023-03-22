@@ -37,7 +37,10 @@ public class PostService {
         post.setBody(newPostDto.getBody());
         post.setLast_updated(new Date());
         post.setAuthor(userService.getCurrentUser());
-        if(newPostDto.getTarget_topic() != null){
+        if(!newPostDto.getTarget_user().isEmpty()){
+            post.setTarget_user(userService.getUser(newPostDto.getTarget_user()));
+        }
+        if(!newPostDto.getTarget_topic().isEmpty()){
             post.setTarget_topic(topicService.getTopicByName(newPostDto.getTarget_topic()));
         }
         postRepository.save(post);

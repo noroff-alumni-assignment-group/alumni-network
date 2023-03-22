@@ -22,6 +22,8 @@ public class Post {
     @ManyToOne
     private User author;
     @ManyToOne
+    private User target_user;
+    @ManyToOne
     private Topic target_topic;
     private Long target_group;
 

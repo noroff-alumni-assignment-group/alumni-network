@@ -6,6 +6,7 @@ import lombok.Data;
 public class NewPostDto {
     private String title;
     private String body;
+    private String target_user;
     private String target_topic;
     private String target_group;
 }
