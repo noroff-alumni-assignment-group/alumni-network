@@ -4,13 +4,16 @@ import no.experisAcadmey.trondheim.NoroffAlumni.exceptions.PostNotFoundException
 import no.experisAcadmey.trondheim.NoroffAlumni.models.DTOs.postDTOs.EditPostDto;
 import no.experisAcadmey.trondheim.NoroffAlumni.models.DTOs.postDTOs.NewPostDto;
 import no.experisAcadmey.trondheim.NoroffAlumni.models.Post;
+import no.experisAcadmey.trondheim.NoroffAlumni.models.Topic;
 import no.experisAcadmey.trondheim.NoroffAlumni.repositories.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class PostService {
@@ -40,10 +43,14 @@ public class PostService {
         if(!newPostDto.getTarget_user().isEmpty()){
             post.setTargetUser(userService.getUser(newPostDto.getTarget_user()));
         }
-        if(!newPostDto.getTarget_topic().isEmpty()){
-            post.setTargetTopics(List.of(topicService.getTopicByName(newPostDto.getTarget_topic())));
+        post = postRepository.save(post);
+        for (String topicName : newPostDto.getTarget_topics()) {
+            post.getTargetTopics().add(topicService.getTopicByName(topicName));
         }
         postRepository.save(post);
+            /*Post finalPost = post;
+            Arrays.stream(newPostDto.getTarget_topics()).forEach(topicName ->
+                    finalPost.getTargetTopics().add(topicService.getTopicByName(topicName)));*/
         return post.getId();
     }
 

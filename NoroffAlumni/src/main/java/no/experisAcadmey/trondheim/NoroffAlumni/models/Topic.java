@@ -1,5 +1,6 @@
 package no.experisAcadmey.trondheim.NoroffAlumni.models;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -27,7 +28,7 @@ public class Topic {
    private Set<User> subscribers;
    @ManyToMany
    @JoinTable(name="topic_posts",joinColumns = @JoinColumn(name = "topic_id"),inverseJoinColumns = @JoinColumn(name = "post_id"))
-   private List<Post> posts;
+   private List<Post> posts = new ArrayList<>();
 
    public Topic addSubscriber(User user){
       subscribers.add(user);

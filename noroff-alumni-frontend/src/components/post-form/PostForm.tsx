@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import {useAlert} from "react-alert";
 import {createPost, editPost, getPost} from "../../services/postService";
-import {getSubscribedTopics} from "../../services/topicService";
+import TopicService from "../../services/topicService";
 import TopicListItem from "../../models/TopicListItemDTO";
 
 type PostFormTypes = {
@@ -15,14 +15,14 @@ type PostFormTypes = {
 
 function PostForm (props: PostFormTypes) {
 
-    let groups: string[] = ["group1", "group2",];
     let postId: number = 3;
 
     let [title, setTitle] = useState("");
     let [text, setText] = useState("");
     let [topics, setTopics] = useState([]);
-    let [selectedGroup, setSelectedGroup] = useState("");
-    let [selectedTopic, setSelectedTopic] = useState("");
+    let [groups, setGroups] = useState([]);
+    let [selectedGroups, setSelectedGroups] = useState([]);
+    let [selectedTopics, setSelectedTopics] = useState([]);
 
     let [previewing, setPreviewing] = useState(false);
     let [erroneous, setErroneous] = useState(false);
@@ -36,16 +36,21 @@ function PostForm (props: PostFormTypes) {
         fetchSubscriptions();
     }, [])
 
+    useEffect(() => {
+        console.log(selectedTopics)
+    }, [selectedTopics])
+
     function fetchPost() {
         getPost(postId)
             .then(data => {
+                console.log(data)
                 setTitle(data.title)
                 setText(data.body)
             })
     }
 
     function fetchSubscriptions(){
-        getSubscribedTopics()
+        TopicService.getSubscribedTopics()
             .then(data => {
                 setTopics(data.map((topic: TopicListItem) => topic.name));
             })
@@ -62,8 +67,8 @@ function PostForm (props: PostFormTypes) {
                 title: title,
                 body: text,
                 target_user: "",
-                target_topic: selectedTopic,
-                target_group: ""
+                target_topics: selectedTopics,
+                target_groups: []
             }
             if(!props.editing) {
                 createPost(newPost)
@@ -90,15 +95,18 @@ function PostForm (props: PostFormTypes) {
         <div className="post-form">
             <div className="post-content">
                 <h1>{props.editing ? "Edit post" : "Write a new post"}</h1>
-                <input type="text" className={"input " + (erroneous && title === "" ? "border-blink" : "")} placeholder="Title.." onChange={(e => setTitle(e.target.value))} value={title}/>
+                <input type="text" className={"input " + (erroneous && title === "" ? "border-blink" : "")}
+                       placeholder="Title.." onChange={(e => setTitle(e.target.value))} value={title}/>
                 <div className="text-content-container">
                     <button type="button" className={"round-toggle " + (previewing ? "button-active" : "button-inactive")}
                             onClick={() => setPreviewing(!previewing)}><FontAwesomeIcon icon={faEye}/></button>
                     {!previewing
                         ?
-                        <textarea className={"input text-content " + (erroneous && text === "" ? "border-blink" : "")} placeholder="Write something.." onChange={(e => setText(e.target.value))} value={text}/>
+                        <textarea className={"input text-content " + (erroneous && text === "" ? "border-blink" : "")}
+                                  placeholder="Write something.." onChange={(e => setText(e.target.value))} value={text}/>
                         :
-                        <div className={"input text-content scroll vertical " + (erroneous && text === "" ? "border-blink" : "")} dangerouslySetInnerHTML={{__html: toGithubMarkdown(text)}}></div>
+                        <div className={"input text-content scroll vertical " + (erroneous && text === "" ? "border-blink" : "")}
+                             dangerouslySetInnerHTML={{__html: toGithubMarkdown(text)}}></div>
                     }
                 </div>
             </div>
@@ -107,16 +115,24 @@ function PostForm (props: PostFormTypes) {
                 <div className="button-row">
                     {groups.map((group, index) => {
                         return <button type="button" className={"entity-tag " +
-                            (selectedGroup === group ? "group-tag-active" : "group-tag-inactive")} key={index}
-                               onClick={() => setSelectedGroup(group)}>{group}</button>
+                            (selectedGroups.includes(group) ? "group-tag-active" : "group-tag-inactive")} key={index}
+                               onClick={() => {
+                                   let arr = selectedTopics.includes(group)
+                                       ? selectedTopics.filter(e => e !== group) : [...selectedTopics, group];
+                                   setSelectedTopics(arr);
+                               }}>{group}</button>
                     })}
                 </div>
                 <p className="subsubtitle">Add topics</p>
                 <div className="button-row">
                     {topics.map((topic, index) => {
                         return <button type="button" className={"entity-tag " +
-                            (selectedTopic === topic ? "topic-tag-active" : "topic-tag-inactive")} key={index}
-                                       onClick={() => setSelectedTopic(topic)}>{topic}</button>
+                            (selectedTopics.includes(topic) ? "topic-tag-active" : "topic-tag-inactive")} key={index}
+                                       onClick={() => {
+                                           let arr = selectedTopics.includes(topic)
+                                               ? selectedTopics.filter(e => e !== topic) : [...selectedTopics, topic];
+                                           setSelectedTopics(arr);
+                                       }}>{topic}</button>
                     })}
                 </div>
                 <input type="text" className="input" placeholder="or create a topic..."/>

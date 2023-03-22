@@ -64,8 +64,8 @@ function PostMessageForm (props: PostFormTypes) {
                 title: title,
                 body: text,
                 target_user: recipient.id,
-                target_topic: "",
-                target_group: ""
+                target_topics: [],
+                target_groups: []
             }
             if(!props.editing) {
                 createPost(newPost)

@@ -19,14 +19,14 @@ const Timeline = () => {
       body: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
       target_topics: ["TOPIC 1"],
       target_groups: ["GROUP 1"],
-      author: {firstName:"Anders",lastName:"A"},
+      author: {firstName:"Anders",lastName:"A", id: "", email: "", username: ""},
       comments: [
         {
-          author:{firstName:"Marcus",lastName:"B"},
+          author:{firstName:"Marcus",lastName:"B", id: "", email: "", username: ""},
           response: "Lorem Ipsum is simply dummy text of the printin",
         },
         {
-          author: {firstName:"Aleksander",lastName:"R"},
+          author: {firstName:"Aleksander",lastName:"R", id: "", email: "", username: ""},
           response: "Yes sui!",
         },
       ],
@@ -38,38 +38,38 @@ const Timeline = () => {
       body: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
       target_topics: ["TOPIC 2"],
       target_groups: ["GROUP 1"],
-      author: {firstName:"Anders",lastName:"A"},
+      author: {firstName:"Anders",lastName:"A", id: "", email: "", username: ""},
       comments: [
         {
-          author: {firstName:"Marcus",lastName:"B"},
+          author: {firstName:"Marcus",lastName:"B", id: "", email: "", username: ""},
           response: "Lorem Ipsum is simply dummy text of the printin",
         },
         {
-          author: {firstName:"Aleksander",lastName:"R"},
+          author: {firstName:"Aleksander",lastName:"R", id: "", email: "", username: ""},
           response: "Yes sui!",
         },
         {
-          author: {firstName:"Marcus",lastName:"B"},
+          author: {firstName:"Marcus",lastName:"B", id: "", email: "", username: ""},
           response: "Lorem Ipsum is simply dummy text of the printin",
         },
         {
-          author: {firstName:"Aleksander",lastName:"R"},
+          author: {firstName:"Aleksander",lastName:"R", id: "", email: "", username: ""},
           response: "Yes sui!",
         },
         {
-          author: {firstName:"Marcus",lastName:"B"},
+          author: {firstName:"Marcus",lastName:"B", id: "", email: "", username: ""},
           response: "Lorem Ipsum is simply dummy text of the printin",
         },
         {
-          author:{firstName:"Aleksander",lastName:"R"},
+          author:{firstName:"Aleksander",lastName:"R", id: "", email: "", username: ""},
           response: "Yes sui!",
         },
         {
-          author: {firstName:"Marcus",lastName:"B"},
+          author: {firstName:"Marcus",lastName:"B", id: "", email: "", username: ""},
           response: "Lorem Ipsum is simply dummy text of the printin",
         },
         {
-          author: {firstName:"Aleksander",lastName:"R"},
+          author: {firstName:"Aleksander",lastName:"R", id: "", email: "", username: ""},
           response: "Yes sui!",
         },
       ],

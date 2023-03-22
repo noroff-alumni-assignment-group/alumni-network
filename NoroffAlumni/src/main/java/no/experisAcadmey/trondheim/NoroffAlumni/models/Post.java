@@ -4,6 +4,7 @@ package no.experisAcadmey.trondheim.NoroffAlumni.models;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class Post {
     @ManyToOne
     private User targetUser;
     @ManyToMany(mappedBy = "posts")
-    private List<Topic> targetTopics;
+    private List<Topic> targetTopics = new ArrayList<>();
     private List<Long> targetGroup;
 
 }
