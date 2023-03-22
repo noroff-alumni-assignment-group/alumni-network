@@ -1,13 +1,18 @@
 import React from "react";
 import "./profilepicture.css";
+import UserDisplayDTO from "../../models/UserDisplayDTO";
 
-function Profilepicture(props: any) {
+interface Props {
+  author:UserDisplayDTO
+}
+
+function Profilepicture({author}:Props) {
   return (
     <div className="profilepicture-container">
       <div className="profilepicture-details">
-        <p>{props.author}</p>
+        <p>{author.firstName + " " + author.lastName}</p>
       </div>
-      {props.initials}
+      { author.firstName && author.lastName ? (author.firstName[0]+author.lastName[0]).toUpperCase():"OO"}
     </div>
   );
 }

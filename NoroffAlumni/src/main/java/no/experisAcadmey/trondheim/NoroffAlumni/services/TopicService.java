@@ -93,7 +93,7 @@ public class TopicService {
       topic.setName(newTopic.getName());
       topic.setDescription(newTopic.getDescription());
       topic.setSubscribers(Set.of(userService.getCurrentUser()));
-      topic.setPosts(new HashSet<>());
+      topic.setPosts(new ArrayList<>());
 
       topicRepository.save(topic);
 
