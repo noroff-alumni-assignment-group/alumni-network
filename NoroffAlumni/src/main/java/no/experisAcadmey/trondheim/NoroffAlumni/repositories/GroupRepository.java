@@ -7,12 +7,13 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Repository
-public interface GroupRepository extends JpaRepository<Group, Integer> {
+public interface GroupRepository extends JpaRepository<Group, Long> {
 
     List<Group> findByIsPrivateFalseOrMembersContains(User user);
 
-    Optional<Group> findByIdAndIsPrivateFalseOrMembersContains(int id, User user);
+    Optional<Group> findByIdAndIsPrivateFalseOrMembersContains(Long id, User user);
 
 }

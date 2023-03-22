@@ -18,6 +18,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class User {
+
    @Id
    private String id;
    @Column(unique = true)
@@ -26,6 +27,10 @@ public class User {
    private String email;
    private String firstName;
    private String lastName;
+
    @ManyToMany(mappedBy = "subscribers")
    private Set<Topic> topics;
+
+   @ManyToMany(mappedBy = "members")
+   private Set<Group> groups;
 }

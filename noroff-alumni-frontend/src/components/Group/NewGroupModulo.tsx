@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { GroupPost } from "../../models/Group/GroupPost";
+import { NewGroup } from "../../models/Group/NewGroup";
 import api from "../../services/api";
 
 type NewGroupProps = {
@@ -13,8 +13,8 @@ const NewGroupModulo = ({setHideModulo}: NewGroupProps) => {
     const [description,setDescription] = useState("")
     const [isPrivate, setIsPrivate] = useState(false)
 
-    async function createGroup(groupPost: GroupPost) {
-        await api.post("/group", groupPost);
+    async function createGroup(newGroup: NewGroup) {
+        await api.post("/group", newGroup);
     }
 
     async function submitNewGroup() {

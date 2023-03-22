@@ -52,16 +52,25 @@
 
 .member-card-right {
     text-align: right;
+    display: flex;
 }
 
 .invite-btn {
-    border-radius: 9px;
     padding: 8px;
-    margin-right: 8px;
+    margin-right: 5px;
     border-style: none;
     font-size: 17px;
     cursor: pointer;
     background-color: white;
+}
+
+.private-label {
+    padding: 8px;
+    background-color: var(--blue);
+    color: white;
+    height: 40px;
+    border-radius: 9px;
+    margin: auto;
 }
 
 .feed-actions {
@@ -73,7 +82,6 @@
 
 .feed-actions button {
     height: 45px;
-    
 }
 
 .feed-header {

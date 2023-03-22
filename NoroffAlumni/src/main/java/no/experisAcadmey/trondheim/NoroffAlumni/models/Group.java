@@ -12,12 +12,15 @@ public class Group {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer group_id;
+    private Long id;
 
+    @Column(length = 50, nullable = false)
     private String name;
 
+    @Column(length = 150)
     private String description;
 
+    @Column(nullable = false)
     private Boolean isPrivate;
 
     @ManyToMany
@@ -30,9 +33,5 @@ public class Group {
 
     public void addMember(User user){
         members.add(user);
-    }
-
-    public void setIsPrivate(Boolean isPrivate) {
-        this.isPrivate = isPrivate;
     }
 }

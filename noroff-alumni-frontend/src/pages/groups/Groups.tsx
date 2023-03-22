@@ -19,7 +19,6 @@ function Groups() {
         setGroups(response.data)
     }
     getGroups()
-
   }, [])
 
   useEffect(() => {

@@ -10,6 +10,6 @@ public class GroupPostDTO {
 
     private String name;
     private String description;
-    private Boolean is_private;
+    private Boolean isPrivate;
 
 }

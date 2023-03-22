@@ -8,7 +8,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import no.experisAcadmey.trondheim.NoroffAlumni.exceptions.GroupNotFoundException;
 import no.experisAcadmey.trondheim.NoroffAlumni.mappers.GroupMapper;
-import no.experisAcadmey.trondheim.NoroffAlumni.mappers.TopicMapper;
 import no.experisAcadmey.trondheim.NoroffAlumni.models.DTOs.groupDTOs.GroupDTO;
 import no.experisAcadmey.trondheim.NoroffAlumni.models.DTOs.groupDTOs.GroupPostDTO;
 import no.experisAcadmey.trondheim.NoroffAlumni.models.Group;
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.Collection;
-
 
 @RestController
 @RequestMapping(path = "api/v1/group")
@@ -70,7 +68,7 @@ public class GroupController {
         }
     }
 
-    @GetMapping("{/group_id}")
+    @GetMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_ALUMNI')")
     @Operation(summary = "Find a group by an ID")
     @ApiResponses(value = {
@@ -103,9 +101,9 @@ public class GroupController {
                     }
             )
     })
-    public ResponseEntity getGroupById(@PathVariable int group_id) {
+    public ResponseEntity getGroupById(@PathVariable Long id) {
         try {
-            return ResponseEntity.ok(groupMapper.groupToGroupDTO(groupService.findGroupById(group_id)));
+            return ResponseEntity.ok(groupMapper.groupToGroupDTO(groupService.findGroupById(id)));
         } catch (GroupNotFoundException e) {
             return ResponseEntity.notFound().build();
         } catch (Exception e) {
@@ -133,15 +131,15 @@ public class GroupController {
     })
     public ResponseEntity createGroup(@RequestBody GroupPostDTO group) {
         try {
-            Group newGroup = groupService.createGroup(groupMapper.groupPostDtoToGroup(group));
-            URI location = URI.create("group/" + newGroup.getGroup_id());
+            Group newGroup = groupService.createGroup(groupMapper.groupPostDTOToGroup(group));
+            URI location = URI.create("group/" + newGroup.getId());
             return ResponseEntity.created(location).build();
         } catch(Exception e){
             return ResponseEntity.badRequest().build();
         }
     }
 
-    @PostMapping("/{group_id}/join")
+    @PostMapping("/{id}/join")
     @PreAuthorize("hasRole('ROLE_ALUMNI')")
     @Operation(summary = "Join a group")
     @ApiResponses(value = {
@@ -164,9 +162,9 @@ public class GroupController {
                             schema = @Schema(implementation = ProblemDetail.class))
             })
     })
-    public ResponseEntity joinGroup(@PathVariable("group_id") int group_id) {
+    public ResponseEntity joinGroup(@PathVariable("id") Long id) {
         try {
-            return ResponseEntity.ok(groupMapper.groupToGroupDTO(groupService.joinGroup(group_id)));
+            return ResponseEntity.ok(groupMapper.groupToGroupDTO(groupService.joinGroup(id)));
         } catch (GroupNotFoundException e) {
             return ResponseEntity.notFound().build();
         } catch(Exception e) {

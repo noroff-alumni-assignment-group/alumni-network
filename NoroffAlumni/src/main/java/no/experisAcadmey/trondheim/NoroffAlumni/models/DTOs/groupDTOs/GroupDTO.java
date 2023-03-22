@@ -10,10 +10,10 @@ import java.util.Set;
 @Data
 public class GroupDTO {
 
-    private int group_id;
+    private Long id;
     private String name;
     private String description;
-    private Boolean is_private;
+    private Boolean isPrivate;
     private Set<String> members;
 
 }
