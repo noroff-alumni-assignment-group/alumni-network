@@ -62,6 +62,16 @@ public class TopicService {
    }
 
    /**
+    * Retrieves a specific topic based on name
+    *
+    * @param topicName Name of the topic to find
+    * @return found topic
+    */
+   public Topic getTopicByName(String topicName){
+      return topicRepository.findByName(topicName).orElseThrow(TopicNotFoundException::new);
+   }
+
+   /**
     * Creates a new Topic.
     *
     * @param newTopic data of the new topic.

@@ -4,6 +4,7 @@ import snarkdown from "snarkdown";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import {useAlert} from "react-alert";
+import {createPost, editPost, getPost} from "../../services/postService";
 
 type PostFormTypes = {
     editing: boolean,
@@ -14,6 +15,7 @@ function PostForm (props: PostFormTypes) {
 
     const groups: string[] = ["group1", "group2",];
     const topics: string[] = ["topic1", "top", "topi2"];
+    const postId: number = 3;
 
     let [title, setTitle] = useState("");
     let [text, setText] = useState("");
@@ -27,7 +29,7 @@ function PostForm (props: PostFormTypes) {
 
     useEffect(() => {
         if(props.editing){
-            getPost();
+            fetchPost();
         }
     }, [props.editing])
 
@@ -35,9 +37,15 @@ function PostForm (props: PostFormTypes) {
         console.log(previewing);
     }, [previewing])
 
-    function getPost() {
+    function fetchPost() {
         // fetch post
         console.log("fetched post");
+
+        getPost(postId)
+            .then(data => {
+                setTitle(data.title)
+                setText(data.body)
+            })
     }
 
     function handleSubmit(){
@@ -47,7 +55,26 @@ function PostForm (props: PostFormTypes) {
                 setErroneous(false)
             }, 1000)
         } else {
-            alert.success("Published successfully");
+            let newPost = {
+                title: title,
+                body: text,
+                target_user: "",
+                target_topic: "Summer",
+                target_group: ""
+            }
+            if(!props.editing) {
+                createPost(newPost)
+                    .then(result => {
+                        alert.success("Published successfully");
+                        props.handler(false);
+                    })
+            } else {
+                editPost({title: newPost.title, body: newPost.body}, postId)
+                    .then(result => {
+                        alert.success("Updated successfully");
+                        props.handler(false);
+                    })
+            }
         }
         return false;
     }
@@ -60,7 +87,7 @@ function PostForm (props: PostFormTypes) {
         <div className="post-form">
             <div className="post-content">
                 <h1>{props.editing ? "Edit post" : "Write a new post"}</h1>
-                <input type="text" className={"input " + (erroneous && title === "" ? "border-blink" : "")} placeholder="Title.." onChange={(e => setTitle(e.target.value))}/>
+                <input type="text" className={"input " + (erroneous && title === "" ? "border-blink" : "")} placeholder="Title.." onChange={(e => setTitle(e.target.value))} value={title}/>
                 <div className="text-content-container">
                     <button type="button" className={"round-toggle " + (previewing ? "button-active" : "button-inactive")}
                             onClick={() => setPreviewing(!previewing)}><FontAwesomeIcon icon={faEye}/></button>
