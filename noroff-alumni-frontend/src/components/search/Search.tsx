@@ -1,25 +1,13 @@
 // Search.tsx
 import React, { useState } from "react";
 import './search.css';
+import PostDTO from "../../models/PostDTO";
 
-interface PostData {
-  title: string;
-  date: string;
-  body: string;
-  topics: string[];
-  groups: string[];
-  author: string;
-  profileInitials: string;
-  comments: {
-    author: string;
-    authorInitials: string;
-    response: string;
-  }[];
-}
+
 
 interface SearchProps {
-  posts: PostData[];
-  updateFilteredPosts: (filteredPosts: PostData[]) => void;
+  posts: PostDTO[];
+  updateFilteredPosts: (filteredPosts: PostDTO[]) => void;
 }
 
 const Search: React.FC<SearchProps> = ({ posts, updateFilteredPosts }) => {
@@ -30,15 +18,15 @@ const Search: React.FC<SearchProps> = ({ posts, updateFilteredPosts }) => {
 
     const filteredPosts = posts.filter((post) => {
       const searchString = e.target.value.toLowerCase();
-      const topicsString = post.topics.join(" ").toLowerCase();
-      const groupsString = post.groups.join(" ").toLowerCase();
+      const topicsString = post.target_topics?.join(" ").toLowerCase();
+      const groupsString = post.target_groups?.join(" ").toLowerCase();
 
       return (
         post.title.toLowerCase().includes(searchString) ||
         post.body.toLowerCase().includes(searchString) ||
-        topicsString.includes(searchString) ||
-        groupsString.includes(searchString) ||
-        post.author.toLowerCase().includes(searchString)
+        topicsString?.includes(searchString) ||
+        groupsString?.includes(searchString) ||
+        (post.author.firstName +" "+ post.author.lastName).toLowerCase().includes(searchString)
       );
     });
 

@@ -6,9 +6,13 @@ type PostDTO = {
     body: string,
     last_updated: Date,
     author: UserDisplayDTO,
-    target_user: UserDisplayDTO,
-    target_topic: string,
-    target_group: string
+    target_user?: UserDisplayDTO,
+    target_topics?: string[],
+    target_groups?: string[],
+    comments?: {
+        author: UserDisplayDTO;
+        response: string;
+      }[];
 }
 
 export default PostDTO;

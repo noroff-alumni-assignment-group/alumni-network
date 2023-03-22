@@ -11,5 +11,5 @@ public class TopicDto {
     private String name;
     private String description;
     private Set<String> subscribers;
-    private List<String> posts;
+    private List<Long> posts;
 }
