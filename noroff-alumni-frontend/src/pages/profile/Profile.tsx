@@ -147,36 +147,14 @@ function Profile() {
                   showSearchField ? "search-cnt-active" : ""
                 }`}
               >
-                {showSearchField && (
-                  <Search
-                    posts={postList}
-                    updateFilteredPosts={setFilteredPosts}
-                  />
-                )}
-                <img
-                  src={search}
-                  alt="search"
-                  className="searchimg"
-                  onClick={handleSearchIconClick}
-                />
+              
               </div>
             </div>
 
             <div className="all-posts">
               {filteredPosts.map((post, i) => (
                 <div className="profile-post">
-                  <Post
-                    id={post.id}
-                    key={`post-${i}`}
-                    title={post.title}
-                    date={post.date}
-                    body={post.body}
-                    topics={post.topics}
-                    groups={post.groups}
-                    author={post.author}
-                    profileInitials={post.profileInitials}
-                    comments={post.comments}
-                  />
+                  
                 </div>
               ))}
             </div>

@@ -6,50 +6,23 @@ import Group from "../tags/Group";
 import Topic from "../tags/Topic";
 import "./post.css";
 import PostResponse from "./PostResponse";
-import edit from "../../assets/icons/Ellipsis.png";
+import PostDTO from "../../models/PostDTO";
 
 interface Props {
-  id: string;
-  title: string;
-  date: string;
-  body: string;
-  topics: string[];
-  groups: string[];
-  author: string;
-  profileInitials: string;
-  comments: {
-    author: string;
-    authorInitials: string;
-    response: string;
-    date: string;
-  }[];
+  post:PostDTO;
 }
 
-function Post({
-  id,
-  title,
-  date,
-  body,
-  topics,
-  groups,
-  author,
-  profileInitials,
-  comments,
-}: Props) {
+function Post({post}: Props) {
   const [showComments, setShowComments] = useState(false);
   const [newCommentText, setNewCommentText] = useState("");
 
   const user = useSelector((state: any) => state.user);
-  const [localComments, setLocalComments] = useState(comments);
+
 
   const handleAddComment = (e: any) => {
     e.preventDefault();
 
-    // Send the comment to the API and update the local state
-    sendCommentToAPI(id, newCommentText);
 
-    // Reset the newCommentText state
-    setNewCommentText("");
   };
 
 
@@ -77,7 +50,7 @@ function Post({
 
       // You can update the local state with the new comment data received from the API
       const newComment = await response.json();
-      setLocalComments((prevState) => [...prevState, newComment]);
+    
     } catch (error) {
       console.error("Error sending comment to the API:", error);
     }
@@ -95,31 +68,31 @@ function Post({
     <div className="post">
       <div className="post-cnt" onClick={handleToggleComments}>
         <div className="post-head">
-          <h2>{title}</h2>
-          {author === user.author ? (
-            <img className="editimg" alt="edit" src={edit} />
-          ) : (
-            <p>{date}</p>
-          )}
+          <h2>{post.title}</h2>
+          <p>{post.last_updated.getHours()}</p>
         </div>
         <div className="post-body">
-          <p>{body}</p>
+          <p>{post.body}</p>
         </div>
         <div className="post-comments">
-          <p>{comments.length} comments</p>
+          <p>{post.comments?.length} comments</p>
         </div>
 
         <div className="post-footer">
           <div className="post-tags">
-            {topics.map((topic) => (
-              <Topic topic={topic} />
+            {post.target_topics?.map((topic) => (
+              <div className="topic" key={topic}>
+                {topic}
+              </div>
             ))}
-            {groups.map((group) => (
-              <Group group={group} />
+            {post.target_groups?.map((group) => (
+              <div className="group" key={group}>
+                {group}
+              </div>
             ))}
           </div>
           <div className="post-author">
-            <Profilepicture initials={profileInitials} author={author} />
+            <Profilepicture author={post.author} />
           </div>
         </div>
       </div>
@@ -127,16 +100,12 @@ function Post({
       {showComments && (
         <div>
           <h2 className="all-comments-h2">All comments</h2>
-          {localComments.map((comment) => (
-            <div className="post-elem-profile">
-              <PostResponse
-                author={comment.author}
-                text={comment.response}
-                initials={comment.authorInitials}
-                key={comment.author + comment.response}
-                date={date}
-              />
-            </div>
+          {post.comments?.map((comment) => (
+            <PostResponse
+              author={comment.author}
+              text={comment.response}
+              key={comment.author + comment.response}
+            />
           ))}
           <form onSubmit={handleAddComment} className="post-response-form">
             <input

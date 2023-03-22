@@ -5,35 +5,80 @@ import "./timeline.css";
 import Search from "../../components/search/Search";
 import PostForm from "../../components/post-form/PostForm";
 import Popup from "../../components/popup/Popup";
-import { postList } from "../../components/post/postList";
-
-interface PostData {
-  id: string;
-  title: string;
-  date: string;
-  body: string;
-  topics: string[];
-  groups: string[];
-  author: string;
-  profileInitials: string;
-  lastActivity: string;
-  comments: {
-    author: string;
-    authorInitials: string;
-    response: string;
-    date: string;
-  }[];
-}
+import PostDTO from "../../models/PostDTO";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 
 const Timeline = () => {
-  const posts: PostData[] = postList;
+  const posts: PostDTO[] = [
+    {
+      id: 1,
+      title: "Lorem Ipsum",
+      last_updated: new Date(),
+      body: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+      target_topics: ["TOPIC 1"],
+      target_groups: ["GROUP 1"],
+      author: { firstName: "Anders", lastName: "A" },
+      comments: [
+        {
+          author: { firstName: "Marcus", lastName: "B" },
+          response: "Lorem Ipsum is simply dummy text of the printin",
+        },
+        {
+          author: { firstName: "Aleksander", lastName: "R" },
+          response: "Yes sui!",
+        },
+      ],
+    },
+    {
+      id: 2,
+      title: "Lorem Ipsum",
+      last_updated: new Date(),
+      body: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+      target_topics: ["TOPIC 2"],
+      target_groups: ["GROUP 1"],
+      author: { firstName: "Anders", lastName: "A" },
+      comments: [
+        {
+          author: { firstName: "Marcus", lastName: "B" },
+          response: "Lorem Ipsum is simply dummy text of the printin",
+        },
+        {
+          author: { firstName: "Aleksander", lastName: "R" },
+          response: "Yes sui!",
+        },
+        {
+          author: { firstName: "Marcus", lastName: "B" },
+          response: "Lorem Ipsum is simply dummy text of the printin",
+        },
+        {
+          author: { firstName: "Aleksander", lastName: "R" },
+          response: "Yes sui!",
+        },
+        {
+          author: { firstName: "Marcus", lastName: "B" },
+          response: "Lorem Ipsum is simply dummy text of the printin",
+        },
+        {
+          author: { firstName: "Aleksander", lastName: "R" },
+          response: "Yes sui!",
+        },
+        {
+          author: { firstName: "Marcus", lastName: "B" },
+          response: "Lorem Ipsum is simply dummy text of the printin",
+        },
+        {
+          author: { firstName: "Aleksander", lastName: "R" },
+          response: "Yes sui!",
+        },
+      ],
+    },
+  ];
 
-  const [filteredPosts, setFilteredPosts] = useState(posts);
+  const [filteredPosts, setFilteredPosts] = useState<PostDTO[]>(posts);
   const [selectedTopics, setSelectedTopics] = useState<string[]>([]);
-  const myGroups = ["GROUP 1", "GROUP 2"];
-  const myTopics = ["TOPIC 1", "TOPIC 2", "TOPICTOPIC 2"];
   const [activeTopic, setActiveTopic] = useState("");
-
+  const user = useSelector((state: RootState) => state.user);
   const [showSearchField, setShowSearchField] = useState(false);
 
   // Add state variable for post form popup visibility
@@ -44,18 +89,15 @@ const Timeline = () => {
     setShowSearchField((prevState) => !prevState);
   };
 
-  const sortedFilteredPosts = filteredPosts.sort((a, b) => {
-    return (
-      new Date(b.lastActivity).getTime() - new Date(a.lastActivity).getTime()
-    );
-  });
-
-  const postsToRender = sortedFilteredPosts.filter((post) => {
+  const postsToRender = filteredPosts.filter((post) => {
     if (selectedTopics.length === 0) {
       return true;
     }
-    return post.topics.some((topic) => selectedTopics.includes(topic));
+    return (post.target_topics ?? []).some((topic) =>
+      selectedTopics.includes(topic)
+    );
   });
+
 
   const handleTopicClick = (topic: string) => {
     let newSelectedTopics;
@@ -77,11 +119,11 @@ const Timeline = () => {
 
       <div className="timeline-content">
         <h1>Timeline</h1>
-  
+
         <div className="timeline-head">
-          <div className="timeline-tags">
-            {myTopics.map((topic, i) => (
-              
+          
+          <div className="timeline-tags ">
+            {user.topics?.map((topic, i) => (
               <div
                 key={`topic-${i}`}
                 className={`timeline-sort-tag ${
@@ -120,18 +162,7 @@ const Timeline = () => {
         </div>
         <div className="timeline-feed">
           {postsToRender.map((post, i) => (
-            <Post
-              key={`post-${i}`}
-              id={post.id}
-              title={post.title}
-              date={post.date}
-              body={post.body}
-              topics={post.topics}
-              groups={post.groups}
-              author={post.author}
-              profileInitials={post.profileInitials}
-              comments={post.comments}
-            />
+            <Post key={`post-${i}`} post={post} />
           ))}
         </div>
       </div>
@@ -140,4 +171,3 @@ const Timeline = () => {
 };
 
 export default Timeline;
-

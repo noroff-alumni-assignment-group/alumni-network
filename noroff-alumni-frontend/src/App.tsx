@@ -27,6 +27,9 @@ function App() {
 
     checkLogin();
   }, []);
+
+  console.log(process.env.REACT_APP_API_URL);
+  
   return (
     <div className="App">
       <BrowserRouter>
@@ -43,7 +46,7 @@ function App() {
                 <Route path="/groups" element={<Groups />} />
                 <Route path="/topics" element={<Topics />} />
                 <Route path="/" element={<Timeline />} />
-                <Route path="/*" element={<NotfoundPage />} />
+                <Route path="/404" element={<NotfoundPage />} />
               </Routes>
             </div>
           </div>

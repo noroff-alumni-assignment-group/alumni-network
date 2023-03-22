@@ -53,8 +53,12 @@
   min-width: 100%;
 }
 
+
+
+
 .timeline-action-btn-cnt {
     display: flex;
+    max-height: 50px;
 }
 
 .timeline-action-btn-cnt img {
@@ -65,6 +69,13 @@
 
 .timeline-tags {
   display: flex;
+    flex-wrap: nowrap; 
+  overflow-x: auto; 
+  max-width: 700px;
+}
+
+.timeline-sort-tag {
+  white-space: nowrap;
 }
 
 .timeline-feed {
