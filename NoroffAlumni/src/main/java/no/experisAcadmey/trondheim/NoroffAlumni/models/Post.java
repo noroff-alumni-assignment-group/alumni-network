@@ -19,6 +19,8 @@ public class Post {
     private String body;
     private Date last_updated;
 
+    private String authorInitlas;
+
     @ManyToOne
     private User author;
     @ManyToOne

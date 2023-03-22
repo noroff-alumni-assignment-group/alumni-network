@@ -11,10 +11,12 @@ import java.util.Set;
  */
 @Data
 public class UserDisplayDto {
-
     private String id;
     private String username;
     private String email;
     private String firstName;
     private String lastName;
+    private String title;
+    private String biography;
+    private String funfact;
 }

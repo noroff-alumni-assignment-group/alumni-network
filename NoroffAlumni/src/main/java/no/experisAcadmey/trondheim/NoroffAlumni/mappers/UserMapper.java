@@ -24,6 +24,11 @@ public abstract class UserMapper {
 
     public abstract UserDisplayDto toUserDisplayDto(User user);
 
+    @Mapping(target = "topics", qualifiedByName = "mapTopicIdToTopic", source = "topics")
+    public abstract User toUser(UserDto userDto);
+
+
+
     /**
      * Defines how to map topics
      * @param topics topics to map
@@ -33,4 +38,16 @@ public abstract class UserMapper {
     public Set<String> mapTopicToTopicId(Set<Topic> topics){
         return topics.stream().map(Topic::getName).collect(Collectors.toSet());
     }
+
+
+    @Named("mapTopicIdToTopic")
+    public Set<Topic> mapTopicIdToTopic(Set<String> topicIds) {
+        return topicIds.stream().map(topicId -> {
+            Topic topic = new Topic();
+            topic.setName(topicId);
+            return topic;
+        }).collect(Collectors.toSet());
+    }
+
+
 }
