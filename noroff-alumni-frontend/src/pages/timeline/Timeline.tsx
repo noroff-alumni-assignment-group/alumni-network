@@ -6,7 +6,7 @@ import "./timeline.css";
 import Search from "../../components/search/Search";
 import PostForm from "../../components/post-form/PostForm";
 import Popup from "../../components/popup/Popup";
-import UserSearch from "../../components/userSearch/UserSearch";
+import PostMessageForm from "../../components/post-form/PostMessageForm";
 
 interface PostData {
   title: string;
@@ -140,7 +140,7 @@ const Timeline = () => {
     <div className="timeline">
 
       {/*showPostForm && <Popup child={<PostForm editing={false} handler={setShowPostForm}/>}/>*/}
-      {showPostForm && <Popup child={<UserSearch handler={null}/>}/>}
+      {showPostForm && <Popup child={<PostMessageForm editing={false} handler={null}/>}/>}
 
       <div className="timeline-content">
         <h1>Timeline</h1>
