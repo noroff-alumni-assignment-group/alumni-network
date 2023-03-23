@@ -56,6 +56,14 @@ public class TopicService {
    }
 
    /**
+    * Retrieves all topics that a user is subscribed to
+    * @return List of subscribed topics for user
+    */
+   public List<Topic> getSubscribedTopics() {
+      return userService.getCurrentUser().getTopics().stream().toList();
+   }
+
+   /**
     * Retrieves a specific topic based on Id
     *
     * @param topicId id of the topic to find

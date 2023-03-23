@@ -60,6 +60,30 @@ public class TopicController {
         }
     }
 
+    @GetMapping("/subscribed")
+    @PreAuthorize("hasRole('ROLE_ALUMNI')")
+    @Operation(summary = "Retrieve all topics that the current user is subscribed to")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Success", content = {
+                    @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = TopicListItem.class)))
+            }),
+            @ApiResponse(responseCode = "400", description = "Bad Request", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class))
+            }),
+            @ApiResponse(responseCode = "404", description = "Topic Not Found", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class))
+            }),
+    })
+    public ResponseEntity getSubscribedTopics() {
+        try {
+            return ResponseEntity.ok(topicMapper.topicToTopicListItem(topicService.getSubscribedTopics()));
+        } catch (TopicNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Request not valid");
+        }
+    }
+
     @GetMapping("/{topic_id}")
     @PreAuthorize("hasRole('ROLE_ALUMNI')")
     @Operation(summary = "Retrieve a Topic based on a specific id")

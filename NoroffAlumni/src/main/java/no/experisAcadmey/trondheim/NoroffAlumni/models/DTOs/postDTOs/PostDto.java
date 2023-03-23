@@ -16,7 +16,7 @@ public class PostDto {
     private UserDisplayDto author;
     private UserDisplayDto target_user;
     private String authorInitlas;
+    
     private List<String> target_topics;
     private List<String> target_group;
-
 }

@@ -11,7 +11,10 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -32,8 +35,20 @@ public class UserService {
         return userRepository.findById(auth.getName()).orElseThrow(UserNotFoundException::new);
     }
 
-    public User getUser(String name){
-        return userRepository.findById(name).orElseThrow(UserNotFoundException::new);
+    /**
+     * Retrieves a user identified by its name
+     * @param id Id of user
+     * @return User identified by the provided Id
+     */
+    public User getUser(String id){
+        return userRepository.findById(id).orElseThrow(UserNotFoundException::new);
+    }
+
+    public List<User> getUsers(String searchWord) {
+        Set<User> users = new HashSet<>();
+        users.addAll(userRepository.findByFirstNameContainingIgnoreCase(searchWord));
+        users.addAll(userRepository.findByLastNameContainingIgnoreCase(searchWord));
+        return users.stream().toList();
     }
 
     public Optional<User> findUserByName(String username) {

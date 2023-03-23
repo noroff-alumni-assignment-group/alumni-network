@@ -4,13 +4,16 @@ import no.experisAcadmey.trondheim.NoroffAlumni.exceptions.PostNotFoundException
 import no.experisAcadmey.trondheim.NoroffAlumni.models.DTOs.postDTOs.EditPostDto;
 import no.experisAcadmey.trondheim.NoroffAlumni.models.DTOs.postDTOs.NewPostDto;
 import no.experisAcadmey.trondheim.NoroffAlumni.models.Post;
+import no.experisAcadmey.trondheim.NoroffAlumni.models.Topic;
 import no.experisAcadmey.trondheim.NoroffAlumni.repositories.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class PostService {
@@ -40,9 +43,10 @@ public class PostService {
         if(!newPostDto.getTarget_user().isEmpty()){
             post.setTargetUser(userService.getUser(newPostDto.getTarget_user()));
         }
-        if(!newPostDto.getTarget_topic().isEmpty()){
-            post.setTargetTopics(List.of(topicService.getTopicByName(newPostDto.getTarget_topic())));
+        for (String topicName : newPostDto.getTarget_topics()) {
+            post.addTopic(topicService.getTopicByName(topicName));
         }
+
         postRepository.save(post);
         return post.getId();
     }

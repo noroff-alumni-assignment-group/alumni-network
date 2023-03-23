@@ -13,6 +13,15 @@
     .post-form .post-content {
         gap: 15px;
     }
+    .user-search {
+        margin-bottom: 50px;
+    }
+    .recipient-tag {
+        margin-top: 35px;
+    }
+    .user-recipient {
+        white-space: nowrap;
+    }
 }
 @media screen and (max-width: 1500px){
     .post-form .text-content, .text-content-container {
@@ -28,6 +37,12 @@
     .post-form .post-content {
         gap: 5px;
     }
+    .recipient-tag {
+        margin-top: 35px;
+    }
+    .user-recipient {
+        white-space: nowrap;
+    }
 }
 @media screen and (max-width: 900px){
     .post-form .text-content, .text-content-container {
@@ -42,6 +57,21 @@
     }
     .post-form .post-content {
         gap: 15px;
+    }
+    .recipient-tag {
+        margin-top: 50px;
+    }
+    .user-search {
+        margin-bottom: 50px;
+    }
+    .user-search-field {
+        width: 100% !important;
+    }
+    .user-list {
+        width: 100% !important;
+    }
+    .user-recipient {
+        white-space: normal;
     }
 }
 
@@ -61,7 +91,19 @@
 .post-form .button-row {
     display: flex;
     gap: 1%;
+    overflow-x: scroll;
+    width: 100%;
+    padding-bottom: 8px;
 }
+.post-form .button-row::-webkit-scrollbar-thumb {
+    background-color: lightgray;
+    border: solid 3px transparent;
+    height: 5px;
+}
+.post-form .button-row::-webkit-scrollbar {
+    height: 5px;
+}
+
 .post-form .submit-row {
     display: flex;
     justify-content: right;
@@ -123,11 +165,16 @@ APP.css
     font-weight: 600;
     font-size: .7rem;
     transition: opacity .1s ease-in-out;
+    white-space: nowrap;
 }
 .entity-tag:hover {
     cursor: pointer;
     opacity: .8;
 }
+.entity-tag:disabled {
+    opacity: .45;
+}
+
 .group-tag-active {
     color: var(--orange);
     background-color: white;
@@ -154,6 +201,92 @@ APP.css
 }
 ::-webkit-scrollbar {
     width: 0;
+}
+
+
+.user-search {
+    position: relative;
+    display: flex;
+    height: 75px;
+    width: 100%;
+}
+.user-search-container {
+    display: flex;
+    width: 100%;
+}
+.user-search p {
+    margin-right: 20px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+.user-search-field {
+    padding: 5px 5px;
+    border: none;
+    border-bottom: 1px solid black;
+    background-color: inherit;
+    width: 75%;
+    height: 60%;
+    margin: auto 0;
+}
+.user-search-icon {
+    width: 30px;
+    height: auto;
+    cursor: pointer;
+    margin-left: 10px;
+}
+.user-list {
+    position: absolute;
+    bottom: -58px;
+    left: 0;
+    width: 75%;
+    background-color: white;
+    z-index: 50;
+}
+.user-list-item {
+    display: flex;
+    gap: 2%;
+    white-space: nowrap;
+    padding: 10px;
+    border: solid 1px lightgray;
+    transition: .1s ease-in-out;
+    width: 100%;
+}
+.user-list-item p {
+    margin: auto 0 auto 0;
+}
+.user-list-item:hover {
+    background-color: #e8ebf1;
+    cursor: pointer;
+}
+
+.user-search .post-profile-pic {
+    min-width: 50px !important;
+}
+
+
+.user-recipient {
+    display: flex;
+    gap: 2%;
+    padding: 10px;
+    border: solid 1px lightgray;
+    transition: .1s ease-in-out;
+    max-width: 100%;
+    border-radius: 40px;
+}
+.user-recipient button {
+    margin: auto 15px auto auto;
+    min-width: 35px;
+    height: 35px;
+    border-radius: 100%;
+    background-color: transparent;
+    color: var(--blue);
+    border: none;
+    transition: .15s ease-in-out;
+    font-size: 1.2rem;
+}
+.user-recipient button:hover {
+    cursor: pointer;
+    background-color: #edeaea;
 }
 
 

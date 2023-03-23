@@ -35,6 +35,15 @@ class UserService {
       return await api.get("http://localhost:8080/api/v1/user");
    }
 
+   async getUsers(searchWord: string){
+      return await api.get("/user/search", {
+               params: {
+                  search: searchWord
+               }
+            })
+          .then(response =>  response.data);
+   }
+
    async registerUser(signupRequest:SignupRequest){
       return await api.post(
         "http://localhost:8080/api/v1/authenticate/register",
