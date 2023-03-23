@@ -160,7 +160,6 @@ REUSABLE COMPONENT STYLING
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-right: 20px;
   cursor: pointer;
   box-shadow: var(--box-shadow);
 }
@@ -211,6 +210,7 @@ REUSABLE COMPONENT STYLING
   font-weight: 600;
   font-size: .9rem;
   cursor: pointer;
+  height: 50px;
   box-shadow: var(--box-shadow);
 }
 

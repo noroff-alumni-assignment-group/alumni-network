@@ -80,7 +80,7 @@ const Timeline = () => {
   const [filteredPosts, setFilteredPosts] = useState<PostDTO[]>(posts);
   const [selectedTopics, setSelectedTopics] = useState<string[]>([]);
   const myGroups = ["GROUP 1", "GROUP 2"];
-  const myTopics = ["TOPIC 1", "TOPIC 2", "TOPICTOPIC 2"];
+  const myTopics = ["TOPIC 1", "TOPIC 2", "TOPICTOPIC 2", "topic", "optic", "Topic"];
   const [activeTopic, setActiveTopic] = useState("");
 
   // Add state variable for search field visibility
@@ -117,8 +117,7 @@ const Timeline = () => {
   return (
     <div className="timeline">
 
-      {/*showPostForm && <Popup child={<PostForm editing={true} handler={setShowPostForm}/>}/>*/}
-      {showPostForm && <Popup child={<PostMessageForm editing={false} handler={setShowPostForm}/>}/>}
+      {showPostForm && <Popup child={<PostForm editing={false} handler={setShowPostForm}/>}/>}
 
       <div className="timeline-content">
         <h1>Timeline</h1>
