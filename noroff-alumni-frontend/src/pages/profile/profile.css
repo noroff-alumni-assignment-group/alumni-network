@@ -16,6 +16,9 @@
   padding: 80px 50px 80px 50px;
 }
 
+.profile-post-header {
+  margin-bottom: 20px;
+}
 .profiledata-head {
   width: 50%;
   display: flex;

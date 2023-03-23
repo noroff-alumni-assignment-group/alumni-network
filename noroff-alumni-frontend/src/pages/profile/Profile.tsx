@@ -4,15 +4,85 @@ import { postList } from "../../components/post/postList";
 import Post from "../../components/post/Post";
 import Search from "../../components/search/Search";
 import search from "../../assets/icons/Search.png";
-import { useNavigate, useParams } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import api from "../../services/api";
 import { useSelector } from "react-redux";
 import edit from "../../assets/icons/Ellipsis.png";
 import EditProfile from "./EditProfile";
 import { setUser } from "../../store/userSlice";
+import PostDTO from "../../models/PostDTO";
 
 function Profile() {
-  const [filteredPosts, setFilteredPosts] = useState(postList);
+   const posts: PostDTO[] = [
+     {
+       id: 1,
+       title: "Lorem Ipsum",
+       last_updated: new Date(),
+       body: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+       target_topics: ["TOPIC 1"],
+       target_groups: ["GROUP 1"],
+       author: { firstName: "Anders", lastName: "A", username: "bugge2" },
+       comments: [
+         {
+           author: { firstName: "Marcus", lastName: "B", username: "bugge2" },
+           response: "Lorem Ipsum is simply dummy text of the printin",
+         },
+         {
+           author: {
+             firstName: "Aleksander",
+             lastName: "R",
+             username: "bugge2",
+           },
+           response: "Yes sui!",
+         },
+       ],
+     },
+     {
+       id: 2,
+       title: "Lorem Ipsum",
+       last_updated: new Date(),
+       body: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+       target_topics: ["TOPIC 2"],
+       target_groups: ["GROUP 1"],
+       author: { firstName: "Anders", lastName: "A", username: "bugge2" },
+       comments: [
+         {
+           author: { firstName: "Marcus", lastName: "B" },
+           response: "Lorem Ipsum is simply dummy text of the printin",
+         },
+         {
+           author: { firstName: "Aleksander", lastName: "R" },
+           response: "Yes sui!",
+         },
+         {
+           author: { firstName: "Marcus", lastName: "B" },
+           response: "Lorem Ipsum is simply dummy text of the printin",
+         },
+         {
+           author: { firstName: "Aleksander", lastName: "R" },
+           response: "Yes sui!",
+         },
+         {
+           author: { firstName: "Marcus", lastName: "B" },
+           response: "Lorem Ipsum is simply dummy text of the printin",
+         },
+         {
+           author: { firstName: "Aleksander", lastName: "R" },
+           response: "Yes sui!",
+         },
+         {
+           author: { firstName: "Marcus", lastName: "B" },
+           response: "Lorem Ipsum is simply dummy text of the printin",
+         },
+         {
+           author: { firstName: "Aleksander", lastName: "R" },
+           response: "Yes sui!",
+         },
+       ],
+     },
+   ];
+
+   const [filteredPosts, setFilteredPosts] = useState<PostDTO[]>(posts);
   const [showSearchField, setShowSearchField] = useState(false);
   const [showEditProfile, setShowEditProfile] = useState(false);
   const navigate = useNavigate();
@@ -30,25 +100,20 @@ function Profile() {
     lastName: "",
   });
 
-  // Function to handle search icon click
   const handleSearchIconClick = () => {
     setShowSearchField((prevState) => !prevState);
   };
 
-  // Function to handle search icon click
   const handleEditProfile = () => {
     setShowEditProfile((prevState) => !prevState);
   };
 
-  // In your frontend useEffect function
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         const response = await api.get(
           `http://localhost:8080/api/v1/user/find/${name}`
         );
-
-       
 
         const userData = response.data;
         setUserProfile({
@@ -133,28 +198,17 @@ function Profile() {
       </div>
 
       <div className="profile-posts">
-        <h1>Posts</h1>
+        <h1 className="profile-post-header">Posts</h1>
         {filteredPosts.length === 0 ? (
           <div className="no-post-found-cnt">
             <p>No posts 💀</p>
           </div>
         ) : (
           <div>
-            <div className="profile-search">
-              {" "}
-              <div
-                className={`search-cnt ${
-                  showSearchField ? "search-cnt-active" : ""
-                }`}
-              >
-              
-              </div>
-            </div>
-
             <div className="all-posts">
               {filteredPosts.map((post, i) => (
                 <div className="profile-post">
-                  
+                  <Post post={post}/>
                 </div>
               ))}
             </div>

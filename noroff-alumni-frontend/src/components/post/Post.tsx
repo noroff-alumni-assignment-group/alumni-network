@@ -25,57 +25,24 @@ function Post({post}: Props) {
 
   };
 
-
-  const sendCommentToAPI = async (postId: string, commentText: string) => {
-    try {
-      const response = await fetch(
-        `https://your-api-url.com/posts/${postId}/comments`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            author: "Your Name", // Replace with the current user's name
-            authorInitials: "YN", // Replace with the current user's initials
-            response: commentText,
-            date: new Date().toISOString(),
-          }),
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error("Failed to send comment to the API");
-      }
-
-      // You can update the local state with the new comment data received from the API
-      const newComment = await response.json();
-    
-    } catch (error) {
-      console.error("Error sending comment to the API:", error);
-    }
-  };
-
-
-
-  // Replace the comments prop with the new localComments state variable
-
   const handleToggleComments = () => {
     setShowComments(!showComments);
   };
 
   return (
     <div className="post">
-      <div className="post-cnt" onClick={handleToggleComments}>
-        <div className="post-head">
-          <h2>{post.title}</h2>
-          <p>{post.last_updated.getHours()}</p>
-        </div>
-        <div className="post-body">
-          <p>{post.body}</p>
-        </div>
-        <div className="post-comments">
-          <p>{post.comments?.length} comments</p>
+      <div className="post-cnt">
+        <div onClick={handleToggleComments}>
+          <div className="post-head">
+            <h2>{post.title}</h2>
+            <p>{post.last_updated.getHours()}</p>
+          </div>
+          <div className="post-body">
+            <p>{post.body}</p>
+          </div>
+          <div className="post-comments">
+            <p>{post.comments?.length} comments</p>
+          </div>
         </div>
 
         <div className="post-footer">

@@ -1,14 +1,21 @@
 import React from "react";
 import "./profilepicture.css";
 import UserDisplayDTO from "../../models/UserDisplayDTO";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   author:UserDisplayDTO
 }
 
 function Profilepicture({author}:Props) {
+
+  let navigate = useNavigate()
+
+  const handleClick = () => {
+    navigate("/profile/" + author.username)
+  }
   return (
-    <div className="profilepicture-container">
+    <div className="profilepicture-container" onClick={handleClick}>
       <div className="profilepicture-details">
         <p>{author.firstName + " " + author.lastName}</p>
       </div>

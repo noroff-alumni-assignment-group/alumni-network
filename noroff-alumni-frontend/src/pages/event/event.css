@@ -1,0 +1,59 @@
+.event-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 50px;
+    align-items: center;
+}
+
+.all-event-cnt {
+    display: flex;
+    overflow-x: auto;
+    
+}
+
+.your-event-cnt {
+    display: flex;
+    margin-top: 70px;
+    flex-direction: column;
+}
+
+.your-event-cnt h1 {
+    margin-bottom: 50px;
+}
+
+.your-events {
+    display: flex;
+}
+
+/** EVENT COMPONENT **/
+
+.event {
+    width: 250px;
+    height: 320px;
+    background-color: var(--blue);
+    border-radius: 9px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    margin-right: 40px;
+    box-shadow: var(--box-shadow);
+    flex-direction: column;
+    
+}
+
+.event-color-1 {
+  background-color: var(--blue);
+}
+
+.event-color-2 {
+  background-color: var(--orange);
+}
+
+.event-color-3 {
+  background-color: var(--green);
+}
+
+.event-color-4 {
+  background-color: rgb(60, 186, 225);
+}
