@@ -8,6 +8,7 @@ import Popup from "../../components/popup/Popup"
 import PostForm from "../../components/post-form/PostForm"
 import Post from "../../components/post/Post"
 import UserDisplayDTO from "../../models/UserDisplayDTO"
+import PostDTO from "../../models/PostDTO"
 
 type params = {
     groupId: string
@@ -75,18 +76,8 @@ const GroupPage = () => {
                     <button className="activity-btn" onClick={() => setShowPostForm(true)}>NEW POST</button>
                 </div>
                 <div className="group-feed">
-                    {group?.posts?.map((post: any) => (
-                        <Post 
-                            key={post.id} 
-                            title={post.title} 
-                            date={post.date} 
-                            body={post.body} 
-                            topics={post.topics} 
-                            groups={post.groups} 
-                            author={post.author} 
-                            profileInitials={post.profileInitials} 
-                            comments={post.comments} 
-                        />
+                    {group?.posts?.map((post: PostDTO) => (
+                        <Post key={post.id} post={post}/>
                     ))}
                 </div>
             </div>
