@@ -1,0 +1,89 @@
+/* Groups */
+
+.groupslist {
+    margin-bottom: 30px;
+    width: fit-content;
+}
+
+.group-list-header {
+    font-size: 20px;
+    padding-top: 10px;
+    padding-bottom: 20px;
+    width: fit-content;
+}
+
+.groups-actions {
+    display: flex;
+    justify-content: space-between;
+}
+
+.groups-actions button {
+    height: 50px;
+}
+
+/* Group page */
+
+.page-header {
+    padding-bottom: 20px;
+    font-size: 25px;
+}
+
+.member-card {
+    margin-bottom: 10px;
+    padding: 15px;
+    background-color: white;
+    border-radius: 15px;
+    display: flex;
+    box-shadow: var(--box-shadow);
+    justify-content: space-between;
+}
+
+.member-card-left {
+    display: flex;
+}
+
+.member-icons {
+    display: flex;
+}
+
+.members-count {
+    margin: 10px;
+}
+
+.member-card-right {
+    text-align: right;
+    display: flex;
+}
+
+.invite-btn {
+    padding: 8px;
+    margin-right: 5px;
+    border-style: none;
+    font-size: 17px;
+    cursor: pointer;
+    background-color: white;
+}
+
+.private-label {
+    padding: 8px;
+    background-color: var(--blue);
+    color: white;
+    height: 40px;
+    border-radius: 9px;
+    margin: auto;
+}
+
+.feed-actions {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 20px;
+    padding-bottom: 10px;
+}
+
+.feed-actions button {
+    height: 45px;
+}
+
+.feed-header {
+    font-size: 20px;
+}
