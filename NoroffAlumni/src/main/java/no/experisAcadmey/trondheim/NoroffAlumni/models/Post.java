@@ -18,7 +18,7 @@ public class Post {
     private String title;
     @Column(length=500, nullable = false)
     private String body;
-    private Date last_updated;
+    private Date lastUpdated;
 
     private String authorInitlas;
 

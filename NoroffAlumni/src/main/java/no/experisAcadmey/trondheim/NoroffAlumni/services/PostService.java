@@ -35,7 +35,7 @@ public class PostService {
         Post post = new Post();
         post.setTitle(newPostDto.getTitle());
         post.setBody(newPostDto.getBody());
-        post.setLast_updated(new Date());
+        post.setLastUpdated(new Date());
         post.setAuthor(userService.getCurrentUser());
         if(!newPostDto.getTarget_user().isEmpty()){
             post.setTargetUser(userService.getUser(newPostDto.getTarget_user()));
@@ -55,7 +55,7 @@ public class PostService {
         Post post = optionalPost.get();
         post.setTitle(editPostDto.getTitle());
         post.setBody(editPostDto.getBody());
-        post.setLast_updated(new Date());
+        post.setLastUpdated(new Date());
         postRepository.save(post);
         return post.getId();
     }
