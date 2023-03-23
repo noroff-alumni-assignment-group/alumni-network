@@ -42,7 +42,7 @@ function App() {
             <Route path="/events" element={<Event />} />
             <Route path="/groups" element={<Groups />} />
             <Route path="/topics" element={<Topics />} />
-            <Route path="/topics/:id" element={<TopicFeed />} />
+            <Route path="/topic/:id" element={<TopicFeed />} />
             <Route path="/" element={<Timeline />}/>
           </Routes>
         </div>

@@ -1,5 +1,6 @@
 package no.experisAcadmey.trondheim.NoroffAlumni.models;
 
+import java.util.List;
 import java.util.Set;
 
 import jakarta.persistence.Basic;
@@ -28,13 +29,16 @@ public class Topic {
    @ManyToMany
    @JoinTable(name = "topic_subscriptions", joinColumns = @JoinColumn(name = "topic_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
    private Set<User> subscribers;
-
-   // TODO: change to use Post Type
-   @Basic
-   private Set<String> posts;
+   @ManyToMany
+   @JoinTable(name="topic_posts",joinColumns = @JoinColumn(name = "topic_id"),inverseJoinColumns = @JoinColumn(name = "post_id"))
+   private List<Post> posts;
 
    public Topic addSubscriber(User user){
       subscribers.add(user);
+      return this;
+   }
+   public Topic removeSubscriber(User user){
+      subscribers.remove(user);
       return this;
    }
 }

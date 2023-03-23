@@ -26,3 +26,9 @@
    gap: 1rem;
    cursor: pointer;
  }
+
+ .topic-description-button-wrapper{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+ }

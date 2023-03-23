@@ -1,6 +1,8 @@
 package no.experisAcadmey.trondheim.NoroffAlumni.services;
 import no.experisAcadmey.trondheim.NoroffAlumni.exceptions.TopicExistException;
 import no.experisAcadmey.trondheim.NoroffAlumni.models.DTOs.topicDTOs.NewTopic;
+import no.experisAcadmey.trondheim.NoroffAlumni.models.Post;
+import no.experisAcadmey.trondheim.NoroffAlumni.repositories.PostRepository;
 import org.springframework.data.domain.Pageable;
 
 import no.experisAcadmey.trondheim.NoroffAlumni.exceptions.TopicNotFoundException;
@@ -23,6 +25,8 @@ public class TopicService {
    private TopicRepository topicRepository;
    @Autowired
    private UserService userService;
+   @Autowired
+   private PostRepository postRepository;
 
 
    /**
@@ -85,7 +89,7 @@ public class TopicService {
       topic.setName(newTopic.getName());
       topic.setDescription(newTopic.getDescription());
       topic.setSubscribers(Set.of(userService.getCurrentUser()));
-      topic.setPosts(new HashSet<>());
+      topic.setPosts(new ArrayList<>());
 
       topicRepository.save(topic);
 
@@ -100,5 +104,17 @@ public class TopicService {
       Topic topic = topicRepository.findById(topicId).orElseThrow(TopicNotFoundException::new);
       topic.addSubscriber(userService.getCurrentUser());
       return topicRepository.save(topic);
+   }
+
+   public void leaveTopic(Long topicId){
+      Topic topic = topicRepository.findById(topicId).orElseThrow(TopicNotFoundException::new);
+      topic.removeSubscriber(userService.getCurrentUser());
+      topicRepository.save(topic);
+   }
+
+   public List<Post> findTopicPosts(Long topicId,Integer pageNumber,Integer pageSize){
+      Pageable pageRequest = PageRequest.of(pageNumber != null ? pageNumber : 0,pageSize != null? pageSize : 10 );
+      List<Post> foundPosts = postRepository.findAllByTargetTopicsIdOrderByLastUpdated(topicId,pageRequest).toList();
+      return foundPosts;
    }
 }

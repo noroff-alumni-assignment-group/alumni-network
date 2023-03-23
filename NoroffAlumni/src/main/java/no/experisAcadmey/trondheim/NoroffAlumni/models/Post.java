@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -17,14 +18,14 @@ public class Post {
     private String title;
     @Column(length=500, nullable = false)
     private String body;
-    private Date last_updated;
+    private Date lastUpdated;
 
     @ManyToOne
     private User author;
     @ManyToOne
-    private User target_user;
-    @ManyToOne
-    private Topic target_topic;
-    private Long target_group;
+    private User targetUser;
+    @ManyToMany(mappedBy = "posts")
+    private List<Topic> targetTopics;
+    private List<Long> targetGroup;
 
 }

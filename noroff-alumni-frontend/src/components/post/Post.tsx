@@ -3,10 +3,10 @@ import "./post.css";
 // import comment from "../../assets/icons/Comments.png";
 import PostResponse from "./PostResponse";
 import Profilepicture from "../profilepicture/Profilepicure";
-import PostModel from "../../models/PostModel";
+import PostDTO from "../../models/PostDTO";
 
 interface Props {
-  post:PostModel
+  post:PostDTO;
 }
 
 function Post({post}: Props) {
@@ -21,30 +21,30 @@ function Post({post}: Props) {
       <div className="post-cnt" onClick={handleToggleComments}>
         <div className="post-head">
           <h2>{post.title}</h2>
-          <p>{post.date}</p>
+          <p>{post.last_updated?.getHours()}</p>
         </div>
         <div className="post-body">
           <p>{post.body}</p>
         </div>
         <div className="post-comments">
-          <p>{post.comments.length} comments</p>
+          <p>{post.comments?.length} comments</p>
         </div>
 
         <div className="post-footer">
           <div className="post-tags">
-            {post.topics.map((topic) => (
+            {post.target_topics?.map((topic) => (
               <div className="topic" key={topic}>
                 {topic}
               </div>
             ))}
-            {post.groups.map((group) => (
+            {post.target_groups?.map((group) => (
               <div className="group" key={group}>
                 {group}
               </div>
             ))}
           </div>
           <div className="post-author">
-            <Profilepicture initials={post.profileInitials} author={post.author} />
+            <Profilepicture author={post.author ?? {firstName:"",lastName:""}} />
           </div>
         </div>
       </div>
@@ -52,11 +52,10 @@ function Post({post}: Props) {
       {showComments && (
         <div>
           <h2 className="all-comments-h2">All comments</h2>
-          {post.comments.map((comment) => (
+          {post.comments?.map((comment) => (
             <PostResponse
               author={comment.author}
               text={comment.response}
-              initials={comment.authorInitials}
               key={comment.author + comment.response}
             />
           ))}

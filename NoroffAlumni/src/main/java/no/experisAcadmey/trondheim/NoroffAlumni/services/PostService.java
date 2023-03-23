@@ -35,13 +35,13 @@ public class PostService {
         Post post = new Post();
         post.setTitle(newPostDto.getTitle());
         post.setBody(newPostDto.getBody());
-        post.setLast_updated(new Date());
+        post.setLastUpdated(new Date());
         post.setAuthor(userService.getCurrentUser());
         if(!newPostDto.getTarget_user().isEmpty()){
-            post.setTarget_user(userService.getUser(newPostDto.getTarget_user()));
+            post.setTargetUser(userService.getUser(newPostDto.getTarget_user()));
         }
         if(!newPostDto.getTarget_topic().isEmpty()){
-            post.setTarget_topic(topicService.getTopicByName(newPostDto.getTarget_topic()));
+            post.setTargetTopics(List.of(topicService.getTopicByName(newPostDto.getTarget_topic())));
         }
         postRepository.save(post);
         return post.getId();
@@ -55,7 +55,7 @@ public class PostService {
         Post post = optionalPost.get();
         post.setTitle(editPostDto.getTitle());
         post.setBody(editPostDto.getBody());
-        post.setLast_updated(new Date());
+        post.setLastUpdated(new Date());
         postRepository.save(post);
         return post.getId();
     }

@@ -16,7 +16,8 @@ export default function TopicListItem({ topic , subscribeToTopic }: TopicListPro
   const user = useSelector((state:RootState)=>state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  async function joinTopic(event:React.MouseEvent<any, MouseEvent>){
+
+  async function joinTopic(event:React.MouseEvent<any,MouseEvent>){
     event.stopPropagation();
     setCurrentTopic(await subscribeToTopic(currentTopic.id));
     let userTopics = [...user.topics!];
@@ -24,12 +25,9 @@ export default function TopicListItem({ topic , subscribeToTopic }: TopicListPro
     dispatch(setUser({...user,topics:userTopics}));
   }
   
-  function navigateToTopicFeed(){
-    navigate("/topics/"+currentTopic.id);
-  }
 
   return (
-    <div className="topic-list-item" onClick={navigateToTopicFeed}>
+    <div className="topic-list-item" onClick={(event)=>navigate("/topic/"+topic.id)}>
       <div className="topic-list-left">
         <h3>{currentTopic.name}</h3>
         <p>{currentTopic.numberOfPosts} Posts</p>
@@ -37,7 +35,7 @@ export default function TopicListItem({ topic , subscribeToTopic }: TopicListPro
       <div className="topic-list-right">
         <p>{currentTopic.subscribers} Subscribers</p>{" "}
         <AiFillStar
-        onClick={!user.topics?.includes(currentTopic.name) ? joinTopic : (event)=>{event.stopPropagation()}}
+        onClick={!user.topics?.includes(currentTopic.name) ? (event)=>joinTopic(event) : (event)=>event.stopPropagation()}
           className={
             user.topics?.includes(currentTopic.name)
               ? "topic-list-item-star-subscribed topic-list-item-star"

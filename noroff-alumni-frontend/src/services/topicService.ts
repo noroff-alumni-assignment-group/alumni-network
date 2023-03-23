@@ -27,13 +27,12 @@ class TopicService {
     });
   }
 
-  async getTopicPosts(topicId: number,searchWord: string, pageNum: number, pageSize: number) {
+  async getTopicPosts(topicId: number, pageNum: number, pageSize: number) {
     return await api
-      .get("/topic/posts/" + topicId, {
+      .get("/topic/" + topicId+"/posts", {
         params: {
           page: pageNum,
           pageSize: pageSize,
-          search: searchWord,
         },
       })
       .then((response) => {
@@ -58,6 +57,11 @@ class TopicService {
   async createTopic(newTopic: NewTopic) {
     await api.post("/topic", newTopic);
   }
-}
 
+  async leaveTopic(topicId:number){
+    return await api.post("/topic/" + topicId + "/leave").then((response) => {
+      return response.data;
+    });
+  }
+}
 export default new TopicService();
