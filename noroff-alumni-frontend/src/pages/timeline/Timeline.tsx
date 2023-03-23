@@ -9,6 +9,7 @@ import PostDTO from "../../models/PostDTO";
 import PostMessageForm from "../../components/post-form/PostMessageForm";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
+import PostFeed from "../../components/post/PostFeed";
 
 const Timeline = () => {
   const posts: PostDTO[] = [
@@ -160,11 +161,7 @@ const Timeline = () => {
             </button>
           </div>
         </div>
-        <div className="timeline-feed">
-          {postsToRender.map((post, i) => (
-            <Post key={`post-${i}`} post={post} />
-          ))}
-        </div>
+        <PostFeed/>
       </div>
     </div>
   );

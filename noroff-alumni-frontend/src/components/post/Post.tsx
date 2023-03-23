@@ -56,7 +56,11 @@ function Post({post}: Props) {
     }
   };
 
-
+  function setTimeSince(date: Date) {
+    let minutes = date.getMinutes();
+    return date.getDate() + " " + date.toLocaleString('default', { month: 'short' })
+        + " - " + date.getHours() + ":" + (minutes > 9 ? minutes: "0" + minutes);
+  }
 
   // Replace the comments prop with the new localComments state variable
 
@@ -69,7 +73,7 @@ function Post({post}: Props) {
       <div className="post-cnt" onClick={handleToggleComments}>
         <div className="post-head">
           <h2>{post.title}</h2>
-          <p>{post.last_updated?.getHours()}</p>
+          <p>{setTimeSince(new Date(post.last_updated ?? ""))}</p>
         </div>
         <div className="post-body">
           <p>{post.body}</p>
