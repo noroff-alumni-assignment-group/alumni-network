@@ -186,11 +186,12 @@ REUSABLE COMPONENT STYLING
   font-weight: 300;
   font-size: 1rem;
   text-align: start;
+  overflow-wrap: break-word;
 }
 
 .profilebubble {
-  width: 50px;
-  height: 50px;
+  width: 2.5rem;
+  height: 2.5rem;
   border-radius: 50%;
   background-color: var(--blue);
   color: white;

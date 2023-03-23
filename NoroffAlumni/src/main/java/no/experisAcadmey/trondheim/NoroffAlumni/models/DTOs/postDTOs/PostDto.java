@@ -15,6 +15,8 @@ public class PostDto {
     private Date last_updated;
     private UserDisplayDto author;
     private UserDisplayDto target_user;
+    private String authorInitlas;
     private List<String> target_topics;
-    private List<String> target_groups;
+    private List<String> target_group;
+
 }

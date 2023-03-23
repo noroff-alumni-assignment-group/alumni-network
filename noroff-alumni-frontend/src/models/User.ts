@@ -4,6 +4,7 @@ type User = {
    firstName?:string;
    lastName?:string;
    topics?:Array<string>;
+   groups?:Array<string>;
    
 };
 

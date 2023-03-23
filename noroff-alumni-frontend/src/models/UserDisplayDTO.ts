@@ -1,4 +1,5 @@
 type UserDisplayDTO = {
+    id?: number,
     email?:string;
     username?: string;
     firstName?:string;
