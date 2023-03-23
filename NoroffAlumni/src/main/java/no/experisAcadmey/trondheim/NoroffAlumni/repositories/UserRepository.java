@@ -5,11 +5,15 @@ import org.springframework.stereotype.Repository;
 
 import no.experisAcadmey.trondheim.NoroffAlumni.models.User;
 
+import java.util.Optional;
+
 /**
  * Repository for interaction between application and
  * SQLDatabase
  */
 @Repository
 public interface UserRepository extends JpaRepository<User,String>{
+
+    Optional<User> findByUsername(String username);
    
 }

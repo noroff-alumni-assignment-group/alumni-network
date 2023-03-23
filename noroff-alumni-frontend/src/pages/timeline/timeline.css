@@ -27,24 +27,38 @@
 .timeline {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  width: 100%;
+  min-width: 100%;
 }
 .timeline-content {
     width: 100%;
 }
+
+.sub-topics {
+    color: rgb(88, 88, 88);
+    font-size: 0.9rem;
+    margin-top: 50px;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+
 
 .timeline-content h1 {
   font-size: 2rem;
 }
 
 .timeline-head {
-  margin-top: 60px;
+    margin-top: 60px;
   display: flex;
+  min-width: 100%;
 }
+
+
+
 
 .timeline-action-btn-cnt {
     display: flex;
+    max-height: 50px;
 }
 
 .timeline-action-btn-cnt img {
@@ -55,6 +69,13 @@
 
 .timeline-tags {
   display: flex;
+    flex-wrap: nowrap; 
+  overflow-x: auto; 
+  max-width: 700px;
+}
+
+.timeline-sort-tag {
+  white-space: nowrap;
 }
 
 .timeline-feed {

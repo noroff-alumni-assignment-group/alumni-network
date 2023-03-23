@@ -41,21 +41,32 @@ function Topics() {
 
   return (
     <div className="topics-page">
-      {showNewTopicModulo ?<CreateTopicModulo setHideModulo={setShowNewTopicModulo}/> : null}
+      {showNewTopicModulo ? (
+        <CreateTopicModulo setHideModulo={setShowNewTopicModulo} />
+      ) : null}
       <div className="topics-page-header">
-        <h2>All Topics</h2>
+        <h1>All Topics</h1>
         <div className="topics-page-header-right">
-          <AiOutlineSearch className="topics-header-search-icon" onClick={onSearch}/>
+          <AiOutlineSearch
+            className="topics-header-search-icon"
+            onClick={onSearch}
+          />
           <input
             type="text"
             className={"topics-page-search-field"}
             placeholder="Search topic..."
             onChange={(event) => setSearchWord(event.target.value)}
           />
-          <button className="activity-btn" onClick={()=>setShowNewTopicModulo(true)}>Add new topic</button>
+          <button
+            className="activity-btn"
+            onClick={() => setShowNewTopicModulo(true)}
+          >
+            Add new topic
+          </button>
         </div>
       </div>
       <div className="topic-list-wrapper">
+    
         {topics.map((topic) => (
           <TopicListItem
             topic={topic}
@@ -64,7 +75,7 @@ function Topics() {
           />
         ))}
       </div>
-        <div className="topic-list-page-nav-wrapper">
+      <div className="topic-list-page-nav-wrapper">
         <div className="topic-list-page-nav-item" onClick={toPreviousPage}>
           <FaArrowCircleLeft className="topic-list-page-nav-arrow" />
           <h3>Previous</h3>
@@ -74,7 +85,6 @@ function Topics() {
           <FaArrowCircleRight className="topic-list-page-nav-arrow" />
         </div>
       </div>
-      
     </div>
   );
 }

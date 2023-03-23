@@ -28,7 +28,7 @@ export default function LoginForm(props: any) {
 
   return (
     <div className={`login-form`}>
-      {loading ? <LoadingIndicator/>: null}
+      {loading ? <LoadingIndicator /> : null}
       <div className="form-cnt">
         <h1>Sign in</h1>
         <form onSubmit={signIn}>
@@ -40,11 +40,20 @@ export default function LoginForm(props: any) {
             <p>Password</p>
             <input type="password" name="password" />
           </div>
-          <input type="submit" className="submit-btn" />
+
           <p className="signup-tag">
             Dont have an account?
-            <span onClick={(event) => props.setAnimateMesh(!props.animateMesh)}> Sign up</span>
+            <span onClick={(event) => props.setAnimateMesh(!props.animateMesh)}>
+              {" "}
+              Sign up
+            </span>
           </p>
+
+          <div className="signin-btn-cnt">
+            <button type="submit" className="submit-btn">
+              Sign in
+            </button>
+          </div>
         </form>
       </div>
     </div>
