@@ -1,0 +1,12 @@
+.notfound-page h1 {
+    font-size: 6rem;
+}
+
+.notfound-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 20%;
+    color: var(--blue);
+}
