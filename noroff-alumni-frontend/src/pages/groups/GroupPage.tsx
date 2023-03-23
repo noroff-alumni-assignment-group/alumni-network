@@ -9,9 +9,10 @@ import PostForm from "../../components/post-form/PostForm"
 import Post from "../../components/post/Post"
 import UserDisplayDTO from "../../models/UserDisplayDTO"
 import PostDTO from "../../models/PostDTO"
+import GroupService from "../../services/groupService"
 
 type params = {
-    groupId: string
+    groupId: any
 }
 
 const GroupPage = () => {
@@ -20,25 +21,31 @@ const GroupPage = () => {
     const { groupId } = useParams<params>()
     const [showPostForm, setShowPostForm] = useState(false)
     const [isPrivate, setIsPrivate] = useState(false)
+    const [posts, setPosts] = useState<PostDTO[]>([])
 
     
     useEffect(() => {
         async function getGroup() {
-            const response = await api.get(`"/group/${groupId}"`)
-            setGroup(response.data)
+            await GroupService.getGroup(groupId)
+                .then((data) => {
+                setGroup(data)
+            })
         }
         getGroup()
         if (group?.isPrivate === true) {
             setIsPrivate(true)
         }
-          
     }, [groupId])
 
     useEffect(() => {
         async function getGroupPosts() {
-           
+           await GroupService.getGroupPosts(groupId)
+               .then((data) => {
+               setPosts(data)
+           })
         }
-    })
+        getGroupPosts()
+    }, [])
 
     if (!group) {
         return null;
@@ -76,7 +83,7 @@ const GroupPage = () => {
                     <button className="activity-btn" onClick={() => setShowPostForm(true)}>NEW POST</button>
                 </div>
                 <div className="group-feed">
-                    {group?.posts?.map((post: PostDTO) => (
+                    {posts.map((post) => (
                         <Post key={post.id} post={post}/>
                     ))}
                 </div>

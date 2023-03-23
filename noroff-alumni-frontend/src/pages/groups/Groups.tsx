@@ -3,8 +3,8 @@ import './groups.css'
 import { Group } from "../../models/Group/Group"
 import { useEffect, useState } from "react"
 import { useNavigate } from 'react-router-dom'
-import api from "../../services/api"
 import NewGroupModulo from "../../components/Group/NewGroupModulo"
+import GroupService from "../../services/groupService"
 
 function Groups() {
 
@@ -14,17 +14,19 @@ function Groups() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    async function getGroups() {
-      const response = await api.get("/group")
-        setGroups(response.data)
+    async function getAllGroups() {
+      await GroupService.getGroups().then((data) => {
+        setGroups(data)
+      })
     }
-    getGroups()
+    getAllGroups()
   }, [])
 
   useEffect(() => {
     async function getMyGroups() {
-      const response = await api.get("/user/groups")
-      setMyGroups(response.data)
+      await GroupService.getUserGroups().then((data) => {
+        setMyGroups(data)
+      })
     }
     getMyGroups()
   }, [])
