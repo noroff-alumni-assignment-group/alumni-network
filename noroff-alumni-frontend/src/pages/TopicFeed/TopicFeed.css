@@ -12,7 +12,6 @@
    justify-content: space-between;
    align-items: end;
    margin: 2rem 0rem;
-   flex-grow: 1;
  }
 
  .topic-feed-page-nav-arrow{
@@ -31,4 +30,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+ }
+ .topic-no-post-wrapper{
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgba(0,0,0,0.5);
  }

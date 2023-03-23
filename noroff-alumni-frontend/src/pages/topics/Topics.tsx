@@ -18,7 +18,11 @@ function Topics() {
 
   useEffect(() => {
     async function getPageOfTopics() {
-      setTopics(await TopicService.getTopics(pageNumber, pageSize));
+      await TopicService.getTopics(pageNumber, pageSize).then((data)=>{
+        setTopics(data);
+      }).catch((error)=>{
+        
+      });
     }
     getPageOfTopics();
   }, [pageNumber]);

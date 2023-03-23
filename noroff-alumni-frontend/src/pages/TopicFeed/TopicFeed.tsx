@@ -7,18 +7,17 @@ import Post from "../../components/post/Post";
 import { FaArrowCircleLeft, FaArrowCircleRight } from "react-icons/fa";
 import PostDTO from "../../models/PostDTO";
 import { RootState } from "../../store/store";
-import {useSelector,useDispatch} from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { setUser } from "../../store/userSlice";
 
 export default function TopicFeed() {
   let { id } = useParams();
   const dispatch = useDispatch();
-  const user = useSelector((state:RootState)=> state.user);
+  const user = useSelector((state: RootState) => state.user);
   const pageSize = 10;
   const [topic, setTopic] = useState({} as Topic);
   const [posts, setPosts] = useState<Array<PostDTO>>([]);
   const [pageNumber, setPageNumber] = useState(0);
-  const isSubscribed = user.topics?.includes(topic.name);
 
   useEffect(() => {
     async function getTopic() {
@@ -30,26 +29,28 @@ export default function TopicFeed() {
       }
     }
     getTopic();
-  }, []);
+  }, [pageNumber]);
 
   function toNextPage() {
     if (posts.length >= 10) setPageNumber(pageNumber + 1);
   }
+  
   function toPreviousPage() {
     if (pageNumber !== 0) setPageNumber(pageNumber - 1);
   }
 
-  async function joinTopic(event:React.MouseEvent<any,MouseEvent>){
+  async function joinTopic(event: React.MouseEvent<any, MouseEvent>) {
     await topicService.joinTopic(topic.id);
     let userTopics = [...user.topics!];
     userTopics.push(topic.name);
-    dispatch(setUser({...user,topics:userTopics}));
+    dispatch(setUser({ ...user, topics: userTopics }));
   }
 
-  async function leaveTopic(){
+  async function leaveTopic() {
     await topicService.leaveTopic(topic.id);
     let userTopics = [...user.topics!];
-    userTopics = userTopics.filter((t)=>t !== topic.name);
+    userTopics = userTopics.filter((t) => t !== topic.name);
+    dispatch(setUser({ ...user, topics: userTopics }));
   }
 
   return (
@@ -60,10 +61,16 @@ export default function TopicFeed() {
           <h4>Description</h4>
           <p>{topic.description}</p>
         </div>
-        <button onClick={user.topics?.includes(topic.name) ? leaveTopic:joinTopic} className="activity-btn">{user.topics?.includes(topic.name) ? "Stop subscription" : "Subscribe"}</button>
+        <button
+          onClick={user.topics?.includes(topic.name) ? leaveTopic : joinTopic}
+          className="activity-btn"
+        >
+          {user.topics?.includes(topic.name)
+            ? "Stop subscription"
+            : "Subscribe"}
+        </button>
       </div>
-      {posts ? posts.map((post) => <Post post={post} />) : null}
-
+      {posts && posts.length > 0 ? posts.map((post) => <Post key={"Post-"+post.id} post={post} />) : <div className="topic-no-post-wrapper"><h3>No posts for this topic</h3></div>}
       <div className="topic-feed-page-nav-wrapper">
         <div className="topic-feed-page-nav-item" onClick={toPreviousPage}>
           <FaArrowCircleLeft className="topic-feed-page-nav-arrow" />
