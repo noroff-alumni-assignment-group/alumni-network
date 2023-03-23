@@ -1,6 +1,6 @@
 import "./CreateTopicModulo.css";
 import { useState } from "react";
-import { createTopic } from "../../services/topicService";
+import TopicService from "../../services/topicService";
 
 type CreateTopicModuloProps = {
    setHideModulo: Function
@@ -12,7 +12,7 @@ export default function CreateTopicModulo({setHideModulo}:CreateTopicModuloProps
 
    async function submitNewTopic(){
       if(name && description){
-         createTopic({name:name,description:description});
+         TopicService.createTopic({name:name,description:description});
          setHideModulo(false)
       }
    }

@@ -2,6 +2,7 @@ package no.experisAcadmey.trondheim.NoroffAlumni.mappers;
 
 import no.experisAcadmey.trondheim.NoroffAlumni.models.DTOs.topicDTOs.TopicDto;
 import no.experisAcadmey.trondheim.NoroffAlumni.models.DTOs.topicDTOs.TopicListItem;
+import no.experisAcadmey.trondheim.NoroffAlumni.models.Post;
 import no.experisAcadmey.trondheim.NoroffAlumni.models.Topic;
 import no.experisAcadmey.trondheim.NoroffAlumni.models.User;
 import org.mapstruct.Mapper;
@@ -40,7 +41,13 @@ public abstract class TopicMapper {
      * @return topicDto from topic
      */
     @Mapping(target = "subscribers", qualifiedByName = "mapSubscribersToId",source = "subscribers")
+    @Mapping(target = "posts", qualifiedByName = "mapPostsToPostId", source = "posts")
     public abstract TopicDto topicToTopicDto(Topic topic);
+
+    @Named("mapPostsToPostId")
+    public List<Long> mapPostsToPostId(List<Post> posts){
+        return posts.stream().map(Post::getId).toList();
+    }
 
     /**
      * Defines how to map the subscriberField
