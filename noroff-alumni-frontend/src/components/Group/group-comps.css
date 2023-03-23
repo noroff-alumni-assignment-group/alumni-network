@@ -99,7 +99,7 @@ label {
   height: 0;
 }
 
-span {
+.modulo-wrapper span {
   position: absolute;
   cursor: pointer;
   top: 0;
@@ -111,7 +111,7 @@ span {
   border-radius: 25px;
 }
 
-span:before {
+.modulo-wrapper span:before {
   position: absolute;
   content: "";
   height: 20px;
