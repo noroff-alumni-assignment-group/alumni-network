@@ -145,6 +145,10 @@ APP.css
     cursor: pointer;
     opacity: .8;
 }
+.entity-tag:disabled {
+    opacity: .45;
+}
+
 .group-tag-active {
     color: var(--orange);
     background-color: white;

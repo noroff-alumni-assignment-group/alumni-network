@@ -26,9 +26,8 @@ public class Topic {
    @ManyToMany
    @JoinTable(name = "topic_subscriptions", joinColumns = @JoinColumn(name = "topic_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
    private Set<User> subscribers;
-   @ManyToMany
-   @JoinTable(name="topic_posts",joinColumns = @JoinColumn(name = "topic_id"),inverseJoinColumns = @JoinColumn(name = "post_id"))
-   private List<Post> posts = new ArrayList<>();
+   @ManyToMany(mappedBy = "targetTopics")
+   private List<Post> posts;
 
    public Topic addSubscriber(User user){
       subscribers.add(user);

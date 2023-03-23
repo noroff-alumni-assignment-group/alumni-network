@@ -25,8 +25,14 @@ public class Post {
     private User author;
     @ManyToOne
     private User targetUser;
-    @ManyToMany(mappedBy = "posts")
+    @ManyToMany
+    @JoinTable(name="topic_posts",joinColumns = @JoinColumn(name = "post_id"),inverseJoinColumns = @JoinColumn(name = "topic_id"))
     private List<Topic> targetTopics = new ArrayList<>();
     private List<Long> targetGroup;
+
+    public Post addTopic(Topic topic){
+        targetTopics.add(topic);
+        return this;
+    }
 
 }

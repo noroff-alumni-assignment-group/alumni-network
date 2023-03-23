@@ -19,10 +19,10 @@ function PostForm (props: PostFormTypes) {
 
     let [title, setTitle] = useState("");
     let [text, setText] = useState("");
-    let [topics, setTopics] = useState([]);
-    let [groups, setGroups] = useState([]);
-    let [selectedGroups, setSelectedGroups] = useState([]);
-    let [selectedTopics, setSelectedTopics] = useState([]);
+    let [topics, setTopics] = useState<string[]>([]);
+    let [groups, setGroups] = useState<string[]>([]);
+    let [selectedGroups, setSelectedGroups] = useState<string[]>([]);
+    let [selectedTopics, setSelectedTopics] = useState<string[]>([]);
 
     let [previewing, setPreviewing] = useState(false);
     let [erroneous, setErroneous] = useState(false);
@@ -30,24 +30,25 @@ function PostForm (props: PostFormTypes) {
     let alert = useAlert();
 
     useEffect(() => {
-        if(props.editing){
-            fetchPost();
-        }
         fetchSubscriptions();
     }, [])
 
     useEffect(() => {
-        console.log(selectedTopics)
-    }, [selectedTopics])
-
-    function fetchPost() {
-        getPost(postId)
-            .then(data => {
-                console.log(data)
-                setTitle(data.title)
-                setText(data.body)
-            })
-    }
+        if(props.editing){
+            getPost(postId)
+                .then(data => {
+                    setTitle(data.title)
+                    setText(data.body)
+                    let arr: string[] = []
+                    data.target_topics?.map(topic => {
+                        if(topics.includes(topic)){
+                            arr.push(topic)
+                        }
+                    })
+                    setSelectedTopics(arr);
+                })
+        }
+    }, [topics])
 
     function fetchSubscriptions(){
         TopicService.getSubscribedTopics()
@@ -114,7 +115,7 @@ function PostForm (props: PostFormTypes) {
                 <p className="subsubtitle">Post to your group</p>
                 <div className="button-row">
                     {groups.map((group, index) => {
-                        return <button type="button" className={"entity-tag " +
+                        return <button type="button" disabled={props.editing} className={"entity-tag " +
                             (selectedGroups.includes(group) ? "group-tag-active" : "group-tag-inactive")} key={index}
                                onClick={() => {
                                    let arr = selectedTopics.includes(group)
@@ -126,7 +127,7 @@ function PostForm (props: PostFormTypes) {
                 <p className="subsubtitle">Add topics</p>
                 <div className="button-row">
                     {topics.map((topic, index) => {
-                        return <button type="button" className={"entity-tag " +
+                        return <button type="button" disabled={props.editing} className={"entity-tag " +
                             (selectedTopics.includes(topic) ? "topic-tag-active" : "topic-tag-inactive")} key={index}
                                        onClick={() => {
                                            let arr = selectedTopics.includes(topic)

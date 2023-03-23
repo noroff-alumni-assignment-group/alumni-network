@@ -43,14 +43,11 @@ public class PostService {
         if(!newPostDto.getTarget_user().isEmpty()){
             post.setTargetUser(userService.getUser(newPostDto.getTarget_user()));
         }
-        post = postRepository.save(post);
         for (String topicName : newPostDto.getTarget_topics()) {
-            post.getTargetTopics().add(topicService.getTopicByName(topicName));
+            post.addTopic(topicService.getTopicByName(topicName));
         }
+
         postRepository.save(post);
-            /*Post finalPost = post;
-            Arrays.stream(newPostDto.getTarget_topics()).forEach(topicName ->
-                    finalPost.getTargetTopics().add(topicService.getTopicByName(topicName)));*/
         return post.getId();
     }
 

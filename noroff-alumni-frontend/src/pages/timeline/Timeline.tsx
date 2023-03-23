@@ -116,7 +116,7 @@ const Timeline = () => {
   return (
     <div className="timeline">
 
-      {showPostForm && <Popup child={<PostForm editing={false} handler={setShowPostForm}/>}/>}
+      {showPostForm && <Popup child={<PostForm editing={true} handler={setShowPostForm}/>}/>}
 
       <div className="timeline-content">
         <h1>Timeline</h1>
