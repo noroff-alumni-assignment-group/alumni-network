@@ -54,7 +54,7 @@ const NewGroupModulo = ({setHideModulo}: NewGroupProps) => {
                             onClick={handlePrivateChange}
                         >
                         </input>
-                        <span/>
+                        <span className="private-check"/>
                     </label>
                 </div>
                 <div className="new-group-actions">

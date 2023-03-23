@@ -29,7 +29,6 @@
   --alert-green: #67c528;
   --alert-red: #de3222;
   --alert-blue: #3aa0e8;
-
   --box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
 }
 
@@ -200,6 +199,7 @@ REUSABLE COMPONENT STYLING
   justify-content: center;
   align-items: center;
   box-shadow: var(--box-shadow);
+  cursor: pointer;
 }
 
 .activity-btn,

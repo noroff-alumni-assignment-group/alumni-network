@@ -39,7 +39,13 @@
     margin-right: 40px;
     box-shadow: var(--box-shadow);
     flex-direction: column;
+    transition: .2s;
+    cursor: pointer;
     
+}
+
+.event:hover {
+    border-radius: 30px;
 }
 
 .event-color-1 {
@@ -56,4 +62,14 @@
 
 .event-color-4 {
   background-color: rgb(60, 186, 225);
+}
+
+/** NEW EVENT **/
+
+.new-event {
+    position: absolute;
+    width: 100vh;
+    height: 100vh;
+    background-color: black;
+    opacity: 0.1;
 }

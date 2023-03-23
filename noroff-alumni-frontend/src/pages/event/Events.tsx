@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import Event from "./Event";
 import "./event.css";
+import NewEvent from "./NewEvent";
 
 function Events() {
   const events = [
@@ -80,13 +81,19 @@ function Events() {
       colortheme: 3,
     },
   ];
+  const [renderNewEvent, setRenderNewEvent] = useState(false)
+  const handleEventClick = ()=> {
+    setRenderNewEvent(!renderNewEvent)
+  }
+
   return (
     <div>
+        <NewEvent />
       <div className="event-header">
         <h1>All Events</h1>
 
         <div className="event-action-btn-cnt">
-          <button className="activity-btn">NEW EVENT</button>
+          <button onClick={handleEventClick} className="activity-btn">NEW EVENT</button>
         </div>
       </div>
 

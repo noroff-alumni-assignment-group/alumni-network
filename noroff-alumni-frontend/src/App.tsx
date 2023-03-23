@@ -47,6 +47,7 @@ function App() {
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/profile/*" element={<Profile />} />
                 <Route path="/events" element={<Events />} />
+                <Route path="/events/:id" element={<EventPage />} />
                 <Route path="/groups" element={<Groups />} />
                 <Route path="/groups/:groupId" element={<GroupPage />} />
                 <Route path="/topics" element={<Topics />} />

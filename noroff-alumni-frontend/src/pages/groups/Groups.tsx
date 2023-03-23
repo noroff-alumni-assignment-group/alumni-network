@@ -40,7 +40,7 @@ function Groups() {
           {showNewGroupModulo ?<NewGroupModulo setHideModulo={setShowNewGroupModulo}/> : null}
           <div className="groups-actions">
                 <div className="group-list-header">
-                  <h3>All groups</h3>
+                  <h1>All groups</h1>
                 </div>
                 <button className="activity-btn" onClick={()=>setShowNewGroupModulo(true)}>NEW GROUP</button>
           </div>
@@ -53,7 +53,7 @@ function Groups() {
           </div>
 
           <div className="group-list-header">
-              <h3>My groups</h3>
+              <h1>My groups</h1>
           </div>
           <div className="groupslist">
               {myGroups.map(group => (

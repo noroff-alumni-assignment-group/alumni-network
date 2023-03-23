@@ -17,6 +17,7 @@ function Login() {
       </div>
 
       <div className={`login-mesh-gradient ${animateMesh ? "animate" : ""}`}>
+        <p>NOROFF ALUMNI</p>
         <img src={MeshGradient} alt="" className="gradient-img" />
       </div> 
     </div>

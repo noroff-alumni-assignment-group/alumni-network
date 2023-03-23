@@ -72,7 +72,7 @@
   height: 100vh;
   display: flex;
   align-items: center;
-  justify-content: center;
+  padding-left: 100px;
 }
 
 .submit-btn {
@@ -155,6 +155,19 @@
 
 .login-mesh-gradient.animate {
   transform: translateX(-100%);
+}
+
+.login-mesh-gradient {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-mesh-gradient p {
+  position: absolute;
+  font-weight: 600;
+  color: white;
+  font-size: 1.2rem;
 }
 
 

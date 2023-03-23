@@ -1,8 +1,11 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import "./event.css";
 
 function Event(props: any) {
-  const { title, location, colortheme } = props.event;
+  const { title, location, colortheme, id } = props.event;
+  
+  let navigate = useNavigate();
 
   const getColorClass = (theme: any) => {
     switch (theme) {
@@ -21,8 +24,11 @@ function Event(props: any) {
 
   const colorClass = getColorClass(colortheme);
 
+  const handleClick = () => {
+    navigate("/events/" + id)
+  };
   return (
-    <div className={`event ${colorClass}`}>
+    <div className={`event ${colorClass}`} onClick={handleClick}>
       <h3>{title}</h3>
       <p className="desc">{location}</p>
     </div>
