@@ -1,4 +1,4 @@
-/* Group Item */ 
+/* GROUP ITEM */ 
 
 .group-item {
     width: 600px;
@@ -17,7 +17,7 @@
     padding: 5px;
 }
 
-/* Member Icon */
+/* MEMBER ICON */
 
 .profile-icon {
   width: 30px;
@@ -34,7 +34,7 @@
   margin-top: 20%;
 }
 
-/* Modulo */
+/* MODULO */
 
 .modulo-wrapper {
   position: absolute;
@@ -59,6 +59,16 @@
   gap: 1rem;
 }
 
+.new-group-name {
+  width: 20rem;
+  resize: none;
+  height: 2rem;
+  padding: 5px;
+  border-style: none;
+  border-radius: 5px;
+  background-color: var(--bluewhite);
+}
+
 .new-group-desc {
   width: 20rem;
   resize: none;
@@ -73,6 +83,55 @@
   display: flex;
   justify-content: space-between;
 }
+
+/* Toggle */
+
+label {
+  position: relative;
+  display: inline-block;
+  width: 55px;
+  height: 25px;
+}
+
+.private-input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+span {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #2c3e50;
+  transition: 0.3s;
+  border-radius: 25px;
+}
+
+span:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 3px;
+  bottom: 2.6px;
+  background-color: #fff;
+  border-radius: 50%;
+  transition: 0.3s;
+}
+
+.private-input:checked + span {
+  background-color: #47e88a;
+}
+
+.private-input:checked + span:before {
+  transform: translateX(29px);
+}
+
+/* Modulo buttons */
 
 .new-group-actions {
   min-width: 100%;

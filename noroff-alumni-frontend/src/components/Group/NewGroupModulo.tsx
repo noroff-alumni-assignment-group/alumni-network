@@ -12,16 +12,22 @@ const NewGroupModulo = ({setHideModulo}: NewGroupProps) => {
     const [name,setName] = useState("")
     const [description,setDescription] = useState("")
     const [isPrivate, setIsPrivate] = useState(false)
+    const [isToggled, setToggled] = useState(false)
 
     async function createGroup(newGroup: NewGroup) {
         await api.post("/group", newGroup);
     }
 
     async function submitNewGroup() {
-        if (name && description && isPrivate) {
+        if (name && description) {
             createGroup({name: name, description: description, isPrivate: isPrivate});
             setHideModulo(true)
         }
+    }
+
+    const handlePrivateChange = () => {
+        setIsPrivate(!isPrivate)
+        setToggled(!isToggled)
     }
     
     return (
@@ -29,23 +35,27 @@ const NewGroupModulo = ({setHideModulo}: NewGroupProps) => {
             <div className="new-group-modulo">
                 <h3>Create a new group</h3>
                 <input 
-                    className="input" 
+                    className="new-group-name" 
                     type="text" 
-                    placeholder="Group name" 
+                    placeholder="Name your group" 
                     onChange={(event) => setName(event.target.value)}>
                 </input>
                 <textarea 
                     className="new-group-desc" 
-                    placeholder="Who is your group for?" 
+                    placeholder="Write a description for your group" 
                     onChange={(event) => setDescription(event.target.value)}>
                 </textarea>
                 <div className="new-group-private-check">
-                    <p>Do you want your group to be private?</p>
-                    <input 
-                        className="private-toggle" 
-                        type="checkbox" 
-                        onChange={(event) => setIsPrivate(true)}>
-                    </input>
+                    <p>Make the group private?</p>
+                    <label>
+                        <input  
+                            className="private-input"
+                            type="checkbox" 
+                            onClick={handlePrivateChange}
+                        >
+                        </input>
+                        <span/>
+                    </label>
                 </div>
                 <div className="new-group-actions">
                     <button className="cancel-btn" onClick={() => setHideModulo(false)}>Cancel</button>
