@@ -28,7 +28,7 @@ public class PostService {
     // TODO: Should return based on user's subscribed topics and groups, not "findAll"
     public List<Post> getPosts(Optional<String> searchWord){
         if(searchWord.isPresent()){
-            return postRepository.findByTitleContainingIgnoreCaseOrBodyContainingIgnoreCase(searchWord.get());
+            return postRepository.findByTitleContainingIgnoreCaseOrBodyContainingIgnoreCase(searchWord.get(), searchWord.get());
         }else {
             return postRepository.findAllByOrderByLastUpdatedDesc();
         }

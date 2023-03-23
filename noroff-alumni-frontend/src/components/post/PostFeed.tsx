@@ -21,7 +21,6 @@ function PostFeed(props: PostFeedProps) {
     function fetchPosts(){
         getPosts()
             .then(data => {
-                console.log(data);
                 setPosts(data);
             })
     }

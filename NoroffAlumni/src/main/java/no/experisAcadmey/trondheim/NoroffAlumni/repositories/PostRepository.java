@@ -16,5 +16,5 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     List<Post> findAllByOrderByLastUpdatedDesc();
 
-    List<Post> findByTitleContainingIgnoreCaseOrBodyContainingIgnoreCase(String searchWord);
+    List<Post> findByTitleContainingIgnoreCaseOrBodyContainingIgnoreCase(String title, String body);
 }

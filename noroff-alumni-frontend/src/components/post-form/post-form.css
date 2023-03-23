@@ -127,6 +127,26 @@
     padding: 5px 10px;
     overflow-y: scroll;
 }
+
+.text-content-meta {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    display: flex;
+    padding: 2px;
+    border-radius: 30px;
+}
+.text-content-meta p {
+    width: 75px;
+    text-align: right;
+    margin: auto 0 auto 0;
+    font-size: .8rem;
+    font-weight: bold;
+    color: #c7c7c7;
+}
+.text-limit-reached {
+    color: var(--alert-red) !important;
+}
 .post-form .round-toggle {
     position: absolute;
     top: 10px;
@@ -135,12 +155,13 @@
     width: 35px;
     height: 35px;
     border: none;
-    transition: .2s ease-in-out all;
+    transition: .05s ease-in-out all;
 }
 .post-form .round-toggle:hover {
     cursor: pointer;
     opacity: .8;
 }
+
 .post-form .button-active {
     background: linear-gradient(90deg, #496cda 0%, #6ca5f1 100%);
     color: white;
