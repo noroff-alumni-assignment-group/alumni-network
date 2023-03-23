@@ -14,6 +14,8 @@ import tokenService from "./services/tokenService";
 import { setUser } from "./store/userSlice";
 import UserService from "./services/UserService";
 import GroupPage from "./pages/groups/GroupPage";
+import NotfoundPage from "./pages/404/NotfoundPage";
+
 
 function App() {
   const user = useSelector((state: RootState) => state.user);
@@ -27,28 +29,31 @@ function App() {
 
     checkLogin();
   }, []);
+
+  console.log(process.env.REACT_APP_API_URL);
+  
   return (
     <div className="App">
       <BrowserRouter>
-      {
-        !user.username && !tokenService.getLocalAccessToken() ?
-        <Login />
-        : 
-        <>
-        <Navbar />
-        <div className="page-container">
-          <Routes>
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/events" element={<Event />} />
-            <Route path="/groups" element={<Groups />} />
-            <Route path="/groups/:groupId" element={<GroupPage />} />
-            <Route path="/topics" element={<Topics />} />
-            <Route path="/" element={<Timeline />}/>
-          </Routes>
-        </div>
-        </>
-      }
-        
+        {!user.username && !tokenService.getLocalAccessToken() ? (
+          <Login />
+        ) : (
+          <div>
+            <Navbar />
+            <div className="page-container">
+              <Routes>
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/profile/*" element={<Profile />} />
+                <Route path="/events" element={<Event />} />
+                <Route path="/groups" element={<Groups />} />
+                <Route path="/groups/:groupId" element={<GroupPage />} />
+                <Route path="/topics" element={<Topics />} />
+                <Route path="/" element={<Timeline />} />
+                <Route path="/404" element={<NotfoundPage />} />
+              </Routes>
+            </div>
+          </div>
+        )}
       </BrowserRouter>
     </div>
   );

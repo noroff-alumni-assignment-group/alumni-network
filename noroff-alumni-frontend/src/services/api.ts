@@ -8,6 +8,9 @@ const instance = axios.create({
 
 });
 
+console.log("env",process.env.REACT_APP_API_URL);
+
+
 instance.interceptors.request.use(
    (config)=>{
       const token = tokenService.getLocalAccessToken();
