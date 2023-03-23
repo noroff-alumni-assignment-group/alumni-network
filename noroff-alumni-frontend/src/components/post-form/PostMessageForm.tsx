@@ -21,7 +21,7 @@ function PostMessageForm (props: PostFormTypes) {
     let [title, setTitle] = useState("");
     let [text, setText] = useState("");
     const [searchWord, setSearchWord] = useState("");
-    const [users, setUsers] = useState([]);
+    const [users, setUsers] = useState<UserDisplayDTO[]>([]);
     const [recipient, setRecipient] = useState<UserDisplayDTO | undefined>(undefined);
 
     let [previewing, setPreviewing] = useState(false);
@@ -44,7 +44,16 @@ function PostMessageForm (props: PostFormTypes) {
     }
 
     function onSearch(){
-        if(searchWord.length <= 0){setUsers([]); return;}
+        if(searchWord.length <= 0){setUsers([
+            {
+                id: "string",
+                email:"string",
+                username: "string",
+                firstName:"Emmanuel-derango",
+                lastName:"S. Throgdan billeoul",
+
+            }
+        ]); return;}
         service.getUsers(searchWord)
             .then(data => setUsers(data))
     }
@@ -70,7 +79,7 @@ function PostMessageForm (props: PostFormTypes) {
             if(!props.editing) {
                 createPost(newPost)
                     .then(result => {
-                        alert.success("Published successfully");
+                        alert.success("Message sent");
                         props.handler(false);
                     })
             } else {
@@ -91,9 +100,9 @@ function PostMessageForm (props: PostFormTypes) {
     return (
         <div className="post-form">
             <div className="post-content">
-                <h1>{props.editing ? "Edit message" : "Write a new message"}</h1>
+                <h1>{props.editing ? "Edit message" : "New message"}</h1>
+                <p className="recipient-tag">Recipient: </p>
                 <div className="user-search">
-                    <p>To: </p>
                     {recipient != undefined &&
                         <div className="user-recipient">
                             <div className="profilebubble post-profile-pic">
@@ -112,6 +121,7 @@ function PostMessageForm (props: PostFormTypes) {
                                 className={"user-search-field"}
                                 placeholder="Search topic..."
                                 onChange={(event) => setSearchWord(event.target.value)}
+                                value={searchWord}
                             />
                             <AiOutlineSearch className="user-search-icon" onClick={onSearch}/>
                             <ul className="user-list">
@@ -141,7 +151,7 @@ function PostMessageForm (props: PostFormTypes) {
             </div>
             <div className="submit-row">
                 <button type="button" className="cancel-btn" onClick={() => props.handler(false)}>Cancel</button>
-                <button type="button" className="activity-btn" onClick={() => handleSubmit()}>Publish</button>
+                <button type="button" className="activity-btn" onClick={() => handleSubmit()}>Send</button>
             </div>
         </div>
     )

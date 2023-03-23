@@ -7,6 +7,7 @@ import Search from "../../components/search/Search";
 import PostForm from "../../components/post-form/PostForm";
 import Popup from "../../components/popup/Popup";
 import PostDTO from "../../models/PostDTO";
+import PostMessageForm from "../../components/post-form/PostMessageForm";
 
 
 
@@ -116,7 +117,8 @@ const Timeline = () => {
   return (
     <div className="timeline">
 
-      {showPostForm && <Popup child={<PostForm editing={true} handler={setShowPostForm}/>}/>}
+      {/*showPostForm && <Popup child={<PostForm editing={true} handler={setShowPostForm}/>}/>*/}
+      {showPostForm && <Popup child={<PostMessageForm editing={false} handler={setShowPostForm}/>}/>}
 
       <div className="timeline-content">
         <h1>Timeline</h1>
