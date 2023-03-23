@@ -14,6 +14,10 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import lombok.Data;
 
+/**
+ * Data model for the Topic entity
+ * stored in the database.
+ */
 @Entity
 @Data
 public class Topic {
@@ -31,6 +35,10 @@ public class Topic {
 
    public Topic addSubscriber(User user){
       subscribers.add(user);
+      return this;
+   }
+   public Topic removeSubscriber(User user){
+      subscribers.remove(user);
       return this;
    }
 }

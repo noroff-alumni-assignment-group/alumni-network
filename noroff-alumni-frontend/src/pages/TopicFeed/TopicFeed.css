@@ -1,0 +1,40 @@
+.topic-feed{
+   display: flex;
+   flex-direction: column;
+   gap: 1rem;
+   min-height: 100%;
+}
+
+
+.topic-feed-page-nav-wrapper{
+   display: flex;
+   min-width: 100%;
+   justify-content: space-between;
+   align-items: end;
+   margin: 2rem 0rem;
+ }
+
+ .topic-feed-page-nav-arrow{
+  width: 2rem;
+  height: auto;
+ }
+ 
+ .topic-feed-page-nav-item{
+   display: flex;
+   align-items: center;
+   gap: 1rem;
+   cursor: pointer;
+ }
+
+ .topic-description-button-wrapper{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+ }
+ .topic-no-post-wrapper{
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgba(0,0,0,0.5);
+ }

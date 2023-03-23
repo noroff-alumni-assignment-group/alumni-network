@@ -25,7 +25,7 @@ export default function TopicListItem({ topic , subscribeToTopic }: TopicListPro
     dispatch(setUser({...user,topics:userTopics}));
   }
   
-//TODO: add logic for subscribed with reducer and check if already subscribed
+
   return (
     <div className="topic-list-item" onClick={(event)=>navigate("/topic/"+topic.id)}>
       <div className="topic-list-left">

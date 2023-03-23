@@ -11,14 +11,18 @@ function Topics() {
   const pageSize = 10;
   const [pageNumber, setPageNumber] = useState<number>(0);
   const [searchWord, setSearchWord] = useState("");
-  const [showNewTopicModulo,setShowNewTopicModulo] = useState(false);
+  const [showNewTopicModulo, setShowNewTopicModulo] = useState(false);
   const [topics, setTopics] = useState<Array<TopicListItemDTO>>(
     [] as Array<TopicListItemDTO>
   );
 
   useEffect(() => {
     async function getPageOfTopics() {
-      setTopics(await TopicService.getTopics(pageNumber, pageSize));
+      await TopicService.getTopics(pageNumber, pageSize).then((data)=>{
+        setTopics(data);
+      }).catch((error)=>{
+        
+      });
     }
     getPageOfTopics();
   }, [pageNumber]);

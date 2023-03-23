@@ -69,7 +69,7 @@ function Post({post}: Props) {
       <div className="post-cnt" onClick={handleToggleComments}>
         <div className="post-head">
           <h2>{post.title}</h2>
-          <p>{post.last_updated.getHours()}</p>
+          <p>{post.last_updated?.getHours()}</p>
         </div>
         <div className="post-body">
           <p>{post.body}</p>
@@ -92,7 +92,7 @@ function Post({post}: Props) {
             ))}
           </div>
           <div className="post-author">
-            <Profilepicture author={post.author} />
+            <Profilepicture author={post.author ?? {firstName:"",lastName:""}} />
           </div>
         </div>
       </div>
