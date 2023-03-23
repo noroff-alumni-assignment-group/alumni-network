@@ -9,6 +9,15 @@ export async function getPosts(): Promise<PostDTO[]> {
         .then(response => response.data);
 }
 
+export async function searchPosts(searchWord: string) {
+    return await api.get("/post", {
+            params: {
+                searchWord: searchWord
+            }
+        })
+        .then(response => response.data)
+}
+
 export async function getPost(post_id: number): Promise<PostDTO> {
     return await api.get("/post/" + post_id)
         .then(response => response.data)
