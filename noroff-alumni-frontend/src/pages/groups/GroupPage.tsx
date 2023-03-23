@@ -3,13 +3,14 @@ import { useParams } from "react-router-dom"
 import MemberIcon from "../../components/Group/MemberIcon"
 import { Group } from "../../models/Group/Group"
 import './groups.css'
-import api from "../../services/api"
 import Popup from "../../components/popup/Popup"
 import PostForm from "../../components/post-form/PostForm"
 import Post from "../../components/post/Post"
 import UserDisplayDTO from "../../models/UserDisplayDTO"
 import PostDTO from "../../models/PostDTO"
 import GroupService from "../../services/groupService"
+import InviteModulo from "../../components/Group/InviteModulo"
+
 
 type params = {
     groupId: any
@@ -20,6 +21,7 @@ const GroupPage = () => {
     const [group, setGroup] = useState<Group>()
     const { groupId } = useParams<params>()
     const [showPostForm, setShowPostForm] = useState(false)
+    const [showInviteModulo, setShowInviteModulo] = useState(false)
     const [isPrivate, setIsPrivate] = useState(false)
     const [posts, setPosts] = useState<PostDTO[]>([])
 
@@ -47,13 +49,16 @@ const GroupPage = () => {
         getGroupPosts()
     }, [])
 
+    
     if (!group) {
         return null;
       } 
+    
 
     return (
         <>
             <div className="group-page">
+                {showInviteModulo ? <InviteModulo setHideInviteModulo={setShowInviteModulo}/> : null}
                 {showPostForm && <Popup child={<PostForm editing={false} handler={setShowPostForm}/>}/>}
                 <div className="page-header">
                     <h3>{group?.name}</h3>
@@ -70,7 +75,7 @@ const GroupPage = () => {
                         </div>
                     </div>
                     <div className="member-card-right">
-                        <button className="invite-btn">Invite</button>
+                        <button className="invite-btn" onClick={() => setShowInviteModulo(true)}>Invite</button>
                         <div className={(isPrivate ? "private-label" : "")}>
                             {isPrivate && <p>Private</p>}
                         </div>

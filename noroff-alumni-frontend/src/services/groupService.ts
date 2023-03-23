@@ -41,5 +41,9 @@ class GroupService {
         .post("/group", newGroup)
     }
 
+    async joinGroup(groupId: number) {
+        await api
+        .post("/group" + groupId + "/join")
+    }
 }
 export default new GroupService()

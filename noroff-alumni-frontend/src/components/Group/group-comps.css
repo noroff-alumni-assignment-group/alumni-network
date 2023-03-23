@@ -50,7 +50,7 @@
   justify-content: center;
 }
 
-.new-group-modulo {
+.modulo-box {
   background-color: white;
   border-radius: 0.5rem;
   display: flex;
@@ -58,6 +58,16 @@
   padding: 2rem;
   gap: 1rem;
 }
+
+/* Buttons */
+
+.modulo-actions {
+  min-width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* MODULO - NEW GROUP */
 
 .new-group-name {
   width: 20rem;
@@ -131,10 +141,6 @@ label {
   transform: translateX(29px);
 }
 
-/* Modulo buttons */
+/* MODULO - INVITE */
 
-.new-group-actions {
-  min-width: 100%;
-  display: flex;
-  justify-content: space-between;
-}
+

@@ -28,7 +28,7 @@ const NewGroupModulo = ({setHideModulo}: NewGroupProps) => {
     
     return (
         <div className="modulo-wrapper">
-            <div className="new-group-modulo">
+            <div className="modulo-box">
                 <h3>Create a new group</h3>
                 <input 
                     className="new-group-name" 
@@ -53,7 +53,7 @@ const NewGroupModulo = ({setHideModulo}: NewGroupProps) => {
                         <span className="private-input-span"/>
                     </label>
                 </div>
-                <div className="new-group-actions">
+                <div className="modulo-actions">
                     <button className="cancel-btn" onClick={() => setHideModulo(false)}>Cancel</button>
                     <button className="activity-btn" onClick={submitNewGroup}>Create</button>
                 </div>
