@@ -2,19 +2,23 @@ package no.experisAcadmey.trondheim.NoroffAlumni.services;
 
 import no.experisAcadmey.trondheim.NoroffAlumni.exceptions.GroupNotFoundException;
 import no.experisAcadmey.trondheim.NoroffAlumni.models.Group;
+import no.experisAcadmey.trondheim.NoroffAlumni.models.Post;
 import no.experisAcadmey.trondheim.NoroffAlumni.models.User;
 import no.experisAcadmey.trondheim.NoroffAlumni.repositories.GroupRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 
 @Service
 public class GroupService {
 
-
+    @Autowired
     private final GroupRepository groupRepository;
+    @Autowired
     private final UserService userService;
 
 
@@ -54,8 +58,8 @@ public class GroupService {
         g.setName(group.getName());
         g.setDescription(group.getDescription());
         g.setIsPrivate(group.getIsPrivate());
+        g.addMember(userService.getCurrentUser());
         groupRepository.save(g);
-
         return g;
     }
 
@@ -68,6 +72,16 @@ public class GroupService {
         Group group = groupRepository.findById(group_id).orElseThrow(GroupNotFoundException::new);
         group.addMember(userService.getCurrentUser());
         return groupRepository.save(group);
+    }
+
+    /**
+     * Gets all the posts in a group
+     * @param group_id the ID of the group to get all posts for
+     * @return posts
+     */
+    public Set<Post> getPostsInGroup(Long group_id) {
+        Group group = groupRepository.findById(group_id).get();
+        return group.getPosts();
     }
 
 }

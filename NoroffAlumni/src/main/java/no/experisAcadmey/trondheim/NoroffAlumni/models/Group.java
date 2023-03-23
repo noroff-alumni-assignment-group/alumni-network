@@ -31,6 +31,9 @@ public class Group {
     )
     private Set<User> members;
 
+    @OneToMany(mappedBy = "group")
+    private Set<Post> posts;
+
     public void addMember(User user){
         members.add(user);
     }

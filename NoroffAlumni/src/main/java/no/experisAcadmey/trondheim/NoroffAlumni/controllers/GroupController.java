@@ -8,9 +8,10 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import no.experisAcadmey.trondheim.NoroffAlumni.exceptions.GroupNotFoundException;
 import no.experisAcadmey.trondheim.NoroffAlumni.mappers.GroupMapper;
-import no.experisAcadmey.trondheim.NoroffAlumni.models.DTOs.groupDTOs.GroupDTO;
-import no.experisAcadmey.trondheim.NoroffAlumni.models.DTOs.groupDTOs.GroupPostDTO;
+import no.experisAcadmey.trondheim.NoroffAlumni.models.DTOs.groupDTOs.GroupDto;
+import no.experisAcadmey.trondheim.NoroffAlumni.models.DTOs.groupDTOs.GroupPostDto;
 import no.experisAcadmey.trondheim.NoroffAlumni.models.Group;
+import no.experisAcadmey.trondheim.NoroffAlumni.models.Post;
 import no.experisAcadmey.trondheim.NoroffAlumni.services.GroupService;
 import org.mapstruct.factory.Mappers;
 import org.springframework.http.ProblemDetail;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.Collection;
+import java.util.Set;
 
 @RestController
 @RequestMapping(path = "api/v1/group")
@@ -41,7 +43,7 @@ public class GroupController {
                     responseCode = "200",
                     description = "Success",
                     content = { @Content(mediaType = "application/json",
-                            array = @ArraySchema(schema = @Schema(implementation = GroupDTO.class)))
+                            array = @ArraySchema(schema = @Schema(implementation = GroupDto.class)))
                     }
             ),
             @ApiResponse(
@@ -61,7 +63,7 @@ public class GroupController {
     })
     public ResponseEntity getGroups() {
         try {
-            Collection<GroupDTO> groups = groupMapper.groupsToGroupDTO(groupService.findGroups());
+            Collection<GroupDto> groups = groupMapper.groupsToGroupDto(groupService.findGroups());
             return ResponseEntity.ok(groups);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Request not valid");
@@ -76,7 +78,7 @@ public class GroupController {
                     responseCode = "200",
                     description = "Success",
                     content = { @Content(mediaType = "application/json",
-                            array = @ArraySchema(schema = @Schema(implementation = GroupDTO.class)))
+                            array = @ArraySchema(schema = @Schema(implementation = GroupDto.class)))
                     }
             ),
             @ApiResponse(
@@ -103,7 +105,7 @@ public class GroupController {
     })
     public ResponseEntity getGroupById(@PathVariable Long id) {
         try {
-            return ResponseEntity.ok(groupMapper.groupToGroupDTO(groupService.findGroupById(id)));
+            return ResponseEntity.ok(groupMapper.groupToGroupDto(groupService.findGroupById(id)));
         } catch (GroupNotFoundException e) {
             return ResponseEntity.notFound().build();
         } catch (Exception e) {
@@ -129,9 +131,9 @@ public class GroupController {
                     }
             )
     })
-    public ResponseEntity createGroup(@RequestBody GroupPostDTO group) {
+    public ResponseEntity createGroup(@RequestBody GroupPostDto group) {
         try {
-            Group newGroup = groupService.createGroup(groupMapper.groupPostDTOToGroup(group));
+            Group newGroup = groupService.createGroup(groupMapper.groupPostDtoToGroup(group));
             URI location = URI.create("group/" + newGroup.getId());
             return ResponseEntity.created(location).build();
         } catch(Exception e){
@@ -164,7 +166,40 @@ public class GroupController {
     })
     public ResponseEntity joinGroup(@PathVariable("id") Long id) {
         try {
-            return ResponseEntity.ok(groupMapper.groupToGroupDTO(groupService.joinGroup(id)));
+            return ResponseEntity.ok(groupMapper.groupToGroupDto(groupService.joinGroup(id)));
+        } catch (GroupNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        } catch(Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @GetMapping("/{id}/posts")
+    @PreAuthorize("hasRole('ROLE_ALUMNI')")
+    @Operation(summary = "Get all posts in a group")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Success",
+                    content = @Content
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Bad request",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ProblemDetail.class))
+                    }
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Group not Found",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ProblemDetail.class))
+                    })
+    })
+    public ResponseEntity<Set<Post>> getGroupPosts(@PathVariable Long id){
+        try {
+            return ResponseEntity.ok(groupService.getPostsInGroup(id));
         } catch (GroupNotFoundException e) {
             return ResponseEntity.notFound().build();
         } catch(Exception e) {
