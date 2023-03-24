@@ -16,9 +16,9 @@ const GroupItem = ({ group }: propsGroup) => {
                 </div>
                    
                 <div className="profile-icon">
-                    {group.members?.map((member: any) => (
+                    {/*group.members?.map((member: any) => (
                         <MemberIcon key={member.id} firstName={member.firstName} lastName={member.lastName}/>
-                    ))}
+                    ))*/}
                 </div>
             </div>
         </>

@@ -22,7 +22,6 @@ const GroupPage = () => {
     const { groupId } = useParams<params>()
     const [showPostForm, setShowPostForm] = useState(false)
     const [showInviteModulo, setShowInviteModulo] = useState(false)
-    const [isPrivate, setIsPrivate] = useState(false)
     const [posts, setPosts] = useState<PostDTO[]>([])
 
     
@@ -34,11 +33,9 @@ const GroupPage = () => {
             })
         }
         getGroup()
-        if (group?.isPrivate === true) {
-            setIsPrivate(true)
-        }
     }, [groupId])
 
+    /*
     useEffect(() => {
         async function getGroupPosts() {
            await GroupService.getGroupPosts(groupId)
@@ -48,11 +45,13 @@ const GroupPage = () => {
         }
         getGroupPosts()
     }, [])
+    */
 
     
     if (!group) {
         return null;
-      } 
+      }
+      
     
 
     return (
@@ -66,9 +65,9 @@ const GroupPage = () => {
                 <div className="member-card">
                     <div className="member-card-left">
                         <div className="member-icons">
-                            {group?.members?.map((member: UserDisplayDTO) => (
+                            {/*group?.members?.map((member: UserDisplayDTO) => (
                                 <MemberIcon key={member.id} firstName={member.firstName} lastName={member.lastName} />
-                            ))}
+                            ))*/}
                         </div>
                         <div className="members-count">
                             <p>{`${group?.members?.length}`}</p>
@@ -76,9 +75,7 @@ const GroupPage = () => {
                     </div>
                     <div className="member-card-right">
                         <button className="invite-btn" onClick={() => setShowInviteModulo(true)}>Invite</button>
-                        <div className={(isPrivate ? "private-label" : "")}>
-                            {isPrivate && <p>Private</p>}
-                        </div>
+                        
                     </div>
                 </div>
                 <div className="feed-actions">
@@ -88,9 +85,9 @@ const GroupPage = () => {
                     <button className="activity-btn" onClick={() => setShowPostForm(true)}>NEW POST</button>
                 </div>
                 <div className="group-feed">
-                    {posts.map((post) => (
+                    {/*posts.map((post) => (
                         <Post key={post.id} post={post}/>
-                    ))}
+                    ))*/}
                 </div>
             </div>
         </>

@@ -20,7 +20,7 @@ class GroupService {
         })
     }
 
-    async getGroup(groupId: string) {
+    async getGroup(groupId: number) {
         return await api
         .get("/group/" + groupId)
         .then((response) => {
