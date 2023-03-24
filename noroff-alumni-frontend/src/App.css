@@ -144,8 +144,13 @@ REUSABLE COMPONENT STYLING
   border-radius: 5px;
   cursor: pointer;
   margin-right: 10px;
-
   box-shadow: var(--box-shadow);
+  transition: .1s ease-in-out;
+}
+
+.topic:hover,
+.group:hover {
+  opacity: .7;
 }
 
 .timeline-sort-tag {
@@ -162,6 +167,11 @@ REUSABLE COMPONENT STYLING
   align-items: center;
   cursor: pointer;
   box-shadow: var(--box-shadow);
+  transition: .1s ease-in-out;
+}
+
+.timeline-sort-tag:hover {
+  opacity: .7;
 }
 
 .timeline-sort-tag.active {
@@ -213,10 +223,16 @@ REUSABLE COMPONENT STYLING
   cursor: pointer;
   height: 50px;
   box-shadow: var(--box-shadow);
+  transition: .1s ease-in-out;
 }
 
 .activity-btn {
   background: linear-gradient(90deg, #496cda 0%, #6ca5f1 100%);
+}
+
+.activity-btn:hover,
+.cancel-btn:hover {
+  opacity: .7;
 }
 
 .cancel-btn {
