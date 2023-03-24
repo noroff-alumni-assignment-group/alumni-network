@@ -24,19 +24,15 @@ const Timeline = () => {
 
 
   useEffect(() => {
-    fetchPosts();
+    getPosts()
+        .then(data => {
+          setPosts(data);
+        })
   }, [])
 
   useEffect(() => {
     filterOnTopics();
   }, [selectedTopics])
-
-  function fetchPosts(){
-    getPosts()
-        .then(data => {
-          setPosts(data);
-        })
-  }
 
   function onSearch(searchWord: string){
     searchPosts(searchWord)
@@ -55,6 +51,8 @@ const Timeline = () => {
     setSelectedTopics(newSelectedTopics);
   };
 
+  // Returns filtered posts based on topics, used as input to feed instead of state-posts
+  // if topic is selected to ensure that state-posts are not modified
   function filterOnTopics(){
     let filteredPosts: PostDTO[] = [];
     posts.forEach(post => {

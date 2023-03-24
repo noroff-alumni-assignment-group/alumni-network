@@ -10,9 +10,14 @@ import { useSelector } from "react-redux";
 import edit from "../../assets/icons/Ellipsis.png";
 import EditProfile from "./EditProfile";
 import { setUser } from "../../store/userSlice";
+import PostFeed from "../../components/post/PostFeed";
+import PostDTO from "../../models/PostDTO";
+import {getPosts, searchPosts} from "../../services/postService";
 
 function Profile() {
-  const [filteredPosts, setFilteredPosts] = useState(postList);
+
+  const [posts, setPosts] = useState<PostDTO[]>([]);
+
   const [showSearchField, setShowSearchField] = useState(false);
   const [showEditProfile, setShowEditProfile] = useState(false);
   const navigate = useNavigate();
@@ -30,15 +35,12 @@ function Profile() {
     lastName: "",
   });
 
-  // Function to handle search icon click
-  const handleSearchIconClick = () => {
-    setShowSearchField((prevState) => !prevState);
-  };
-
-  // Function to handle search icon click
-  const handleEditProfile = () => {
-    setShowEditProfile((prevState) => !prevState);
-  };
+  useEffect(() => {
+    getPosts()
+        .then(data => {
+          setPosts(data);
+        })
+  }, [])
 
   // In your frontend useEffect function
   useEffect(() => {
@@ -67,6 +69,19 @@ function Profile() {
 
     fetchUserData();
   }, [name]);
+
+  // Function to handle search icon click
+  const handleEditProfile = () => {
+    setShowEditProfile((prevState) => !prevState);
+  };
+
+  function onSearch(searchWord: string) {
+      searchPosts(searchWord)
+          .then(data => {
+            setPosts(data);
+          })
+  }
+
 
   return (
     <div className="profilepage">
@@ -133,33 +148,11 @@ function Profile() {
       </div>
 
       <div className="profile-posts">
-        <h1>Posts</h1>
-        {filteredPosts.length === 0 ? (
-          <div className="no-post-found-cnt">
-            <p>No posts 💀</p>
-          </div>
-        ) : (
-          <div>
-            <div className="profile-search">
-              {" "}
-              <div
-                className={`search-cnt ${
-                  showSearchField ? "search-cnt-active" : ""
-                }`}
-              >
-              
-              </div>
-            </div>
-
-            <div className="all-posts">
-              {filteredPosts.map((post, i) => (
-                <div className="profile-post">
-                  
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
+        <div className="profile-posts-header">
+          <h1>Posts</h1>
+          <Search onSearch={onSearch}/>
+        </div>
+        <PostFeed posts={posts}/>
       </div>
     </div>
   );
