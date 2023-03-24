@@ -30,11 +30,7 @@ function PostForm (props: PostFormTypes) {
         if(props.editing){
             getPost();
         }
-    }, [props.editing])
-
-    useEffect(() => {
-        console.log(previewing);
-    }, [previewing])
+    }, [])
 
     function getPost() {
         // fetch post
