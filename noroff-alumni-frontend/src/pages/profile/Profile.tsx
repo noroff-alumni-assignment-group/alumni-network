@@ -12,7 +12,7 @@ import EditProfile from "./EditProfile";
 import { setUser } from "../../store/userSlice";
 import PostFeed from "../../components/post/PostFeed";
 import PostDTO from "../../models/PostDTO";
-import {getPosts, searchPosts} from "../../services/postService";
+import {getPosts, getPostsUser, searchPosts, searchPostsUser} from "../../services/postService";
 
 function Profile() {
 
@@ -36,7 +36,7 @@ function Profile() {
   });
 
   useEffect(() => {
-    getPosts()
+    getPostsUser(user.id)
         .then(data => {
           setPosts(data);
         })
@@ -76,8 +76,9 @@ function Profile() {
   };
 
   function onSearch(searchWord: string) {
-      searchPosts(searchWord)
+      searchPostsUser(user.id, searchWord)
           .then(data => {
+            console.log(data)
             setPosts(data);
           })
   }
