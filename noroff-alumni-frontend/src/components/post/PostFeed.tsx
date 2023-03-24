@@ -11,7 +11,7 @@ function PostFeed(props: PostFeedProps) {
 
     return (
         <div className="post-feed">
-            {props.posts.map((post, i) => (
+            {props.posts?.map((post, i) => (
                 <Post key={`post-${i}`} post={post} />
             ))}
         </div>

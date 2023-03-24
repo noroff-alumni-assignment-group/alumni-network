@@ -17,7 +17,6 @@ const Timeline = () => {
   const [posts, setPosts] = useState<PostDTO[]>([]);
 
   const [selectedTopics, setSelectedTopics] = useState<string[]>([]);
-  const [activeTopic, setActiveTopic] = useState("");
   const user = useSelector((state: RootState) => state.user);
 
   // Add state variable for post form popup visibility
@@ -27,6 +26,10 @@ const Timeline = () => {
   useEffect(() => {
     fetchPosts();
   }, [])
+
+  useEffect(() => {
+    filterOnTopics();
+  }, [selectedTopics])
 
   function fetchPosts(){
     getPosts()
@@ -50,9 +53,17 @@ const Timeline = () => {
       newSelectedTopics = [...selectedTopics, topic];
     }
     setSelectedTopics(newSelectedTopics);
-
-    setActiveTopic(newSelectedTopics[newSelectedTopics.length - 1]);
   };
+
+  function filterOnTopics(){
+    let filteredPosts: PostDTO[] = [];
+    posts.forEach(post => {
+      if(post.target_topics?.some(topic => selectedTopics.includes(topic))){
+        filteredPosts.push(post);
+      }
+    })
+    return filteredPosts;
+  }
 
   return (
     <div className="timeline">
@@ -85,7 +96,7 @@ const Timeline = () => {
             </button>
           </div>
         </div>
-        <PostFeed posts={posts}/>
+        <PostFeed posts={selectedTopics.length > 0 ? filterOnTopics() : posts}/>
       </div>
     </div>
   );
