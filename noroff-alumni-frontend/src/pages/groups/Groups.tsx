@@ -3,6 +3,7 @@ import './groups.css'
 import { Group } from "../../models/Group/Group"
 import { useEffect, useState } from "react"
 import { useNavigate } from 'react-router-dom'
+import api from "../../services/api"
 import NewGroupModulo from "../../components/Group/NewGroupModulo"
 import GroupService from "../../services/groupService"
 
@@ -27,6 +28,7 @@ function Groups() {
       await GroupService.getUserGroups().then((data) => {
         setMyGroups(data)
       })
+      
     }
     getMyGroups()
   }, [])

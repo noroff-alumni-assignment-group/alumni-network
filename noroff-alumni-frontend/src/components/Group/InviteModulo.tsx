@@ -9,8 +9,10 @@ type InviteProps = {
 const InviteModulo = ({setHideInviteModulo}: InviteProps) => {
     
     const [invited, setInvited] = useState<UserDisplayDTO[]>([])
+    const [email, setEmail] = useState("")
 
     async function submitInvite() {
+        setEmail("")
         setHideInviteModulo(true)
     }
     
@@ -19,9 +21,14 @@ const InviteModulo = ({setHideInviteModulo}: InviteProps) => {
         <div className="modulo-wrapper">
             <div className="modulo-box">
                 <h3>Invite a new member</h3>
-                <div className="user-list">
-                    
-                </div>
+                    <input 
+                        className="invite-email"
+                        type="email" 
+                        placeholder="Enter email" 
+                        value={email} 
+                        onChange={(event) => setEmail(event.target.value)}
+                    >
+                    </input>
                 <div className="modulo-actions">
                     <button className="cancel-btn" onClick={() => setHideInviteModulo(false)}>Cancel</button>
                     <button className="activity-btn" onClick={submitInvite}>Invite</button>

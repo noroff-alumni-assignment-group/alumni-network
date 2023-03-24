@@ -1,12 +1,13 @@
 package no.experisAcadmey.trondheim.NoroffAlumni.models;
 
+import java.util.List;
 import java.util.Set;
 
 import jakarta.persistence.*;
 import lombok.Data;
 
 
-@Entity
+@Entity(name = "groups")
 @Data
 public class Group {
 
@@ -20,7 +21,7 @@ public class Group {
     @Column(length = 150)
     private String description;
 
-    @Column(nullable = false)
+    @Column
     private Boolean isPrivate;
 
     @ManyToMany
@@ -31,10 +32,11 @@ public class Group {
     )
     private Set<User> members;
 
-    @OneToMany(mappedBy = "group")
-    private Set<Post> posts;
+    @OneToMany(mappedBy = "targetGroup")
+    private List<Post> posts;
 
-    public void addMember(User user){
+    public Group addMember(User user){
         members.add(user);
+        return this;
     }
 }

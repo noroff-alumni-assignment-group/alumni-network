@@ -1,8 +1,13 @@
 /* Groups */
 
+.group-container {
+    width: fit-content;
+}
+
 .groupslist {
     margin-bottom: 30px;
     width: fit-content;
+    
 }
 
 .group-list-header {

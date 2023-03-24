@@ -11,6 +11,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -40,19 +41,20 @@ public abstract class GroupMapper {
      * @param group the created group to be mapped
      * @return created group entity
      */
+
     public abstract Group groupPostDtoToGroup(GroupPostDto group);
 
     @Named("membersToIds")
-    public Set<String> mapMembersToIds(Set<User> source) {
+    public Set<String> membersToIds(Set<User> source) {
         if (source == null)
             return null;
         return source.stream().map(User::getId).collect(Collectors.toSet());
     }
 
     @Named("postsToIds")
-    public Set<Long> mapPostsToIds(Set<Post> source) {
+    public List<Long> postsToIds(List<Post> source) {
         if (source == null)
             return null;
-        return source.stream().map(Post::getId).collect(Collectors.toSet());
+        return source.stream().map(Post::getId).collect(Collectors.toList());
     }
 }

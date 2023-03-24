@@ -14,7 +14,7 @@ class GroupService {
 
     async getUserGroups() {
         return await api
-        .get("/user/groups")
+        .get("/group/member")
         .then((response) => {
             return response.data
         })

@@ -2,6 +2,7 @@ package no.experisAcadmey.trondheim.NoroffAlumni.models.DTOs.groupDTOs;
 
 import lombok.Data;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -15,6 +16,6 @@ public class GroupDto {
     private String description;
     private Boolean isPrivate;
     private Set<String> members;
-    private Set<Long> posts;
+    private List<Long> posts;
 
 }

@@ -67,7 +67,7 @@
   justify-content: space-between;
 }
 
-/* MODULO - NEW GROUP */
+/* NEW GROUP */
 
 .new-group-name {
   width: 20rem;
@@ -141,6 +141,16 @@ label {
   transform: translateX(29px);
 }
 
-/* MODULO - INVITE */
+/* INVITE */
+
+.invite-email {
+  width: 20rem;
+  resize: none;
+  height: 2rem;
+  padding: 5px;
+  border-style: none;
+  border-radius: 5px;
+  background-color: var(--bluewhite);
+}
 
 
