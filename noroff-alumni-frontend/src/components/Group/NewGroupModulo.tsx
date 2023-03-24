@@ -17,7 +17,7 @@ const NewGroupModulo = ({setHideModulo}: NewGroupProps) => {
     async function submitNewGroup() {
         if (name && description) {
             GroupService.createGroup({name: name, description: description, isPrivate: isPrivate});
-            setHideModulo(true)
+            setHideModulo(false)
         }
     }
 
