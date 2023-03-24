@@ -77,29 +77,16 @@ const Timeline = () => {
     },
   ];
 
-  const [filteredPosts, setFilteredPosts] = useState<PostDTO[]>(posts);
   const [selectedTopics, setSelectedTopics] = useState<string[]>([]);
   const [activeTopic, setActiveTopic] = useState("");
   const user = useSelector((state: RootState) => state.user);
-  const [showSearchField, setShowSearchField] = useState(false);
 
   // Add state variable for post form popup visibility
   const [showPostForm, setShowPostForm] = useState(false);
 
-  // Function to handle search icon click
-  const handleSearchIconClick = () => {
-    setShowSearchField((prevState) => !prevState);
-  };
-
-  const postsToRender = filteredPosts.filter((post) => {
-    if (selectedTopics.length === 0) {
-      return true;
-    }
-    return (post.target_topics ?? []).some((topic) =>
-      selectedTopics.includes(topic)
-    );
-  });
-
+  function onSearch(searchWord: string){
+    console.log(searchWord);
+  }
 
   const handleTopicClick = (topic: string) => {
     let newSelectedTopics;
@@ -120,9 +107,7 @@ const Timeline = () => {
 
       <div className="timeline-content">
         <h1>Timeline</h1>
-
         <div className="timeline-head">
-
           <div className="timeline-tags ">
             {user.topics?.map((topic, i) => (
               <div
@@ -137,22 +122,7 @@ const Timeline = () => {
             ))}
           </div>
           <div className="timeline-action-btn-cnt">
-            <div
-              className={`search-cnt ${
-                showSearchField ? "search-cnt-active" : ""
-              }`}
-            >
-              {showSearchField && (
-                <Search posts={posts} updateFilteredPosts={setFilteredPosts} />
-              )}
-              <img
-                src={search}
-                alt="search"
-                className="searchimg"
-                onClick={handleSearchIconClick}
-              />
-            </div>
-
+            <Search onSearch={onSearch}/>
             <button
               className="activity-btn"
               onClick={() => setShowPostForm(true)}
