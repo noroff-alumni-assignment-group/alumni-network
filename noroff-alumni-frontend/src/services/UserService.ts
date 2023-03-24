@@ -10,27 +10,45 @@ import axios from "axios";
 class UserService {
 
    async login(loginData:LoginRequest) {
-      await api.post("/authenticate",loginData).then((response)=>{
-         console.log(response.status);
-      if(response.status === 200){
-         tokenService.setAuth(response.data);
-      }
-      }).catch((error)=> error);
+      await api
+        .post("http://localhost:8080/api/v1/authenticate", loginData)
+        .then((response) => {
+          console.log(response.status);
+          if (response.status === 200) {
+            tokenService.setAuth(response.data);
+          }
+        })
+        .catch((error) => error);
       
    }
 
    async logout(){
       tokenService.removeAuth();
       store.dispatch(removeUser({}));
-      return await api.post("/authenticate/signout",{token: tokenService.getLocalRefreshToken()});
+      return await api.post(
+        "http://localhost:8080/api/v1/authenticate/signout",
+        { token: tokenService.getLocalRefreshToken() }
+      );
    }
 
    async getUser(){
-      return await api.get("/user");
+      return await api.get("http://localhost:8080/api/v1/user");
+   }
+
+   async getUsers(searchWord: string){
+      return await api.get("/user/search", {
+               params: {
+                  search: searchWord
+               }
+            })
+          .then(response =>  response.data);
    }
 
    async registerUser(signupRequest:SignupRequest){
-      return await api.post("/authenticate/register",signupRequest);
+      return await api.post(
+        "http://localhost:8080/api/v1/authenticate/register",
+        signupRequest
+      );
    }
 }
 

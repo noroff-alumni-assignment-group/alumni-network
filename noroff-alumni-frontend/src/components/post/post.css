@@ -3,11 +3,10 @@
   padding: 35px 50px;
   border-radius: 20px;
   box-shadow: var(--box-shadow);
-
 }
 
 .post-cnt {
-      cursor: pointer;
+  cursor: pointer;
 }
 
 .post-head,
@@ -17,6 +16,13 @@
   align-items: center;
 }
 
+.post-feed {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  margin-top: 20px;
+}
+
 .post-head {
   justify-content: space-between;
   margin-bottom: 15px;
@@ -24,7 +30,7 @@
 
 .post-head h2 {
   font-weight: 800;
-  font-size: 30px;
+  font-size: 1.5rem;
 }
 
 .post-head p {
@@ -65,9 +71,10 @@
 }
 
 .all-comments-h2 {
-  font-size: 20px;
+  font-size: 1rem;
   margin-top: 30px;
   margin-bottom: 10px;
+  margin-right: 20px;
 }
 
 /** THREAD **/
@@ -93,6 +100,7 @@
 
 .post-profile-pic {
   margin-right: 10px;
+  min-width: 50px;
 }
 
 .response-author {
@@ -100,16 +108,18 @@
   display: flex;
   flex-direction: column;
   margin-left: 10px;
+  margin-right: 20px;
+  min-width: 80px;
 }
 
 .post-response-author p {
   color: rgb(53, 53, 53);
-  font-size: 16px;
+  font-size: 0.8rem;
 }
 
 .post-time {
   color: var(--lightgray);
-  font-size: 14px;
+  font-size: 0.7rem;
 }
 
 .vertical-stroke {
@@ -119,11 +129,11 @@
 }
 
 .post-response-text p {
-  font-size: 16px;
+  font-size: 0.8rem;
 }
 
 .post-response-input {
-    border-radius: 9px;
+  border-radius: 9px;
   border-style: none;
   background-color: var(--offwhite);
   width: 400px;
@@ -131,4 +141,10 @@
   padding: 10px 20px;
   margin-top: 50px;
   box-shadow: var(--box-shadow);
+  font-size: 1rem;
 }
+
+.editimg {
+  width: 30px;
+}
+

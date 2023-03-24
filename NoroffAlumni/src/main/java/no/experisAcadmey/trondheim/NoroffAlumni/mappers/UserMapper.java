@@ -1,5 +1,6 @@
 package no.experisAcadmey.trondheim.NoroffAlumni.mappers;
 
+import no.experisAcadmey.trondheim.NoroffAlumni.models.DTOs.userDTOs.UserDisplayDto;
 import no.experisAcadmey.trondheim.NoroffAlumni.models.DTOs.userDTOs.UserDto;
 import no.experisAcadmey.trondheim.NoroffAlumni.models.Topic;
 import no.experisAcadmey.trondheim.NoroffAlumni.models.User;
@@ -7,6 +8,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -21,6 +23,13 @@ public abstract class UserMapper {
     @Mapping(target = "topics", qualifiedByName = "mapTopicToTopicId", source = "topics")
     public abstract UserDto toUserDto(User user);
 
+    public abstract UserDisplayDto toUserDisplayDto(User user);
+
+    public abstract List<UserDisplayDto> toUserDisplayDto(List<User> users);
+
+    @Mapping(target = "topics", qualifiedByName = "mapTopicIdToTopic", source = "topics")
+    public abstract User toUser(UserDto userDto);
+
     /**
      * Defines how to map topics
      * @param topics topics to map
@@ -30,4 +39,16 @@ public abstract class UserMapper {
     public Set<String> mapTopicToTopicId(Set<Topic> topics){
         return topics.stream().map(Topic::getName).collect(Collectors.toSet());
     }
+
+
+    @Named("mapTopicIdToTopic")
+    public Set<Topic> mapTopicIdToTopic(Set<String> topicIds) {
+        return topicIds.stream().map(topicId -> {
+            Topic topic = new Topic();
+            topic.setName(topicId);
+            return topic;
+        }).collect(Collectors.toSet());
+    }
+
+
 }

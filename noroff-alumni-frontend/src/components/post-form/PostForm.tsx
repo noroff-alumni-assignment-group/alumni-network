@@ -4,7 +4,9 @@ import snarkdown from "snarkdown";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import {useAlert} from "react-alert";
-import { createPost } from "../../services/postService";
+import {createPost, editPost, getPost} from "../../services/postService";
+import TopicService from "../../services/topicService";
+import TopicListItem from "../../models/TopicListItemDTO";
 
 type PostFormTypes = {
     editing: boolean,
@@ -13,28 +15,47 @@ type PostFormTypes = {
 
 function PostForm (props: PostFormTypes) {
 
-    const groups: string[] = ["group1", "group2",];
-    const topics: string[] = ["topic1", "top", "topi2"];
+    let postId: number = 3;
+    const maxLength: number = 500;
 
-    let [title, setTitle] = useState("");
-    let [text, setText] = useState("");
-    let [selectedGroup, setSelectedGroup] = useState(-1);
-    let [selectedTopic, setSelectedTopic] = useState(-1);
+    const [title, setTitle] = useState("");
+    const [text, setText] = useState("");
+    const [topics, setTopics] = useState<string[]>([]);
+    const [groups, setGroups] = useState<string[]>([]);
+    const [selectedGroups, setSelectedGroups] = useState<string[]>([]);
+    const [selectedTopics, setSelectedTopics] = useState<string[]>([]);
 
-    let [previewing, setPreviewing] = useState(false);
-    let [erroneous, setErroneous] = useState(false);
+    const [previewing, setPreviewing] = useState(false);
+    const [erroneous, setErroneous] = useState(false);
 
-    let alert = useAlert();
+    const alert = useAlert();
+
+    useEffect(() => {
+        fetchSubscriptions();
+    }, [])
 
     useEffect(() => {
         if(props.editing){
-            getPost();
+            getPost(postId)
+                .then(data => {
+                    setTitle(data.title)
+                    setText(data.body)
+                    let arr: string[] = []
+                    data.target_topics?.map(topic => {
+                        if(topics.includes(topic)){
+                            arr.push(topic)
+                        }
+                    })
+                    setSelectedTopics(arr);
+                })
         }
-    }, [])
+    }, [topics])
 
-    function getPost() {
-        // fetch post
-        console.log("fetched post");
+    function fetchSubscriptions(){
+        TopicService.getSubscribedTopics()
+            .then(data => {
+                setTopics(data.map((topic: TopicListItem) => topic.name));
+            })
     }
 
     function handleSubmit(){
@@ -44,14 +65,26 @@ function PostForm (props: PostFormTypes) {
                 setErroneous(false)
             }, 1000)
         } else {
-            createPost({
+            let newPost = {
                 title: title,
                 body: text,
-                target_topic: "Summer",
-                target_group: ""
-            });
-            alert.success("Published successfully");
-            props.handler(false);
+                target_user: "",
+                target_topics: selectedTopics,
+                target_groups: []
+            }
+            if(!props.editing) {
+                createPost(newPost)
+                    .then(result => {
+                        alert.success("Published successfully");
+                        props.handler(false);
+                    })
+            } else {
+                editPost({title: newPost.title, body: newPost.body}, postId)
+                    .then(result => {
+                        alert.success("Updated successfully");
+                        props.handler(false);
+                    })
+            }
         }
         return false;
     }
@@ -64,15 +97,23 @@ function PostForm (props: PostFormTypes) {
         <div className="post-form">
             <div className="post-content">
                 <h1>{props.editing ? "Edit post" : "Write a new post"}</h1>
-                <input type="text" className={"input " + (erroneous && title === "" ? "border-blink" : "")} placeholder="Title.." onChange={(e => setTitle(e.target.value))}/>
+                <input type="text" className={"input " + (erroneous && title === "" ? "border-blink" : "")}
+                       placeholder="Title.." onChange={(e => setTitle(e.target.value))} value={title}/>
                 <div className="text-content-container">
                     <button type="button" className={"round-toggle " + (previewing ? "button-active" : "button-inactive")}
                             onClick={() => setPreviewing(!previewing)}><FontAwesomeIcon icon={faEye}/></button>
+                    <div className="text-content-meta">
+                        <p className={text.length >= maxLength ? "text-limit-reached" : ""}>{text.length + "/" + maxLength}</p>
+                    </div>
                     {!previewing
                         ?
-                        <textarea className={"input text-content " + (erroneous && text === "" ? "border-blink" : "")} placeholder="Write something.." onChange={(e => setText(e.target.value))} value={text}/>
+                        <textarea className={"input text-content " + (erroneous && text === "" ? "border-blink" : "")}
+                                  placeholder="Write something.." onChange={(e => {
+                                      if(e.target.value.length <= maxLength){setText(e.target.value)}
+                        })} value={text}/>
                         :
-                        <div className={"input text-content scroll vertical " + (erroneous && text === "" ? "border-blink" : "")} dangerouslySetInnerHTML={{__html: toGithubMarkdown(text)}}></div>
+                        <div className={"input text-content scroll vertical " + (erroneous && text === "" ? "border-blink" : "")}
+                             dangerouslySetInnerHTML={{__html: toGithubMarkdown(text)}}></div>
                     }
                 </div>
             </div>
@@ -80,17 +121,25 @@ function PostForm (props: PostFormTypes) {
                 <p className="subsubtitle">Post to your group</p>
                 <div className="button-row">
                     {groups.map((group, index) => {
-                        return <button type="button" className={"entity-tag " +
-                            (selectedGroup === index ? "group-tag-active" : "group-tag-inactive")} key={index}
-                               onClick={() => setSelectedGroup(index)}>{group}</button>
+                        return <button type="button" disabled={props.editing} className={"entity-tag " +
+                            (selectedGroups.includes(group) ? "group-tag-active" : "group-tag-inactive")} key={index}
+                               onClick={() => {
+                                   let arr = selectedTopics.includes(group)
+                                       ? selectedTopics.filter(e => e !== group) : [...selectedTopics, group];
+                                   setSelectedTopics(arr);
+                               }}>{group}</button>
                     })}
                 </div>
                 <p className="subsubtitle">Add topics</p>
                 <div className="button-row">
                     {topics.map((topic, index) => {
-                        return <button type="button" className={"entity-tag " +
-                            (selectedTopic === index ? "topic-tag-active" : "topic-tag-inactive")} key={index}
-                                       onClick={() => setSelectedTopic(index)}>{topic}</button>
+                        return <button type="button" disabled={props.editing} className={"entity-tag " +
+                            (selectedTopics.includes(topic) ? "topic-tag-active" : "topic-tag-inactive")} key={index}
+                                       onClick={() => {
+                                           let arr = selectedTopics.includes(topic)
+                                               ? selectedTopics.filter(e => e !== topic) : [...selectedTopics, topic];
+                                           setSelectedTopics(arr);
+                                       }}>{topic}</button>
                     })}
                 </div>
                 <input type="text" className="input" placeholder="or create a topic..."/>

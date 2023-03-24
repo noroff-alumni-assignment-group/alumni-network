@@ -4,7 +4,9 @@ package no.experisAcadmey.trondheim.NoroffAlumni.models;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -17,12 +19,22 @@ public class Post {
     private String title;
     @Column(length=500, nullable = false)
     private String body;
-    private Date last_updated;
+    private Date lastUpdated;
+
+    private String authorInitlas;
 
     @ManyToOne
     private User author;
     @ManyToOne
-    private Topic target_topic;
-    private Long target_group;
+    private User targetUser;
+    @ManyToMany
+    @JoinTable(name="topic_posts",joinColumns = @JoinColumn(name = "post_id"),inverseJoinColumns = @JoinColumn(name = "topic_id"))
+    private List<Topic> targetTopics = new ArrayList<>();
+    private List<Long> targetGroup;
+
+    public Post addTopic(Topic topic){
+        targetTopics.add(topic);
+        return this;
+    }
 
 }

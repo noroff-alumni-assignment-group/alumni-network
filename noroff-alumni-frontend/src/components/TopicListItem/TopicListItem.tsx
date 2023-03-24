@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { setUser } from "../../store/userSlice";
+import { useNavigate } from "react-router-dom";
 type TopicListProps = {
   topic: TopicListItemDTO,
   subscribeToTopic: Function
@@ -14,16 +15,19 @@ export default function TopicListItem({ topic , subscribeToTopic }: TopicListPro
   const [currentTopic,setCurrentTopic] = useState(topic);
   const user = useSelector((state:RootState)=>state.user);
   const dispatch = useDispatch();
-  async function joinTopic(){
+  const navigate = useNavigate();
+
+  async function joinTopic(event:React.MouseEvent<any,MouseEvent>){
+    event.stopPropagation();
     setCurrentTopic(await subscribeToTopic(currentTopic.id));
     let userTopics = [...user.topics!];
     userTopics.push(currentTopic.name);
     dispatch(setUser({...user,topics:userTopics}));
   }
   
-//TODO: add logic for subscribed with reducer and check if already subscribed
+
   return (
-    <div className="topic-list-item">
+    <div className="topic-list-item" onClick={(event)=>navigate("/topic/"+topic.id)}>
       <div className="topic-list-left">
         <h3>{currentTopic.name}</h3>
         <p>{currentTopic.numberOfPosts} Posts</p>
@@ -31,7 +35,7 @@ export default function TopicListItem({ topic , subscribeToTopic }: TopicListPro
       <div className="topic-list-right">
         <p>{currentTopic.subscribers} Subscribers</p>{" "}
         <AiFillStar
-        onClick={!user.topics?.includes(currentTopic.name) ? joinTopic : undefined}
+        onClick={!user.topics?.includes(currentTopic.name) ? (event)=>joinTopic(event) : (event)=>event.stopPropagation()}
           className={
             user.topics?.includes(currentTopic.name)
               ? "topic-list-item-star-subscribed topic-list-item-star"

@@ -1,35 +1,68 @@
-import React, { useState } from "react";
-import "./post.css";
-// import comment from "../../assets/icons/Comments.png";
-import PostResponse from "./PostResponse";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import User from "../../models/User";
 import Profilepicture from "../profilepicture/Profilepicure";
+import Group from "../tags/Group";
+import Topic from "../tags/Topic";
+import "./post.css";
+import PostResponse from "./PostResponse";
+import PostDTO from "../../models/PostDTO";
 
 interface Props {
-  title: string;
-  date: string;
-  body: string;
-  topics: string[];
-  groups: string[];
-  author: string;
-  profileInitials: string;
-  comments: {
-    author: string;
-    authorInitials: string;
-    response: string;
-  }[];
+  post:PostDTO;
 }
 
-function Post({
-  title,
-  date,
-  body,
-  topics,
-  groups,
-  author,
-  profileInitials,
-  comments,
-}: Props) {
+function Post({post}: Props) {
   const [showComments, setShowComments] = useState(false);
+  const [newCommentText, setNewCommentText] = useState("");
+
+  const user = useSelector((state: any) => state.user);
+
+
+  const handleAddComment = (e: any) => {
+    e.preventDefault();
+
+
+  };
+
+
+  const sendCommentToAPI = async (postId: string, commentText: string) => {
+    try {
+      const response = await fetch(
+        `https://your-api-url.com/posts/${postId}/comments`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            author: "Your Name", // Replace with the current user's name
+            authorInitials: "YN", // Replace with the current user's initials
+            response: commentText,
+            date: new Date().toISOString(),
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to send comment to the API");
+      }
+
+      // You can update the local state with the new comment data received from the API
+      const newComment = await response.json();
+    
+    } catch (error) {
+      console.error("Error sending comment to the API:", error);
+    }
+  };
+
+  function setTimeSince(date: Date) {
+    let minutes = date.getMinutes();
+    return date.getDate() + " " + date.toLocaleString('default', { month: 'short' })
+        + " - " + date.getHours() + ":" + (minutes > 9 ? minutes: "0" + minutes);
+  }
+
+  // Replace the comments prop with the new localComments state variable
 
   const handleToggleComments = () => {
     setShowComments(!showComments);
@@ -39,31 +72,31 @@ function Post({
     <div className="post">
       <div className="post-cnt" onClick={handleToggleComments}>
         <div className="post-head">
-          <h2>{title}</h2>
-          <p>{date}</p>
+          <h2>{post.title}</h2>
+          <p>{setTimeSince(new Date(post.last_updated ?? ""))}</p>
         </div>
         <div className="post-body">
-          <p>{body}</p>
+          <p>{post.body}</p>
         </div>
         <div className="post-comments">
-          <p>{comments.length} comments</p>
+          <p>{post.comments?.length} comments</p>
         </div>
 
         <div className="post-footer">
           <div className="post-tags">
-            {topics.map((topic) => (
+            {post.target_topics?.map((topic) => (
               <div className="topic" key={topic}>
                 {topic}
               </div>
             ))}
-            {groups.map((group) => (
+            {post.target_groups?.map((group) => (
               <div className="group" key={group}>
                 {group}
               </div>
             ))}
           </div>
           <div className="post-author">
-            <Profilepicture initials={profileInitials} author={author} />
+            <Profilepicture author={post.author ?? {firstName:"",lastName:""}} />
           </div>
         </div>
       </div>
@@ -71,19 +104,25 @@ function Post({
       {showComments && (
         <div>
           <h2 className="all-comments-h2">All comments</h2>
-          {comments.map((comment) => (
+          {post.comments?.map((comment) => (
             <PostResponse
               author={comment.author}
               text={comment.response}
-              initials={comment.authorInitials}
               key={comment.author + comment.response}
             />
           ))}
-          <input
-            className="post-response-input"
-            type="text"
-            placeholder="Write your comment..."
-          />
+          <form onSubmit={handleAddComment} className="post-response-form">
+            <input
+              className="post-response-input"
+              type="text"
+              placeholder="Write your comment..."
+              value={newCommentText}
+              onChange={(e) => setNewCommentText(e.target.value)}
+            />
+            <button type="submit" className="post-response-submit">
+              Submit
+            </button>
+          </form>
         </div>
       )}
     </div>

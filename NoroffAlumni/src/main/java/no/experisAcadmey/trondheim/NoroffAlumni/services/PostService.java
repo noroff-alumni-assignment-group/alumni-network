@@ -4,13 +4,16 @@ import no.experisAcadmey.trondheim.NoroffAlumni.exceptions.PostNotFoundException
 import no.experisAcadmey.trondheim.NoroffAlumni.models.DTOs.postDTOs.EditPostDto;
 import no.experisAcadmey.trondheim.NoroffAlumni.models.DTOs.postDTOs.NewPostDto;
 import no.experisAcadmey.trondheim.NoroffAlumni.models.Post;
+import no.experisAcadmey.trondheim.NoroffAlumni.models.Topic;
 import no.experisAcadmey.trondheim.NoroffAlumni.repositories.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class PostService {
@@ -23,8 +26,12 @@ public class PostService {
     private TopicService topicService;
 
     // TODO: Should return based on user's subscribed topics and groups, not "findAll"
-    public List<Post> getPosts(){
-        return postRepository.findAll();
+    public List<Post> getPosts(Optional<String> searchWord){
+        if(searchWord.isPresent()){
+            return postRepository.findByTitleContainingIgnoreCaseOrBodyContainingIgnoreCase(searchWord.get(), searchWord.get());
+        }else {
+            return postRepository.findAllByOrderByLastUpdatedDesc();
+        }
     }
 
     public Post getPost(Long id) {
@@ -35,11 +42,15 @@ public class PostService {
         Post post = new Post();
         post.setTitle(newPostDto.getTitle());
         post.setBody(newPostDto.getBody());
-        post.setLast_updated(new Date());
+        post.setLastUpdated(new Date());
         post.setAuthor(userService.getCurrentUser());
-        if(newPostDto.getTarget_topic() != null){
-            post.setTarget_topic(topicService.getTopicByName(newPostDto.getTarget_topic()));
+        if(!newPostDto.getTarget_user().isEmpty()){
+            post.setTargetUser(userService.getUser(newPostDto.getTarget_user()));
         }
+        for (String topicName : newPostDto.getTarget_topics()) {
+            post.addTopic(topicService.getTopicByName(topicName));
+        }
+
         postRepository.save(post);
         return post.getId();
     }
@@ -52,7 +63,7 @@ public class PostService {
         Post post = optionalPost.get();
         post.setTitle(editPostDto.getTitle());
         post.setBody(editPostDto.getBody());
-        post.setLast_updated(new Date());
+        post.setLastUpdated(new Date());
         postRepository.save(post);
         return post.getId();
     }

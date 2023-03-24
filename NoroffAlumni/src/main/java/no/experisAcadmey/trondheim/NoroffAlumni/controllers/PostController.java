@@ -19,7 +19,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.text.html.Option;
 import java.net.URI;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/api/v1/post")
@@ -40,9 +42,9 @@ public class PostController {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class))
             })
     })
-    public ResponseEntity getPosts(){
+    public ResponseEntity getPosts(@RequestParam Optional<String> searchWord){
         try {
-            return ResponseEntity.ok(postMapper.postToPostDto(postService.getPosts()));
+            return ResponseEntity.ok(postMapper.postToPostDto(postService.getPosts(searchWord)));
         } catch (PostNotFoundException e) {
             return ResponseEntity.notFound().build();
         } catch (Exception e) {
