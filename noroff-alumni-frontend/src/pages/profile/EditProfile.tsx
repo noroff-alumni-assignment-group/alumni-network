@@ -16,8 +16,6 @@ export default function EditProfile(props: any) {
       funfact: userData.funfact, // Update funfact
     };
 
-    console.log("updated", updatedUserData);
-
     // Send the updated user data to the API
     api
       .put(
@@ -25,7 +23,6 @@ export default function EditProfile(props: any) {
         updatedUserData
       )
       .then((response) => {
-        console.log(response);
         // Hide EditProfile component after successful API call
         props.setShowEditProfile(false); // Add this line to close the EditProfile component
         window.location.reload();

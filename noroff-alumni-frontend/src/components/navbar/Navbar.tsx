@@ -108,14 +108,14 @@ function Navbar() {
               </NavLink>
             </h1>
           </div>
-          <div className="tag-cnt">
+          {/**<div className="tag-cnt">
             <img src={events} alt="events" />
             <h1>
               <NavLink to="/events" onClick={() => handleClick()}>
                 Events
               </NavLink>
             </h1>
-          </div>
+          </div>*/}
           <div className="tag-cnt">
             <FontAwesomeIcon icon={faEnvelope} className="nav-icon"/>
             <h1>
@@ -123,20 +123,19 @@ function Navbar() {
                 Inbox
               </NavLink>
             </h1>
-          </div>
         </div>
 
-        <div className="nav-events">
+        {/*<div className="nav-events">
           <h1 className="subtitle">Your upcoming events</h1>
           <p>Event 1 - Trondheim</p>
           <p>Event 2 - Oslo</p>
-        </div>
+      </div>*/}
 
-        <div className="nav-groups">
+        {/*<div className="nav-groups">
           <h1 className="subtitle">Your groups</h1>
           <p>Group Lorem</p>
           <p>Group Ipsum </p>
-        </div>
+      </div>*/}
 
         <div className="tag-cnt logout-btn">
           <FontAwesomeIcon icon={faSignOutAlt} className={"nav-icon"} />
