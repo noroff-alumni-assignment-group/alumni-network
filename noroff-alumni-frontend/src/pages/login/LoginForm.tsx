@@ -3,10 +3,12 @@ import {useDispatch} from "react-redux";
 import { setUser } from "../../store/userSlice";
 import UserService from "../../services/UserService";
 import { useState } from "react";
+import { useAlert } from "react-alert";
 import LoadingIndicator from "../../components/LoadingIndicator/LoadingIndicator";
 
 export default function LoginForm(props: any) {
   const dispatch = useDispatch();
+  const alert = useAlert();
   const [loading,setLoading] = useState(false);
 
      const signIn = async (event: any) => {
@@ -14,14 +16,18 @@ export default function LoginForm(props: any) {
        setLoading(true);
        const username = event.target.elements.username.value;
        const password = event.target.elements.password.value;
-       await UserService.login({username:username,password:password});
-       try{
-         const response = await UserService.getUser();
-         dispatch(setUser(response.data));
-
-       }catch(_error){
-        console.error(_error);
+       const loginResponse = await UserService.login({username:username,password:password});
+       if(loginResponse.status === 200){
+          await UserService.getUser().then((response)=>{
+            dispatch(setUser(response.data));
+          }).catch((error)=>{
+            alert.error("Could not retrieve user data");
+          });
+ 
+       }else{
+        alert.error("Login failed");
        }
+       
        setLoading(false);
      };
 
