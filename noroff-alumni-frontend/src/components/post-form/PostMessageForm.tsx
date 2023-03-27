@@ -8,6 +8,7 @@ import {createPost, editPost, getPost} from "../../services/postService";
 import {AiOutlineSearch} from "react-icons/ai";
 import UserDisplayDTO from "../../models/UserDisplayDTO";
 import service from "../../services/UserService";
+import SnarkdownText from "../SnarkdownText/SnarkdownText";
 
 type PostFormTypes = {
     editing: boolean,
@@ -145,7 +146,9 @@ function PostMessageForm (props: PostFormTypes) {
                         ?
                         <textarea className={"input text-content " + (erroneous && text === "" ? "border-blink" : "")} placeholder="Write something.." onChange={(e => setText(e.target.value))} value={text}/>
                         :
-                        <div className={"input text-content scroll vertical " + (erroneous && text === "" ? "border-blink" : "")} dangerouslySetInnerHTML={{__html: toGithubMarkdown(text)}}></div>
+                        <div className={"input text-content scroll vertical " + (erroneous && text === "" ? "border-blink" : "")}>
+                            <SnarkdownText text={text}/>
+                        </div>
                     }
                 </div>
             </div>
