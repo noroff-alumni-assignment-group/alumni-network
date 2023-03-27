@@ -7,6 +7,7 @@ import Topic from "../tags/Topic";
 import "./post.css";
 import PostResponse from "./PostResponse";
 import PostDTO from "../../models/PostDTO";
+import SnarkdownText from "../SnarkdownText/SnarkdownText";
 
 interface Props {
   post:PostDTO;
@@ -76,7 +77,7 @@ function Post({post}: Props) {
           <p>{setTimeSince(new Date(post.last_updated ?? ""))}</p>
         </div>
         <div className="post-body">
-          <p>{post.body}</p>
+          <p><SnarkdownText text={post.body}/></p>
         </div>
         <div className="post-comments">
           <p>{post.comments?.length} comments</p>

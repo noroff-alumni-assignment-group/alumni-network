@@ -7,6 +7,7 @@ import {useAlert} from "react-alert";
 import {createPost, editPost, getPost} from "../../services/postService";
 import TopicService from "../../services/topicService";
 import TopicListItem from "../../models/TopicListItemDTO";
+import SnarkdownText from "../SnarkdownText/SnarkdownText";
 
 type PostFormTypes = {
     editing: boolean,
@@ -16,7 +17,7 @@ type PostFormTypes = {
 function PostForm (props: PostFormTypes) {
 
     let postId: number = 3;
-    const maxLength: number = 500;
+    const maxLength: number = 1500;
 
     const [title, setTitle] = useState("");
     const [text, setText] = useState("");
@@ -89,10 +90,6 @@ function PostForm (props: PostFormTypes) {
         return false;
     }
 
-    function toGithubMarkdown(text: string){
-        return snarkdown(text);
-    }
-
     return (
         <div className="post-form">
             <div className="post-content">
@@ -112,8 +109,9 @@ function PostForm (props: PostFormTypes) {
                                       if(e.target.value.length <= maxLength){setText(e.target.value)}
                         })} value={text}/>
                         :
-                        <div className={"input text-content scroll vertical " + (erroneous && text === "" ? "border-blink" : "")}
-                             dangerouslySetInnerHTML={{__html: toGithubMarkdown(text)}}></div>
+                        <div className={"input text-content scroll vertical " + (erroneous && text === "" ? "border-blink" : "")}>
+                            <SnarkdownText text={text}/>
+                        </div>
                     }
                 </div>
             </div>

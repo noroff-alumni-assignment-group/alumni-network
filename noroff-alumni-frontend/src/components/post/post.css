@@ -15,6 +15,9 @@
   display: flex;
   align-items: center;
 }
+.post-body p {
+  white-space: pre-line;
+}
 
 .post-feed {
   display: flex;
