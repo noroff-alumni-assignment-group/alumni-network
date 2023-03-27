@@ -19,7 +19,6 @@ function PostMessageForm (props: PostFormTypes) {
 
     let postId: number = 3;
 
-    let [title, setTitle] = useState("");
     let [text, setText] = useState("");
     const [searchWord, setSearchWord] = useState("");
     const [users, setUsers] = useState<UserDisplayDTO[]>([]);
@@ -39,7 +38,6 @@ function PostMessageForm (props: PostFormTypes) {
     function fetchPost() {
         getPost(postId)
             .then(data => {
-                setTitle(data.title)
                 setText(data.body)
             })
     }
@@ -64,14 +62,14 @@ function PostMessageForm (props: PostFormTypes) {
             alert.info("Message must have a recipient")
             return;
         }
-        if((title === "" || text === "") && !erroneous){
+        if((text === "") && !erroneous){
             setErroneous(true)
             setTimeout(() => {
                 setErroneous(false)
             }, 1000)
         } else {
             let newPost = {
-                title: title,
+                title: "",
                 body: text,
                 target_user: recipient.id,
                 target_topics: [],
@@ -138,7 +136,6 @@ function PostMessageForm (props: PostFormTypes) {
                         </div>
                     }
                 </div>
-                <input type="text" className={"input " + (erroneous && title === "" ? "border-blink" : "")} placeholder="Title.." onChange={(e => setTitle(e.target.value))} value={title}/>
                 <div className="text-content-container">
                     <button type="button" className={"round-toggle " + (previewing ? "button-active" : "button-inactive")}
                             onClick={() => setPreviewing(!previewing)}><FontAwesomeIcon icon={faEye}/></button>
