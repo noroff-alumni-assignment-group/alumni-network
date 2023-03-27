@@ -95,12 +95,13 @@ public class GroupService {
      * @return posts
      */
     public List<Post> getPostsInGroup(Long group_id) {
-        return postRepository.findAllByTargetGroupIdOrderByLastUpdated(group_id);
+        return postRepository.findAllByTargetGroupsIdOrderByLastUpdated(group_id);
     }
 
     public List<Group> findUserGroups(){
         User currentUser = userService.getCurrentUser();
         return groupRepository.findByMembersContains(currentUser);
     }
+
 
 }

@@ -33,9 +33,9 @@ public class Post {
     @ManyToMany
     @JoinTable(name="topic_posts",joinColumns = @JoinColumn(name = "post_id"),inverseJoinColumns = @JoinColumn(name = "topic_id"))
     private List<Topic> targetTopics = new ArrayList<>();
-    @ManyToOne
-    @JoinColumn(name = "group_id")
-    private Group targetGroup;
+    @ManyToMany
+    @JoinTable(name="group_posts", joinColumns =@JoinColumn(name = "post_id"), inverseJoinColumns = @JoinColumn(name = "group_id"))
+    private List<Group> targetGroups = new ArrayList<>();
 
     public Post addTopic(Topic topic){
         targetTopics.add(topic);

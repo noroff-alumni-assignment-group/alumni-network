@@ -32,7 +32,7 @@ public class Group {
     )
     private Set<User> members;
 
-    @OneToMany(mappedBy = "targetGroup")
+    @ManyToMany(mappedBy = "targetGroups")
     private List<Post> posts;
 
     public Group addMember(User user){

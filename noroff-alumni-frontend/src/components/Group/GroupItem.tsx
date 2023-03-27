@@ -1,8 +1,8 @@
 import './group-comps.css';
-import GroupListItem from '../../models/Group/GroupListItem';
+import Group from '../../models/Group/Group';
 
 type propsGroup = {
-    group: GroupListItem
+    group: Group
 }
 
 const GroupItem = ({ group }: propsGroup) => {
@@ -10,10 +10,10 @@ const GroupItem = ({ group }: propsGroup) => {
     return (
         <>
             <div className="group-item">
-                <div className="group-name">
-                    <p>{group.name}</p>
+                <div className="group-left">
+                    <h3>{group.name}</h3>
+                    <p>Members: {group.members.length}</p>
                 </div>
-                   
                 <div className="">
                     {/*group.members?.map((member: any) => (
                         <MemberIcon key={member.id} firstName={member.firstName} lastName={member.lastName}/>

@@ -46,7 +46,7 @@ const GroupPage = () => {
                 {showInviteModulo ? <InviteModulo setHideInviteModulo={setShowInviteModulo}/> : null}
                 {showPostForm && <Popup child={<PostForm editing={false} handler={setShowPostForm}/>}/>}
                 <div className="page-header">
-                    <h3>{group?.name}</h3>
+                    <h1>{group?.name}</h1>
                     <button className="activity-btn" onClick={handleJoinClick}>Join</button>      
                 </div>
                 <div className="group-desc">

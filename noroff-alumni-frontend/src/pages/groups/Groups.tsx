@@ -9,8 +9,8 @@ import GroupListItem from "../../models/Group/GroupListItem"
 
 function Groups() {
 
-  const [groups, setGroups] = useState<GroupListItem[]>([])
-  const [myGroups, setMyGroups] = useState<GroupListItem[]>([])
+  const [groups, setGroups] = useState<Group[]>([])
+  const [myGroups, setMyGroups] = useState<Group[]>([])
   const [showNewGroupModulo, setShowNewGroupModulo] = useState(false)
   const navigate = useNavigate()
 
@@ -33,7 +33,7 @@ function Groups() {
     getMyGroups()
   }, [])
 
-  const handleGroupClick = (group: GroupListItem) => {
+  const handleGroupClick = (group: Group) => {
     let page = `/groups/${group.id}`
     navigate(page)
   }
@@ -46,7 +46,7 @@ function Groups() {
           {showNewGroupModulo ? <NewGroupModulo setHideModulo={setShowNewGroupModulo}/> : null}
           <div className="groups-actions">
                 <div className="group-list-header">
-                  <h3>All groups</h3>
+                  <h1>All groups</h1>
                 </div>
                 <button className="activity-btn" onClick={() => setShowNewGroupModulo(true)}>NEW GROUP</button>
           </div>
@@ -59,7 +59,7 @@ function Groups() {
           </div>
 
           <div className="group-list-header">
-              <h3>My groups</h3>
+              <h1>My groups</h1>
           </div>
           <div className="groupslist">
               {myGroups.map(group => (

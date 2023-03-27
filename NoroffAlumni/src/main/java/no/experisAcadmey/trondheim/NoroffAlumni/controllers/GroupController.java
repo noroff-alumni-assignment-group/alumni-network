@@ -7,13 +7,10 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import no.experisAcadmey.trondheim.NoroffAlumni.exceptions.GroupNotFoundException;
-import no.experisAcadmey.trondheim.NoroffAlumni.exceptions.TopicNotFoundException;
 import no.experisAcadmey.trondheim.NoroffAlumni.mappers.GroupMapper;
+import no.experisAcadmey.trondheim.NoroffAlumni.mappers.PostMapper;
 import no.experisAcadmey.trondheim.NoroffAlumni.models.DTOs.groupDTOs.GroupDto;
 import no.experisAcadmey.trondheim.NoroffAlumni.models.DTOs.groupDTOs.GroupPostDto;
-import no.experisAcadmey.trondheim.NoroffAlumni.models.DTOs.topicDTOs.TopicListItem;
-import no.experisAcadmey.trondheim.NoroffAlumni.models.Group;
-import no.experisAcadmey.trondheim.NoroffAlumni.models.Post;
 import no.experisAcadmey.trondheim.NoroffAlumni.services.GroupService;
 import org.mapstruct.factory.Mappers;
 import org.springframework.http.ProblemDetail;
@@ -23,8 +20,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.Collection;
-import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping(path = "api/v1/group")
@@ -32,6 +27,7 @@ public class GroupController {
 
     private final GroupService groupService;
     private final GroupMapper groupMapper = Mappers.getMapper(GroupMapper.class);
+    private final PostMapper postMapper = Mappers.getMapper(PostMapper.class);
 
     public GroupController(GroupService groupService) {
         this.groupService = groupService;
@@ -167,7 +163,7 @@ public class GroupController {
         }
     }
 
-    @PostMapping("/{id}/join")
+    @PostMapping("/{group_id}/join")
     @PreAuthorize("hasRole('ROLE_ALUMNI')")
     @Operation(summary = "Join a group")
     @ApiResponses(value = {
@@ -190,9 +186,9 @@ public class GroupController {
                             schema = @Schema(implementation = ProblemDetail.class))
             })
     })
-    public ResponseEntity joinGroup(@PathVariable("id") Long id) {
+    public ResponseEntity joinGroup(@PathVariable("group_id") Long groupId) {
         try {
-            return ResponseEntity.ok(groupMapper.groupToGroupDto(groupService.joinGroup(id)));
+            return ResponseEntity.ok(groupMapper.groupToGroupDto(groupService.joinGroup(groupId)));
         } catch (GroupNotFoundException e) {
             return ResponseEntity.notFound().build();
         } catch(Exception e) {
@@ -200,7 +196,7 @@ public class GroupController {
         }
     }
 
-    @PostMapping("/{id}/leave")
+    @PostMapping("/{group_id}/leave")
     @PreAuthorize("hasRole('ROLE_ALUMNI')")
     @Operation(summary = "Leave a group")
     @ApiResponses(value = {
@@ -223,9 +219,9 @@ public class GroupController {
                             schema = @Schema(implementation = ProblemDetail.class))
                     })
     })
-    public ResponseEntity leaveGroup(@PathVariable("id") Long id) {
+    public ResponseEntity leaveGroup(@PathVariable("group_id") Long groupId) {
         try {
-            groupService.leaveGroup(id);
+            groupService.leaveGroup(groupId);
             return ResponseEntity.ok().build();
         } catch (GroupNotFoundException e) {
             return ResponseEntity.notFound().build();
@@ -234,7 +230,7 @@ public class GroupController {
         }
     }
 
-    @GetMapping("/{id}/posts")
+    @GetMapping("/{group_id}/posts")
     @PreAuthorize("hasRole('ROLE_ALUMNI')")
     @Operation(summary = "Get all posts in a group")
     @ApiResponses(value = {
@@ -257,9 +253,9 @@ public class GroupController {
                             schema = @Schema(implementation = ProblemDetail.class))
                     })
     })
-    public ResponseEntity<List<Post>> getGroupPosts(@PathVariable Long id){
+    public ResponseEntity getGroupPosts(@PathVariable("group_id") Long groupId){
         try {
-            return ResponseEntity.ok(groupService.getPostsInGroup(id));
+            return ResponseEntity.ok(postMapper.postToPostDto(groupService.getPostsInGroup(groupId)));
         } catch (GroupNotFoundException e) {
             return ResponseEntity.notFound().build();
         } catch(Exception e) {

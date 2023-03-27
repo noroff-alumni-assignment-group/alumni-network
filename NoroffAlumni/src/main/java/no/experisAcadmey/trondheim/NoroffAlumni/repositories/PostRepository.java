@@ -27,4 +27,6 @@ public interface PostRepository extends JpaRepository<Post, Long> {
             "and (upper(post.body) like upper(?1) or upper(post.title) like upper(?1))",
             nativeQuery = true)
     List<Post> findAllBySearchWord(String searchWord, String authorId);
+
+    List<Post> findAllByTargetGroupsIdOrderByLastUpdated(Long groupId);
 }
