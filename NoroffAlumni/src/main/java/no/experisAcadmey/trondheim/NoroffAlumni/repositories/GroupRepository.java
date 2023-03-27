@@ -16,6 +16,4 @@ public interface GroupRepository extends JpaRepository<Group, Long> {
 
     List<Group> findByMembersContains(User user);
 
-    Optional<Group> findByIdAndIsPrivateFalseOrMembersContains(Long id, User user);
-
 }

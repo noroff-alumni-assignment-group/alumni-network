@@ -1,10 +1,11 @@
-import PostDTO from "../PostDTO";
-import UserDisplayDTO from "../UserDisplayDTO";
+import Post from "../PostModel"
 
-export interface Group {
+type Group = {
     id: number,
     name: string,
+    description: string,
     isPrivate: boolean,
-    members?: UserDisplayDTO | any,
-    posts?: PostDTO | any
+    members: Array<string>,
+    posts:Array<Post>
 }
+export default Group

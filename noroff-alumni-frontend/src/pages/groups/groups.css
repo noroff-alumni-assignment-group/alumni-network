@@ -29,8 +29,13 @@
 /* Group page */
 
 .page-header {
-    padding-bottom: 20px;
+    display: flex;
     font-size: 25px;
+    justify-content: space-between;
+}
+
+.group-desc {
+    padding-bottom: 20px;
 }
 
 .member-card {

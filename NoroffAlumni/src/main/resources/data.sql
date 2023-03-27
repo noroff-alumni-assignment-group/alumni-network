@@ -17,4 +17,4 @@ INSERT INTO post(title, body) VALUES('Understanding how to interact with people'
 INSERT INTO groups(name,description,is_private) VALUES('Trondheim surfers','For those who love surfing in nidelva', false);
 INSERT INTO groups(name,description,is_Private) VALUES('Book club','All about books', false);
 INSERT INTO groups(name,description,is_private) VALUES('Experis gaming team','Professionals only', false);
-INSERT INTO groups(name,description,is_private) VALUES('Newbies corner','Work babies', false);
+INSERT INTO groups(name,description,is_private) VALUES('Newbies corner','No stupid questions', false);

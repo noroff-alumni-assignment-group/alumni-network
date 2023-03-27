@@ -48,8 +48,8 @@ public class GroupService {
      * @return the group with the matching ID
      */
     public Group findGroupById(Long group_id) {
-        User currentUser = userService.getCurrentUser();
-        Optional<Group> group = groupRepository.findByIdAndIsPrivateFalseOrMembersContains(group_id, currentUser);
+
+        Optional<Group> group = groupRepository.findById(group_id);
         return group.orElse(null);
     }
 
@@ -81,6 +81,12 @@ public class GroupService {
         Group group = groupRepository.findById(group_id).orElseThrow(GroupNotFoundException::new);
         group.addMember(userService.getCurrentUser());
         return groupRepository.save(group);
+    }
+
+    public void leaveGroup(Long group_id) {
+        Group group = groupRepository.findById(group_id).orElseThrow(GroupNotFoundException::new);
+        group.removeMember(userService.getCurrentUser());
+        groupRepository.save(group);
     }
 
     /**

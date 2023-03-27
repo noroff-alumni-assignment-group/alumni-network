@@ -1,16 +1,16 @@
 import GroupItem from "../../components/Group/GroupItem"
 import './groups.css'
-import { Group } from "../../models/Group/Group"
+import Group from "../../models/Group/Group"
 import { useEffect, useState } from "react"
 import { useNavigate } from 'react-router-dom'
-import api from "../../services/api"
 import NewGroupModulo from "../../components/Group/NewGroupModulo"
 import GroupService from "../../services/groupService"
+import GroupListItem from "../../models/Group/GroupListItem"
 
 function Groups() {
 
-  const [groups, setGroups] = useState<Group[]>([])
-  const [myGroups, setMyGroups] = useState<Group[]>([])
+  const [groups, setGroups] = useState<GroupListItem[]>([])
+  const [myGroups, setMyGroups] = useState<GroupListItem[]>([])
   const [showNewGroupModulo, setShowNewGroupModulo] = useState(false)
   const navigate = useNavigate()
 
@@ -33,20 +33,22 @@ function Groups() {
     getMyGroups()
   }, [])
 
-  const handleGroupClick = (group: Group) => {
+  const handleGroupClick = (group: GroupListItem) => {
     let page = `/groups/${group.id}`
     navigate(page)
   }
 
+
+
   return (
       <>
         <div className="group-container">
-          {showNewGroupModulo ?<NewGroupModulo setHideModulo={setShowNewGroupModulo}/> : null}
+          {showNewGroupModulo ? <NewGroupModulo setHideModulo={setShowNewGroupModulo}/> : null}
           <div className="groups-actions">
                 <div className="group-list-header">
                   <h3>All groups</h3>
                 </div>
-                <button className="activity-btn" onClick={()=>setShowNewGroupModulo(true)}>NEW GROUP</button>
+                <button className="activity-btn" onClick={() => setShowNewGroupModulo(true)}>NEW GROUP</button>
           </div>
           <div className="groupslist">
                 {groups.map(group => (
@@ -62,7 +64,7 @@ function Groups() {
           <div className="groupslist">
               {myGroups.map(group => (
                   <div key={group.id} onClick={() => handleGroupClick(group)}>
-                    <GroupItem key={group.id} group={group} />
+                    <GroupItem key={group.id} group={group}/>
                   </div>
                 ))}
           </div>

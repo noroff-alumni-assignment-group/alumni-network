@@ -39,11 +39,25 @@ class GroupService {
     async createGroup(newGroup: NewGroup) {
         await api
         .post("/group", newGroup)
+        .then((response) => {
+            return response.data
+        })
     }
 
     async joinGroup(groupId: number) {
-        await api
-        .post("/group" + groupId + "/join")
+        return await api
+        .post("/group/" + groupId + "/join")
+        .then((response) => {
+            return response.data
+        })
+    }
+
+    async leaveGroup(groupId: number) {
+        return await api
+        .post("/group/" + groupId + "/leave")
+        .then((response) => {
+            return response.data
+        })
     }
 }
 export default new GroupService()

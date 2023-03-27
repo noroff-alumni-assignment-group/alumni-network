@@ -200,6 +200,40 @@ public class GroupController {
         }
     }
 
+    @PostMapping("/{id}/leave")
+    @PreAuthorize("hasRole('ROLE_ALUMNI')")
+    @Operation(summary = "Leave a group")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Success",
+                    content = @Content
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Bad request",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ProblemDetail.class))
+                    }
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Group not Found",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ProblemDetail.class))
+                    })
+    })
+    public ResponseEntity leaveGroup(@PathVariable("id") Long id) {
+        try {
+            groupService.leaveGroup(id);
+            return ResponseEntity.ok().build();
+        } catch (GroupNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        } catch(Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
     @GetMapping("/{id}/posts")
     @PreAuthorize("hasRole('ROLE_ALUMNI')")
     @Operation(summary = "Get all posts in a group")

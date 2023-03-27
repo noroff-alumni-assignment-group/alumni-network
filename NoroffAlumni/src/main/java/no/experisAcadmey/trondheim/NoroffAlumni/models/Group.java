@@ -39,4 +39,9 @@ public class Group {
         members.add(user);
         return this;
     }
+
+    public Group removeMember(User user){
+        members.remove(user);
+        return this;
+    }
 }
