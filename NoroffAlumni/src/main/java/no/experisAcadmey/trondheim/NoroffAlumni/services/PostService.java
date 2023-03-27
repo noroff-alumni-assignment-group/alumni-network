@@ -45,7 +45,7 @@ public class PostService {
 
     public List<Post> getPostsForTargetUser(Optional<String> searchWord){
         if(searchWord.isPresent()){
-            return postRepository.findAllMessagesReceivedBySearchWord(userService.getCurrentUser().getId(), "%" + searchWord + "%");
+            return postRepository.findAllMessagesReceivedBySearchWord(userService.getCurrentUser().getId(), "%" + searchWord.get() + "%");
         } else {
             return postRepository.findAllByTargetUserIdOrderByLastUpdatedDesc(userService.getCurrentUser().getId());
         }
@@ -53,9 +53,9 @@ public class PostService {
 
     public List<Post> getPostsToTargetUser(Optional<String> searchWord){
         if(searchWord.isPresent()){
-            return postRepository.findAllByAuthorIdAndTargetUserIdIsNotNull(userService.getCurrentUser().getId());
+            return postRepository.findMessagesSentBySearchWord(userService.getCurrentUser().getId(), "%" + searchWord.get() + "%");
         } else {
-            return postRepository.findMessagesSentBySearchWord(userService.getCurrentUser().getId(), "%" + searchWord + "%");
+            return postRepository.findAllByAuthorIdAndTargetUserIdIsNotNull(userService.getCurrentUser().getId());
         }
     }
 

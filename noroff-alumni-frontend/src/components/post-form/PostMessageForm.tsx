@@ -108,7 +108,11 @@ function PostMessageForm (props: PostFormTypes) {
                                 {(recipient?.firstName ?? "").charAt(0).toUpperCase()+(recipient?.lastName ??"") .charAt(0).toUpperCase()}
                             </div>
                             <p>{recipient?.firstName + " " + recipient?.lastName}</p>
-                            <button onClick={() => setRecipient(undefined)}>
+                            <button onClick={() => {
+                                setRecipient(undefined);
+                                setSearchWord("");
+                                setUsers([]);
+                            }}>
                                 <FontAwesomeIcon icon={faTimes}/>
                             </button>
                         </div>

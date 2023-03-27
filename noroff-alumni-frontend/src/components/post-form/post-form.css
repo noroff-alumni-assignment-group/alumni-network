@@ -257,7 +257,7 @@ APP.css
 }
 .user-list {
     position: absolute;
-    bottom: -58px;
+    top: 60px;
     left: 0;
     width: 75%;
     background-color: white;
@@ -266,7 +266,6 @@ APP.css
 .user-list-item {
     display: flex;
     gap: 2%;
-    white-space: nowrap;
     padding: 10px;
     border: solid 1px lightgray;
     transition: .1s ease-in-out;
@@ -282,6 +281,7 @@ APP.css
 
 .user-search .post-profile-pic {
     min-width: 50px !important;
+    margin: auto 10px auto 0;
 }
 
 
