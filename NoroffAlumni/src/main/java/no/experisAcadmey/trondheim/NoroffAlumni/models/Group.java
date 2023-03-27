@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 
-@Entity
+@Entity(name = "groups")
 @Data
 public class Group {
 

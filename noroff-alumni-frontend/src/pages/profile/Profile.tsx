@@ -10,12 +10,14 @@ import { useSelector } from "react-redux";
 import edit from "../../assets/icons/Ellipsis.png";
 import EditProfile from "./EditProfile";
 import { setUser } from "../../store/userSlice";
+import PostFeed from "../../components/post/PostFeed";
 import PostDTO from "../../models/PostDTO";
+import {getPosts, getPostsUser, searchPosts, searchPostsUser} from "../../services/postService";
 
 function Profile() {
-   const posts: PostDTO[] = []
 
-   const [filteredPosts, setFilteredPosts] = useState<PostDTO[]>(posts);
+  const [posts, setPosts] = useState<PostDTO[]>([]);
+
   const [showSearchField, setShowSearchField] = useState(false);
   const [showEditProfile, setShowEditProfile] = useState(false);
   const navigate = useNavigate();
@@ -33,19 +35,18 @@ function Profile() {
     lastName: "",
   });
 
-  const handleSearchIconClick = () => {
-    setShowSearchField((prevState) => !prevState);
-  };
-
-  const handleEditProfile = () => {
-    setShowEditProfile((prevState) => !prevState);
-  };
+  useEffect(() => {
+    getPostsUser(user.id)
+        .then(data => {
+          setPosts(data);
+        })
+  }, [])
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         const response = await api.get(
-          `http://localhost:8080/api/v1/user/find/${name}`
+            `/user/find/${name}`
         );
 
         const userData = response.data;
@@ -65,6 +66,20 @@ function Profile() {
 
     fetchUserData();
   }, [name]);
+
+  // Function to handle search icon click
+  const handleEditProfile = () => {
+    setShowEditProfile((prevState) => !prevState);
+  };
+
+  function onSearch(searchWord: string) {
+      searchPostsUser(user.id, searchWord)
+          .then(data => {
+            console.log(data)
+            setPosts(data);
+          })
+  }
+
 
   return (
     <div className="profilepage">
@@ -131,22 +146,11 @@ function Profile() {
       </div>
 
       <div className="profile-posts">
-        <h1 className="profile-post-header">Posts</h1>
-        {filteredPosts.length === 0 ? (
-          <div className="no-post-found-cnt">
-            <p>No posts 💀</p>
-          </div>
-        ) : (
-          <div>
-            <div className="all-posts">
-              {filteredPosts.map((post, i) => (
-                <div className="profile-post">
-                  <Post post={post}/>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
+        <div className="profile-posts-header">
+          <h1>Posts</h1>
+          <Search onSearch={onSearch}/>
+        </div>
+        <PostFeed posts={posts}/>
       </div>
     </div>
   );

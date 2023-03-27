@@ -1,5 +1,27 @@
-@media screen and (max-width: 900px){
 
+
+@media screen and (min-width: 901px) {
+  .profile-posts {
+    padding: 100px 100px;
+  }
+  .profiledata-head-cnt {
+    display: flex;
+    flex-direction: row;
+  }
+}
+@media screen and (max-width: 900px){
+  .profile-posts {
+    margin-top: 100px;
+  }
+  .profiledata-head-cnt {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+  }
+  .profiledata-head-cnt div {
+    margin: auto;
+    width: 100%;
+  }
 }
 
 
@@ -40,7 +62,7 @@
 }
 
 .profilepicture-profile {
-  width: 100px;
+  width: 100px !important;
   height: 100px;
   font-size: 2rem;
   background-color: var(--green);
@@ -56,10 +78,12 @@
 
 .profile-title {
   color: var(--blue);
+  text-align: center;
 }
 
-.profile-posts {
-  padding: 100px 100px;
+.profile-posts-header {
+  display: flex;
+  justify-content: space-between;
 }
 
 .profile-post {

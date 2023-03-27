@@ -7,6 +7,7 @@ import Topic from "../tags/Topic";
 import "./post.css";
 import PostResponse from "./PostResponse";
 import PostDTO from "../../models/PostDTO";
+import SnarkdownText from "../SnarkdownText/SnarkdownText";
 
 interface Props {
   post:PostDTO;
@@ -25,24 +26,61 @@ function Post({post}: Props) {
 
   };
 
+
+  const sendCommentToAPI = async (postId: string, commentText: string) => {
+    try {
+      const response = await fetch(
+        `https://your-api-url.com/posts/${postId}/comments`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            author: "Your Name", // Replace with the current user's name
+            authorInitials: "YN", // Replace with the current user's initials
+            response: commentText,
+            date: new Date().toISOString(),
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to send comment to the API");
+      }
+
+      // You can update the local state with the new comment data received from the API
+      const newComment = await response.json();
+    
+    } catch (error) {
+      console.error("Error sending comment to the API:", error);
+    }
+  };
+
+  function setTimeSince(date: Date) {
+    let minutes = date.getMinutes();
+    return date.getDate() + " " + date.toLocaleString('default', { month: 'short' })
+        + " - " + date.getHours() + ":" + (minutes > 9 ? minutes: "0" + minutes);
+  }
+
+  // Replace the comments prop with the new localComments state variable
+
   const handleToggleComments = () => {
     setShowComments(!showComments);
   };
 
   return (
     <div className="post">
-      <div className="post-cnt">
-        <div onClick={handleToggleComments}>
-          <div className="post-head">
-            <h2>{post.title}</h2>
-            <p>{post.last_updated.getHours()}</p>
-          </div>
-          <div className="post-body">
-            <p>{post.body}</p>
-          </div>
-          <div className="post-comments">
-            <p>{post.comments?.length} comments</p>
-          </div>
+      <div className="post-cnt" onClick={handleToggleComments}>
+        <div className="post-head">
+          <h2>{post.title}</h2>
+          <p>{setTimeSince(new Date(post.last_updated ?? ""))}</p>
+        </div>
+        <div className="post-body">
+          <p><SnarkdownText text={post.body}/></p>
+        </div>
+        <div className="post-comments">
+          <p>{post.comments?.length} comments</p>
         </div>
 
         <div className="post-footer">
