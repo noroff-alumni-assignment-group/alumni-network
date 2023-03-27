@@ -11,7 +11,7 @@ class UserService {
 
    async login(loginData:LoginRequest) {
       await api
-        .post("http://localhost:8080/api/v1/authenticate", loginData)
+        .post(process.env.REACT_APP_API_URL + "/authenticate", loginData)
         .then((response) => {
           console.log(response.status);
           if (response.status === 200) {
@@ -26,13 +26,13 @@ class UserService {
       tokenService.removeAuth();
       store.dispatch(removeUser({}));
       return await api.post(
-        "http://localhost:8080/api/v1/authenticate/signout",
+          process.env.REACT_APP_API_URL + "/authenticate/signout",
         { token: tokenService.getLocalRefreshToken() }
       );
    }
 
    async getUser(){
-      return await api.get("http://localhost:8080/api/v1/user");
+      return await api.get(process.env.REACT_APP_API_URL + "/user");
    }
 
    async getUsers(searchWord: string){
@@ -46,7 +46,7 @@ class UserService {
 
    async registerUser(signupRequest:SignupRequest){
       return await api.post(
-        "http://localhost:8080/api/v1/authenticate/register",
+          process.env.REACT_APP_API_URL + "/authenticate/register",
         signupRequest
       );
    }
