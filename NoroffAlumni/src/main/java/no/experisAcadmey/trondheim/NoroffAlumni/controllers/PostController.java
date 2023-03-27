@@ -19,7 +19,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.text.html.Option;
 import java.net.URI;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/api/v1/post")
@@ -29,26 +31,6 @@ public class PostController {
     private PostService postService;
     private PostMapper postMapper = Mappers.getMapper(PostMapper.class);
 
-    @GetMapping
-    @PreAuthorize("hasRole('ROLE_ALUMNI')")
-    @Operation(summary = "Retrieve all posts relating to a user's subscriptions")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "success", content = {
-                    @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = PostDto.class)))
-            }),
-            @ApiResponse(responseCode = "400", description = "Bad Request", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class))
-            })
-    })
-    public ResponseEntity getPosts(){
-        try {
-            return ResponseEntity.ok(postMapper.postToPostDto(postService.getPosts()));
-        } catch (PostNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
-    }
 
     @GetMapping("/{post_id}")
     @PreAuthorize("hasRole('ROLE_ALUMNI')")
@@ -67,6 +49,48 @@ public class PostController {
     public ResponseEntity getPost(@PathVariable("post_id") Long postId){
         try {
             return ResponseEntity.ok(postMapper.postToPostDto(postService.getPost(postId)));
+        } catch (PostNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @GetMapping
+    @PreAuthorize("hasRole('ROLE_ALUMNI')")
+    @Operation(summary = "Retrieve all posts relating to a user's subscriptions")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "success", content = {
+                    @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = PostDto.class)))
+            }),
+            @ApiResponse(responseCode = "400", description = "Bad Request", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class))
+            })
+    })
+    public ResponseEntity getPosts(@RequestParam Optional<String> searchWord){
+        try {
+            return ResponseEntity.ok(postMapper.postToPostDto(postService.getPosts(searchWord)));
+        } catch (PostNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @GetMapping("/user")
+    @PreAuthorize("hasRole('ROLE_ALUMNI')")
+    @Operation(summary = "Retrieve all posts where the user is the author")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "success", content = {
+                    @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = PostDto.class)))
+            }),
+            @ApiResponse(responseCode = "400", description = "Bad Request", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class))
+            })
+    })
+    public ResponseEntity getPostsUser(@RequestParam String authorId, @RequestParam Optional<String> searchWord){
+        try {
+            return ResponseEntity.ok(postMapper.postToPostDto(postService.getPostsUser(authorId, searchWord)));
         } catch (PostNotFoundException e) {
             return ResponseEntity.notFound().build();
         } catch (Exception e) {

@@ -9,10 +9,7 @@ import no.experisAcadmey.trondheim.NoroffAlumni.repositories.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,8 +23,20 @@ public class PostService {
     private TopicService topicService;
 
     // TODO: Should return based on user's subscribed topics and groups, not "findAll"
-    public List<Post> getPosts(){
-        return postRepository.findAll();
+    public List<Post> getPosts(Optional<String> searchWord){
+        if(searchWord.isPresent()){
+            return postRepository.findAllByTitleContainingIgnoreCaseOrBodyContainingIgnoreCaseOrderByLastUpdatedDesc(searchWord.get(), searchWord.get());
+        }else {
+            return postRepository.findAllByOrderByLastUpdatedDesc();
+        }
+    }
+
+    public List<Post> getPostsUser(String authorId, Optional<String> searchWord){
+        if(searchWord.isPresent()){
+            return postRepository.findAllBySearchWord("%" + searchWord.get() + "%", authorId);
+        }else {
+            return postRepository.findAllByAuthorIdOrderByLastUpdated(authorId);
+        }
     }
 
     public Post getPost(Long id) {

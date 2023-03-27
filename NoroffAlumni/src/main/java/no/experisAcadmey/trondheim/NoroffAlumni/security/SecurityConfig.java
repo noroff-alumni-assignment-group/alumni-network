@@ -33,6 +33,9 @@ public class SecurityConfig {
     @Value("${spring.security.oauth2.resourceserver.jwt.issuer-uri}")
     private String issuerUri;
 
+    @Value("${ALLOWED_CLIENT_ORIGIN}")
+    private String allowed_client_origin;
+
     /**
      * Configures security filter chain for http requests. Exposes endpoints
      * "/api/v1/authenticate" and "/api/v1/authenticate/register" for login and user registration.
@@ -116,9 +119,10 @@ public class SecurityConfig {
     */
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
+
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowCredentials(true);
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
+        configuration.setAllowedOrigins(Arrays.asList(allowed_client_origin));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("authorization", "withCredentials", "content-type",
                 "x-auth-token", "Access-Control-Allow-Credentials", "access-control-allow-origin",

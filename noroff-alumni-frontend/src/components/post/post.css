@@ -16,6 +16,13 @@
   align-items: center;
 }
 
+.post-feed {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  margin-top: 20px;
+}
+
 .post-head {
   justify-content: space-between;
   margin-bottom: 15px;

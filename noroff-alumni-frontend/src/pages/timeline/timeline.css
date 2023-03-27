@@ -11,6 +11,9 @@
     .timeline-tags {
         max-width: 50%;
     }
+    .timeline .search-cnt {
+        margin-right: 15px;
+    }
 }
 
 @media screen and (max-width: 800px) {
@@ -19,13 +22,11 @@
         justify-content: right;
         gap: 15px;
     }
-    .timeline-action-btn-cnt {
-        flex-direction: column;
-        justify-content: right;
-        gap: 15px;
-    }
     .timeline-tags {
         max-width: 100%;
+    }
+    .timeline .search-cnt {
+        margin-right: 15px;
     }
 }
 
@@ -60,8 +61,6 @@
 }
 
 
-
-
 .timeline-action-btn-cnt {
     display: flex;
     max-height: 50px;
@@ -87,23 +86,7 @@
     display: flex;
     flex-direction: column;
     gap: 30px;
-  margin-top: 20px;
-}
-
-.search-cnt {
-    display: flex;
-    border-radius: 9px;
-    margin-right: 10px;
-  
-}
-
-.search-cnt-active {
-    background-color: white;
-    box-shadow: var(--box-shadow);
-}
-
-.searchimg {
-    margin-left: auto;
+    margin-top: 20px;
 }
 
 @keyframes searchfield {

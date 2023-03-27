@@ -25,6 +25,7 @@ public abstract class PostMapper {
     @Mapping(target = "target_topics", qualifiedByName = "mapTopicToTopicName", source = "targetTopics")
     @Mapping(target = "author", qualifiedByName = "mapUserToUserDisplayDto", source = "author")
     @Mapping(target = "target_user", qualifiedByName = "mapUserToUserDisplayDto", source = "targetUser")
+    @Mapping(target = "last_updated", source = "lastUpdated")
     public abstract PostDto postToPostDto(Post post);
 
     public abstract Collection<PostDto> postToPostDto(Collection<Post> posts);
