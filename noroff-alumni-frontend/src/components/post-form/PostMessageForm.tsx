@@ -19,6 +19,7 @@ function PostMessageForm (props: PostFormTypes) {
 
     let postId: number = 3;
 
+    const [title, setTitle] = useState("");
     let [text, setText] = useState("");
     const [searchWord, setSearchWord] = useState("");
     const [users, setUsers] = useState<UserDisplayDTO[]>([]);
@@ -62,14 +63,14 @@ function PostMessageForm (props: PostFormTypes) {
             alert.info("Message must have a recipient")
             return;
         }
-        if((text === "") && !erroneous){
+        if((title === "" || text === "") && !erroneous){
             setErroneous(true)
             setTimeout(() => {
                 setErroneous(false)
             }, 1000)
         } else {
             let newPost = {
-                title: "",
+                title: title,
                 body: text,
                 target_user: recipient.id,
                 target_topics: [],
@@ -122,7 +123,7 @@ function PostMessageForm (props: PostFormTypes) {
                             <input
                                 type="text"
                                 className={"user-search-field"}
-                                placeholder="Search topic..."
+                                placeholder="Search users..."
                                 onChange={(event) => setSearchWord(event.target.value)}
                                 value={searchWord}
                             />
@@ -140,6 +141,8 @@ function PostMessageForm (props: PostFormTypes) {
                         </div>
                     }
                 </div>
+                <input type="text" className={"input " + (erroneous && title === "" ? "border-blink" : "")}
+                       placeholder="Title.." onChange={(e => setTitle(e.target.value))} value={title}/>
                 <div className="text-content-container">
                     <button type="button" className={"round-toggle " + (previewing ? "button-active" : "button-inactive")}
                             onClick={() => setPreviewing(!previewing)}><FontAwesomeIcon icon={faEye}/></button>

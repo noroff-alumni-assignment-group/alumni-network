@@ -4,13 +4,9 @@ import Search from "../../components/search/Search";
 import Popup from "../../components/popup/Popup";
 import PostDTO from "../../models/PostDTO";
 import PostMessageForm from "../../components/post-form/PostMessageForm";
-import { useSelector } from "react-redux";
-import { RootState } from "../../store/store";
 import PostFeed from "../../components/post/PostFeed";
 import {
-    getPosts,
     getPostsForTargetUser, getPostsToTargetUser,
-    searchPosts,
     searchPostsForTargetUser,
     searchPostsToTargetUser
 } from "../../services/postService";
@@ -93,6 +89,7 @@ const Inbox = () => {
                     </div>
                 </div>
                 <div className="inbox-feed">
+                    {posts.length <= 0 && <div className="no-content-tag"><p>No messages...</p></div>}
                     <PostFeed posts={posts}/>
                 </div>
             </div>

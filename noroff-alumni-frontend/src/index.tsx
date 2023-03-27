@@ -9,7 +9,7 @@ import { transitions, positions, Provider as AlertProvider } from 'react-alert';
 
 const options = {
     position: positions.TOP_CENTER,
-    timeout: 5000,
+    timeout: 3000,
     transition: transitions.SCALE
 }
 

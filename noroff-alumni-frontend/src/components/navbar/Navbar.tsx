@@ -136,7 +136,7 @@ function Navbar() {
           <p>Group Lorem</p>
           <p>Group Ipsum </p>
       </div>*/}
-
+        </div>
         <div className="tag-cnt logout-btn">
           <FontAwesomeIcon icon={faSignOutAlt} className={"nav-icon"} />
           <h1>
