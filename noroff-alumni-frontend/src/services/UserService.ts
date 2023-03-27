@@ -11,7 +11,7 @@ class UserService {
 
    async login(loginData:LoginRequest) {
       await api
-        .post(process.env.REACT_APP_API_URL + "/authenticate", loginData)
+        .post("/authenticate", loginData)
         .then((response) => {
           console.log(response.status);
           if (response.status === 200) {
@@ -26,13 +26,13 @@ class UserService {
       tokenService.removeAuth();
       store.dispatch(removeUser({}));
       return await api.post(
-          process.env.REACT_APP_API_URL + "/authenticate/signout",
+          "/authenticate/signout",
         { token: tokenService.getLocalRefreshToken() }
       );
    }
 
    async getUser(){
-      return await api.get(process.env.REACT_APP_API_URL + "/user");
+      return await api.get("/user");
    }
 
    async getUsers(searchWord: string){
@@ -46,7 +46,7 @@ class UserService {
 
    async registerUser(signupRequest:SignupRequest){
       return await api.post(
-          process.env.REACT_APP_API_URL + "/authenticate/register",
+          "/authenticate/register",
         signupRequest
       );
    }

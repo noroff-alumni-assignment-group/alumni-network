@@ -47,7 +47,7 @@ function Profile() {
     const fetchUserData = async () => {
       try {
         const response = await api.get(
-            process.env.REACT_APP_API_URL + `/user/find/${name}`
+            `/user/find/${name}`
         );
 
        

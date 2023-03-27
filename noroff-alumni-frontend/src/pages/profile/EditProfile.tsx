@@ -21,7 +21,7 @@ export default function EditProfile(props: any) {
     // Send the updated user data to the API
     api
       .put(
-          process.env.REACT_APP_API_URL + `/user/${props.user.id}`,
+          `/user/${props.user.id}`,
         updatedUserData
       )
       .then((response) => {
