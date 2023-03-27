@@ -6,9 +6,11 @@ import { AiOutlineSearch } from "react-icons/ai";
 import { FaArrowCircleLeft, FaArrowCircleRight } from "react-icons/fa";
 import TopicService from "../../services/topicService";
 import CreateTopicModulo from "../../components/CreateTopicModulo/CreateTopicModulo";
+import {useAlert} from "react-alert";
 
 function Topics() {
   const pageSize = 10;
+  const alert =useAlert();
   const [pageNumber, setPageNumber] = useState<number>(0);
   const [searchWord, setSearchWord] = useState("");
   const [showNewTopicModulo, setShowNewTopicModulo] = useState(false);
@@ -21,7 +23,7 @@ function Topics() {
       await TopicService.getTopics(pageNumber, pageSize).then((data)=>{
         setTopics(data);
       }).catch((error)=>{
-        
+        alert.error("Failed to get topics");
       });
     }
     getPageOfTopics();
