@@ -8,9 +8,6 @@ const instance = axios.create({
 
 });
 
-console.log("env",process.env.REACT_APP_API_URL);
-
-
 instance.interceptors.request.use(
    (config)=>{
       const token = tokenService.getLocalAccessToken();
@@ -27,7 +24,6 @@ instance.interceptors.response.use(
       return res
    },
    async (err)=>{
-      console.log(err.config);
       const originalConfig = err.config;
 
       if((originalConfig.url !== "/authenticate" && originalConfig.url !== "/authenticate/refresh") && err.response){

@@ -25,7 +25,6 @@ function Profile() {
   let name = window.location.pathname.replace("/profile/", "");
   name = name.replace("/profile", "");
   const user = useSelector((state: any) => state.user);
-  console.log("user", user);
 
   const [userProfile, setUserProfile] = useState({
     title: "",
@@ -61,7 +60,6 @@ function Profile() {
           lastName: userData.lastName,
         });
 
-        console.log("res", response.data);
       } catch (error) {
         navigate("/404");
       }
@@ -78,7 +76,6 @@ function Profile() {
   function onSearch(searchWord: string) {
       searchPostsUser(user.id, searchWord)
           .then(data => {
-            console.log(data)
             setPosts(data);
           })
   }
