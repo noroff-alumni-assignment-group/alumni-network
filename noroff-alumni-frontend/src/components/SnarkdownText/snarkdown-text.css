@@ -1,4 +1,6 @@
-
+.snarkdown-text {
+    white-space: pre-line;
+}
 .snarkdown-text h1,
 .snarkdown-text h2,
 .snarkdown-text h3 {
