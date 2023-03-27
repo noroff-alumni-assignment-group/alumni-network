@@ -6,6 +6,7 @@ import Search from "../../components/search/Search";
 import PostForm from "../../components/post-form/PostForm";
 import Popup from "../../components/popup/Popup";
 import PostDTO from "../../models/PostDTO";
+import PostMessageForm from "../../components/post-form/PostMessageForm";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 
@@ -18,18 +19,14 @@ const Timeline = () => {
       body: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
       target_topics: ["TOPIC 1"],
       target_groups: ["GROUP 1"],
-      author: { firstName: "Anders", lastName: "A", username: "bugge2" },
+      author: {firstName:"Anders",lastName:"A", id: "", email: "", username: ""},
       comments: [
         {
-          author: { firstName: "Marcus", lastName: "B", username: "bugge2" },
+          author:{firstName:"Marcus",lastName:"B", id: "", email: "", username: ""},
           response: "Lorem Ipsum is simply dummy text of the printin",
         },
         {
-          author: {
-            firstName: "Aleksander",
-            lastName: "R",
-            username: "bugge2",
-          },
+          author: {firstName:"Aleksander",lastName:"R", id: "", email: "", username: ""},
           response: "Yes sui!",
         },
       ],
@@ -41,38 +38,38 @@ const Timeline = () => {
       body: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
       target_topics: ["TOPIC 2"],
       target_groups: ["GROUP 1"],
-      author: { firstName: "Anders", lastName: "A", username: "bugge2" },
+      author: {firstName:"Anders",lastName:"A", id: "", email: "", username: ""},
       comments: [
         {
-          author: { firstName: "Marcus", lastName: "B" },
+          author: {firstName:"Marcus",lastName:"B", id: "", email: "", username: ""},
           response: "Lorem Ipsum is simply dummy text of the printin",
         },
         {
-          author: { firstName: "Aleksander", lastName: "R" },
+          author: {firstName:"Aleksander",lastName:"R", id: "", email: "", username: ""},
           response: "Yes sui!",
         },
         {
-          author: { firstName: "Marcus", lastName: "B" },
+          author: {firstName:"Marcus",lastName:"B", id: "", email: "", username: ""},
           response: "Lorem Ipsum is simply dummy text of the printin",
         },
         {
-          author: { firstName: "Aleksander", lastName: "R" },
+          author: {firstName:"Aleksander",lastName:"R", id: "", email: "", username: ""},
           response: "Yes sui!",
         },
         {
-          author: { firstName: "Marcus", lastName: "B" },
+          author: {firstName:"Marcus",lastName:"B", id: "", email: "", username: ""},
           response: "Lorem Ipsum is simply dummy text of the printin",
         },
         {
-          author: { firstName: "Aleksander", lastName: "R" },
+          author:{firstName:"Aleksander",lastName:"R", id: "", email: "", username: ""},
           response: "Yes sui!",
         },
         {
-          author: { firstName: "Marcus", lastName: "B" },
+          author: {firstName:"Marcus",lastName:"B", id: "", email: "", username: ""},
           response: "Lorem Ipsum is simply dummy text of the printin",
         },
         {
-          author: { firstName: "Aleksander", lastName: "R" },
+          author: {firstName:"Aleksander",lastName:"R", id: "", email: "", username: ""},
           response: "Yes sui!",
         },
       ],
@@ -117,15 +114,14 @@ const Timeline = () => {
 
   return (
     <div className="timeline">
-      {showPostForm && (
-        <Popup child={<PostForm editing={false} handler={setShowPostForm} />} />
-      )}
+
+      {showPostForm && <Popup child={<PostForm editing={false} handler={setShowPostForm}/>}/>}
 
       <div className="timeline-content">
         <h1>Timeline</h1>
 
         <div className="timeline-head">
-          
+
           <div className="timeline-tags ">
             {user.topics?.map((topic, i) => (
               <div

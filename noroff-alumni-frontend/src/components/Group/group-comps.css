@@ -99,7 +99,7 @@ label {
   height: 0;
 }
 
-.private-check {
+.private-input-span {
   position: absolute;
   cursor: pointer;
   top: 0;
@@ -111,7 +111,7 @@ label {
   border-radius: 25px;
 }
 
-span:before {
+.private-input-span:before {
   position: absolute;
   content: "";
   height: 20px;
@@ -123,11 +123,11 @@ span:before {
   transition: 0.3s;
 }
 
-.private-input:checked + span {
+.private-input:checked + .private-input-span {
   background-color: #47e88a;
 }
 
-.private-input:checked + span:before {
+.private-input:checked + .private-input-span:before {
   transform: translateX(29px);
 }
 

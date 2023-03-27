@@ -8,6 +8,9 @@
     .timeline-action-btn-cnt {
         flex-direction: row;
     }
+    .timeline-tags {
+        max-width: 50%;
+    }
 }
 
 @media screen and (max-width: 800px) {
@@ -20,6 +23,9 @@
         flex-direction: column;
         justify-content: right;
         gap: 15px;
+    }
+    .timeline-tags {
+        max-width: 100%;
     }
 }
 
@@ -68,14 +74,13 @@
 }
 
 .timeline-tags {
-  display: flex;
-    flex-wrap: nowrap; 
-  overflow-x: auto; 
-  max-width: 700px;
+  display: inline-flex;
+  flex-wrap: wrap;
+    gap: 15px;
 }
 
 .timeline-sort-tag {
-  white-space: nowrap;
+    white-space: nowrap;
 }
 
 .timeline-feed {

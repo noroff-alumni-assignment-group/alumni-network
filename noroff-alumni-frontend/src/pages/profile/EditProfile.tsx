@@ -27,7 +27,7 @@ export default function EditProfile(props: any) {
       .then((response) => {
         console.log(response);
         // Hide EditProfile component after successful API call
-        props.setShowEditProfile(false); // Add this line to close the EditProfile component
+        props.setShowEditProfile(false); 
         window.location.reload();
       });
   };

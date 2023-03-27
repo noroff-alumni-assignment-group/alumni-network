@@ -2,6 +2,7 @@ package no.experisAcadmey.trondheim.NoroffAlumni.controllers;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -110,6 +111,25 @@ public class UserController {
             return ResponseEntity.ok(userMapper.toUserDto(updatedUser));
         } else {
             return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/search")
+    @PreAuthorize("hasRole('ROLE_ALUMNI')")
+    @Operation(summary = "Retrieves all users whose full name match the search word")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Success", content = {
+                    @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = UserDto.class)))
+            }),
+            @ApiResponse(responseCode = "400", description = "Bad Request", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class))
+            }),
+    })
+    public ResponseEntity getUsers(@RequestParam("search") String searchWord){
+        try {
+            return ResponseEntity.ok(userMapper.toUserDisplayDto(userService.getUsers(searchWord)));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
         }
     }
 }

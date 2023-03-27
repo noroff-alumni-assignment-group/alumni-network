@@ -8,6 +8,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -24,10 +25,10 @@ public abstract class UserMapper {
 
     public abstract UserDisplayDto toUserDisplayDto(User user);
 
+    public abstract List<UserDisplayDto> toUserDisplayDto(List<User> users);
+
     @Mapping(target = "topics", qualifiedByName = "mapTopicIdToTopic", source = "topics")
     public abstract User toUser(UserDto userDto);
-
-
 
     /**
      * Defines how to map topics

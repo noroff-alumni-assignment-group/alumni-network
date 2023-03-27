@@ -1,5 +1,6 @@
 package no.experisAcadmey.trondheim.NoroffAlumni.models;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -13,6 +14,10 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import lombok.Data;
 
+/**
+ * Data model for the Topic entity
+ * stored in the database.
+ */
 @Entity
 @Data
 public class Topic {
@@ -25,12 +30,15 @@ public class Topic {
    @ManyToMany
    @JoinTable(name = "topic_subscriptions", joinColumns = @JoinColumn(name = "topic_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
    private Set<User> subscribers;
-   @ManyToMany
-   @JoinTable(name="topic_posts",joinColumns = @JoinColumn(name = "topic_id"),inverseJoinColumns = @JoinColumn(name = "post_id"))
+   @ManyToMany(mappedBy = "targetTopics")
    private List<Post> posts;
 
    public Topic addSubscriber(User user){
       subscribers.add(user);
+      return this;
+   }
+   public Topic removeSubscriber(User user){
+      subscribers.remove(user);
       return this;
    }
 }

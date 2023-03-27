@@ -5,6 +5,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import {useAlert} from "react-alert";
 import {createPost, editPost, getPost} from "../../services/postService";
+import TopicService from "../../services/topicService";
+import TopicListItem from "../../models/TopicListItemDTO";
 
 type PostFormTypes = {
     editing: boolean,
@@ -13,14 +15,14 @@ type PostFormTypes = {
 
 function PostForm (props: PostFormTypes) {
 
-    const groups: string[] = ["group1", "group2",];
-    const topics: string[] = ["topic1", "top", "topi2"];
-    const postId: number = 3;
+    let postId: number = 3;
 
     let [title, setTitle] = useState("");
     let [text, setText] = useState("");
-    let [selectedGroup, setSelectedGroup] = useState(-1);
-    let [selectedTopic, setSelectedTopic] = useState(-1);
+    let [topics, setTopics] = useState<string[]>([]);
+    let [groups, setGroups] = useState<string[]>([]);
+    let [selectedGroups, setSelectedGroups] = useState<string[]>([]);
+    let [selectedTopics, setSelectedTopics] = useState<string[]>([]);
 
     let [previewing, setPreviewing] = useState(false);
     let [erroneous, setErroneous] = useState(false);
@@ -28,23 +30,30 @@ function PostForm (props: PostFormTypes) {
     let alert = useAlert();
 
     useEffect(() => {
-        if(props.editing){
-            fetchPost();
-        }
-    }, [props.editing])
+        fetchSubscriptions();
+    }, [])
 
     useEffect(() => {
-        console.log(previewing);
-    }, [previewing])
+        if(props.editing){
+            getPost(postId)
+                .then(data => {
+                    setTitle(data.title)
+                    setText(data.body)
+                    let arr: string[] = []
+                    data.target_topics?.map(topic => {
+                        if(topics.includes(topic)){
+                            arr.push(topic)
+                        }
+                    })
+                    setSelectedTopics(arr);
+                })
+        }
+    }, [topics])
 
-    function fetchPost() {
-        // fetch post
-        console.log("fetched post");
-
-        getPost(postId)
+    function fetchSubscriptions(){
+        TopicService.getSubscribedTopics()
             .then(data => {
-                setTitle(data.title)
-                setText(data.body)
+                setTopics(data.map((topic: TopicListItem) => topic.name));
             })
     }
 
@@ -59,8 +68,8 @@ function PostForm (props: PostFormTypes) {
                 title: title,
                 body: text,
                 target_user: "",
-                target_topic: "Summer",
-                target_group: ""
+                target_topics: selectedTopics,
+                target_groups: []
             }
             if(!props.editing) {
                 createPost(newPost)
@@ -87,15 +96,18 @@ function PostForm (props: PostFormTypes) {
         <div className="post-form">
             <div className="post-content">
                 <h1>{props.editing ? "Edit post" : "Write a new post"}</h1>
-                <input type="text" className={"input " + (erroneous && title === "" ? "border-blink" : "")} placeholder="Title.." onChange={(e => setTitle(e.target.value))} value={title}/>
+                <input type="text" className={"input " + (erroneous && title === "" ? "border-blink" : "")}
+                       placeholder="Title.." onChange={(e => setTitle(e.target.value))} value={title}/>
                 <div className="text-content-container">
                     <button type="button" className={"round-toggle " + (previewing ? "button-active" : "button-inactive")}
                             onClick={() => setPreviewing(!previewing)}><FontAwesomeIcon icon={faEye}/></button>
                     {!previewing
                         ?
-                        <textarea className={"input text-content " + (erroneous && text === "" ? "border-blink" : "")} placeholder="Write something.." onChange={(e => setText(e.target.value))} value={text}/>
+                        <textarea className={"input text-content " + (erroneous && text === "" ? "border-blink" : "")}
+                                  placeholder="Write something.." onChange={(e => setText(e.target.value))} value={text}/>
                         :
-                        <div className={"input text-content scroll vertical " + (erroneous && text === "" ? "border-blink" : "")} dangerouslySetInnerHTML={{__html: toGithubMarkdown(text)}}></div>
+                        <div className={"input text-content scroll vertical " + (erroneous && text === "" ? "border-blink" : "")}
+                             dangerouslySetInnerHTML={{__html: toGithubMarkdown(text)}}></div>
                     }
                 </div>
             </div>
@@ -103,17 +115,25 @@ function PostForm (props: PostFormTypes) {
                 <p className="subsubtitle">Post to your group</p>
                 <div className="button-row">
                     {groups.map((group, index) => {
-                        return <button type="button" className={"entity-tag " +
-                            (selectedGroup === index ? "group-tag-active" : "group-tag-inactive")} key={index}
-                               onClick={() => setSelectedGroup(index)}>{group}</button>
+                        return <button type="button" disabled={props.editing} className={"entity-tag " +
+                            (selectedGroups.includes(group) ? "group-tag-active" : "group-tag-inactive")} key={index}
+                               onClick={() => {
+                                   let arr = selectedTopics.includes(group)
+                                       ? selectedTopics.filter(e => e !== group) : [...selectedTopics, group];
+                                   setSelectedTopics(arr);
+                               }}>{group}</button>
                     })}
                 </div>
                 <p className="subsubtitle">Add topics</p>
                 <div className="button-row">
                     {topics.map((topic, index) => {
-                        return <button type="button" className={"entity-tag " +
-                            (selectedTopic === index ? "topic-tag-active" : "topic-tag-inactive")} key={index}
-                                       onClick={() => setSelectedTopic(index)}>{topic}</button>
+                        return <button type="button" disabled={props.editing} className={"entity-tag " +
+                            (selectedTopics.includes(topic) ? "topic-tag-active" : "topic-tag-inactive")} key={index}
+                                       onClick={() => {
+                                           let arr = selectedTopics.includes(topic)
+                                               ? selectedTopics.filter(e => e !== topic) : [...selectedTopics, topic];
+                                           setSelectedTopics(arr);
+                                       }}>{topic}</button>
                     })}
                 </div>
                 <input type="text" className="input" placeholder="or create a topic..."/>

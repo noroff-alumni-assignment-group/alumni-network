@@ -59,7 +59,7 @@ function Post({post}: Props) {
             ))}
           </div>
           <div className="post-author">
-            <Profilepicture author={post.author} />
+            <Profilepicture author={post.author ?? {firstName:"",lastName:""}} />
           </div>
         </div>
       </div>

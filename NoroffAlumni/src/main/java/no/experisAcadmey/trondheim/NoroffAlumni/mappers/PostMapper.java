@@ -22,7 +22,7 @@ public abstract class PostMapper {
     @Autowired
     private UserMapper userMapper = Mappers.getMapper(UserMapper.class);
 
-    @Mapping(target = "target_topic", qualifiedByName = "mapTopicToTopicName", source = "targetTopics")
+    @Mapping(target = "target_topics", qualifiedByName = "mapTopicToTopicName", source = "targetTopics")
     @Mapping(target = "author", qualifiedByName = "mapUserToUserDisplayDto", source = "author")
     @Mapping(target = "target_user", qualifiedByName = "mapUserToUserDisplayDto", source = "targetUser")
     public abstract PostDto postToPostDto(Post post);

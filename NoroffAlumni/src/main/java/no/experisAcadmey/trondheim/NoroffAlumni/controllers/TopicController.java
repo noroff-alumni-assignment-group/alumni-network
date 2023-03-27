@@ -11,7 +11,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import no.experisAcadmey.trondheim.NoroffAlumni.exceptions.TopicExistException;
 import no.experisAcadmey.trondheim.NoroffAlumni.exceptions.TopicNotFoundException;
+import no.experisAcadmey.trondheim.NoroffAlumni.mappers.PostMapper;
 import no.experisAcadmey.trondheim.NoroffAlumni.mappers.TopicMapper;
+import no.experisAcadmey.trondheim.NoroffAlumni.models.DTOs.postDTOs.PostDto;
 import no.experisAcadmey.trondheim.NoroffAlumni.models.DTOs.topicDTOs.NewTopic;
 import no.experisAcadmey.trondheim.NoroffAlumni.models.DTOs.topicDTOs.TopicDto;
 import no.experisAcadmey.trondheim.NoroffAlumni.models.DTOs.topicDTOs.TopicListItem;
@@ -31,7 +33,7 @@ public class TopicController {
     @Autowired
     private TopicService topicService;
     private TopicMapper topicMapper = Mappers.getMapper(TopicMapper.class);
-
+    private PostMapper postMapper = Mappers.getMapper(PostMapper.class);
     @GetMapping
     @PreAuthorize("hasRole('ROLE_ALUMNI')")
     @Operation(summary = "Retrieve a page of topics, optionally with parameters such as search, page and page-size")
@@ -51,6 +53,30 @@ public class TopicController {
                                     @RequestParam("pageSize") Optional<Integer> pageSize) {
         try {
             return ResponseEntity.ok(topicMapper.topicToTopicListItem(topicService.getTopics(searchWord, page, pageSize)));
+        } catch (TopicNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Request not valid");
+        }
+    }
+
+    @GetMapping("/subscribed")
+    @PreAuthorize("hasRole('ROLE_ALUMNI')")
+    @Operation(summary = "Retrieve all topics that the current user is subscribed to")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Success", content = {
+                    @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = TopicListItem.class)))
+            }),
+            @ApiResponse(responseCode = "400", description = "Bad Request", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class))
+            }),
+            @ApiResponse(responseCode = "404", description = "Topic Not Found", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class))
+            }),
+    })
+    public ResponseEntity getSubscribedTopics() {
+        try {
+            return ResponseEntity.ok(topicMapper.topicToTopicListItem(topicService.getSubscribedTopics()));
         } catch (TopicNotFoundException e) {
             return ResponseEntity.notFound().build();
         } catch (Exception e) {
@@ -108,7 +134,7 @@ public class TopicController {
 
     @PostMapping("/{topic_id}/join")
     @PreAuthorize("hasRole('ROLE_ALUMNI')")
-    @Operation(summary = "Create a new topic with name and description")
+    @Operation(summary = "Subscribe to a topic")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Success", content = {
                     @Content(mediaType = "application/json")
@@ -128,6 +154,56 @@ public class TopicController {
             return ResponseEntity.notFound().build();
         } catch(Exception e){
             return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @PostMapping("/{topic_id}/leave")
+    @PreAuthorize("hasRole('ROLE_ALUMNI')")
+    @Operation(summary = "Unsubscribes from a topic")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Success", content = {
+                    @Content(mediaType = "application/json")
+            }),
+            @ApiResponse(responseCode = "400", description = "Bad Request", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class))
+            }),
+            @ApiResponse(responseCode = "404", description = "Topic Not Found", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class))
+            }),
+    })
+    public ResponseEntity unSubscribeToTopic(@PathVariable("topic_id") Long topicId){
+        try{
+            topicService.leaveTopic(topicId);
+            return ResponseEntity.ok().build();
+        }catch (TopicNotFoundException e){
+            return ResponseEntity.notFound().build();
+        } catch(Exception e){
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @GetMapping("/{topic_id}/posts")
+    @PreAuthorize("hasRole('ROLE_ALUMNI')")
+    @Operation(summary = "Retrieve a Topic based on a specific id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Success", content = {
+                    @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = PostDto.class)))
+            }),
+            @ApiResponse(responseCode = "400", description = "Bad Request", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class))
+            }),
+            @ApiResponse(responseCode = "404", description = "Topic Not Found", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class))
+            }),
+    })
+    public ResponseEntity getTopicPosts(@PathVariable("topic_id") Long topicId,@RequestParam("page") Integer page,
+                                        @RequestParam("pageSize") Integer pageSize){
+        try{
+            return ResponseEntity.ok(postMapper.postToPostDto(topicService.findTopicPosts(topicId,page,pageSize)));
+        }catch (TopicNotFoundException e){
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Request not valid");
         }
     }
 
