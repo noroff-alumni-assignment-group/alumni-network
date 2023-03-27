@@ -7,6 +7,7 @@ import {useAlert} from "react-alert";
 import {createPost, editPost, getPost} from "../../services/postService";
 import TopicService from "../../services/topicService";
 import TopicListItem from "../../models/TopicListItemDTO";
+import SnarkdownText from "../SnarkdownText/SnarkdownText";
 
 type PostFormTypes = {
     editing: boolean,
@@ -16,18 +17,19 @@ type PostFormTypes = {
 function PostForm (props: PostFormTypes) {
 
     let postId: number = 3;
+    const maxLength: number = 1500;
 
-    let [title, setTitle] = useState("");
-    let [text, setText] = useState("");
-    let [topics, setTopics] = useState<string[]>([]);
-    let [groups, setGroups] = useState<string[]>([]);
-    let [selectedGroups, setSelectedGroups] = useState<string[]>([]);
-    let [selectedTopics, setSelectedTopics] = useState<string[]>([]);
+    const [title, setTitle] = useState("");
+    const [text, setText] = useState("");
+    const [topics, setTopics] = useState<string[]>([]);
+    const [groups, setGroups] = useState<string[]>([]);
+    const [selectedGroups, setSelectedGroups] = useState<string[]>([]);
+    const [selectedTopics, setSelectedTopics] = useState<string[]>([]);
 
-    let [previewing, setPreviewing] = useState(false);
-    let [erroneous, setErroneous] = useState(false);
+    const [previewing, setPreviewing] = useState(false);
+    const [erroneous, setErroneous] = useState(false);
 
-    let alert = useAlert();
+    const alert = useAlert();
 
     useEffect(() => {
         fetchSubscriptions();
@@ -88,10 +90,6 @@ function PostForm (props: PostFormTypes) {
         return false;
     }
 
-    function toGithubMarkdown(text: string){
-        return snarkdown(text);
-    }
-
     return (
         <div className="post-form">
             <div className="post-content">
@@ -101,13 +99,19 @@ function PostForm (props: PostFormTypes) {
                 <div className="text-content-container">
                     <button type="button" className={"round-toggle " + (previewing ? "button-active" : "button-inactive")}
                             onClick={() => setPreviewing(!previewing)}><FontAwesomeIcon icon={faEye}/></button>
+                    <div className="text-content-meta">
+                        <p className={text.length >= maxLength ? "text-limit-reached" : ""}>{text.length + "/" + maxLength}</p>
+                    </div>
                     {!previewing
                         ?
                         <textarea className={"input text-content " + (erroneous && text === "" ? "border-blink" : "")}
-                                  placeholder="Write something.." onChange={(e => setText(e.target.value))} value={text}/>
+                                  placeholder="Write something.." onChange={(e => {
+                                      if(e.target.value.length <= maxLength){setText(e.target.value)}
+                        })} value={text}/>
                         :
-                        <div className={"input text-content scroll vertical " + (erroneous && text === "" ? "border-blink" : "")}
-                             dangerouslySetInnerHTML={{__html: toGithubMarkdown(text)}}></div>
+                        <div className={"input text-content scroll vertical " + (erroneous && text === "" ? "border-blink" : "")}>
+                            <SnarkdownText text={text}/>
+                        </div>
                     }
                 </div>
             </div>

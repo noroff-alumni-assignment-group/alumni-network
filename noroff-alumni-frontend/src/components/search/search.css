@@ -1,6 +1,36 @@
 .search-input {
     background-color: white;
-    padding-left: 10px;
+    padding-left: 15px;
     border-style: none;
-    border-radius: 9px;
+    border-radius: 10px;
+    width: 80%;
+    min-height: 50px;
+    outline: none;
+}
+.search-cnt {
+    display: flex;
+    border-radius: 10px;
+}
+
+.search-cnt-active {
+    background-color: white;
+    box-shadow: var(--box-shadow);
+}
+
+.search-btn {
+    display: flex;
+    width: 20%;
+    border: none;
+    border-radius: 0 10px 10px 0;
+    background: white;
+    transition: .1s ease-in-out;
+}
+.search-btn:hover {
+    background: #eeeeee;
+    cursor: pointer;
+}
+.search-btn-icon {
+    font-size: 1.5rem;
+    color: lightgray;
+    margin: auto;
 }
