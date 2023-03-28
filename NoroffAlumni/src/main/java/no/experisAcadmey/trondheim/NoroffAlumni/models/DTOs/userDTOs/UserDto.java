@@ -21,5 +21,6 @@ public class UserDto {
     private String biography;
     private String funfact;
 
+
     private Set<String> topics;
 }

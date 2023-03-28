@@ -8,7 +8,7 @@ import jakarta.persistence.EntityNotFoundException;
  */
 public class UserNotFoundException extends EntityNotFoundException {
 
-    public UserNotFoundException() {
+    public UserNotFoundException(String s) {
         super("User not found");
     }
 }

@@ -12,6 +12,12 @@ INSERT INTO topic(name,description) VALUES('Java','All about java');
 INSERT INTO topic(name,description) VALUES('C ++','All about C ++');
 
 
+INSERT INTO event (created_by, group_id, title, description, date, time, location, name, theme) VALUES
+                                                                                             ('Alice', '1', 'Cooking Class', 'Learn how to make a delicious meal!', '2022-05-01', '18:00', '456 Main St.', 'Cooking Class', '1'),
+                                                                                             ('Bob', '2', 'Movie Night', 'Watch a great movie with friends!', '2022-06-10', '20:00', '789 Cinema Lane', 'Movie Night', '2'),
+                                                                                             ('Charlie', '3', 'Game Night', 'Bring your favorite board games and let''s play!', '2022-07-15', '19:00', '123 Game St.', 'Game Night', '2'),
+                                                                                             ('Alice', '1', 'Charity Event', 'Help raise money for a good cause!', '2022-08-01', '14:00', '456 Charity Ave.', 'Charity Event', '3'),
+                                                                                             ('Bob', '2', 'BBQ Party', 'Enjoy delicious food and drinks!', '2022-08-20', '16:00', '789 BBQ Blvd.', 'BBQ Party', '1');
 INSERT INTO groups(is_private,name,description) VALUES (false,'Code Wizards', 'This group is dedicated to all things programming. Whether you´re a beginner or an experienced developer, you`ll find resources and support for everything from learning new languages to solving complex coding challenges.');
 INSERT INTO groups(is_private,name,description) VALUES (false,'DevOps Heroes', 'DevOps Heroes is a group for professionals interested in the intersection of software development and IT operations. Members share knowledge and expertise on topics like automation, continuous integration and delivery, and containerization to help streamline software delivery pipelines.');
 INSERT INTO groups(is_private,name,description) VALUES (false,'Tech Innovators', 'Tech Innovators is a community of forward-thinking developers, designers, and entrepreneurs who are passionate about pushing the boundaries of technology. Members collaborate on projects and share insights on emerging trends in areas like artificial intelligence, blockchain, and the Internet of Things.');

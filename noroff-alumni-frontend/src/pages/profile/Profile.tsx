@@ -4,7 +4,7 @@ import { postList } from "../../components/post/postList";
 import Post from "../../components/post/Post";
 import Search from "../../components/search/Search";
 import search from "../../assets/icons/Search.png";
-import { useNavigate, useParams } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import api from "../../services/api";
 import { useSelector } from "react-redux";
 import edit from "../../assets/icons/Ellipsis.png";
@@ -39,15 +39,12 @@ function Profile() {
     
   }, [])
 
-  // In your frontend useEffect function
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         const response = await api.get(
             `/user/find/${name}`
         );
-
-       
 
         const userData = response.data;
         setUserProfile({

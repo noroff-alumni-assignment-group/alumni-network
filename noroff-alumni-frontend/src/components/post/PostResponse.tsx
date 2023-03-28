@@ -1,5 +1,6 @@
 import React from "react";
 import UserDisplayDTO from "../../models/UserDisplayDTO";
+import Profilepicture from "../profilepicture/Profilepicure";
 import ReplyDTO from "../../models/ReplyDTO";
 import {setTimeSince} from "../../services/utilService";
 
@@ -11,6 +12,7 @@ function PostResponse(props: Props) {
   return (
     <div className="post-response">
       <div className="post-author-cnt">
+        <Profilepicture author={props.reply.author}/>
         <div className="profilebubble post-profile-pic">{
             props.reply.author.firstName && props.reply.author.lastName
             ? (props.reply.author.firstName[0]+props.reply.author.lastName[0]).toUpperCase():"OO"}</div>

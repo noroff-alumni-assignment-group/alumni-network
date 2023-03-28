@@ -7,6 +7,7 @@ import no.experisAcadmey.trondheim.NoroffAlumni.models.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
+import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 import java.util.Set;
@@ -49,6 +50,4 @@ public abstract class UserMapper {
             return topic;
         }).collect(Collectors.toSet());
     }
-
-
 }
