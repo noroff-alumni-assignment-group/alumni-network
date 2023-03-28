@@ -27,6 +27,7 @@ function Profile() {
   const user = useSelector((state: any) => state.user);
 
   const [userProfile, setUserProfile] = useState({
+    id:"",
     title: "",
     biography: "",
     funfact: "",
@@ -35,10 +36,7 @@ function Profile() {
   });
 
   useEffect(() => {
-    getPostsUser(user.id)
-        .then(data => {
-          setPosts(data);
-        })
+    
   }, [])
 
   // In your frontend useEffect function
@@ -53,12 +51,18 @@ function Profile() {
 
         const userData = response.data;
         setUserProfile({
+          id:userData.id,
           title: userData.title,
           biography: userData.biography,
           funfact: userData.funfact,
           firstName: userData.firstName,
           lastName: userData.lastName,
         });
+
+        await getPostsUser(userData.id)
+        .then(data => {
+          setPosts(data);
+        })
 
       } catch (error) {
         navigate("/404");
@@ -74,7 +78,7 @@ function Profile() {
   };
 
   function onSearch(searchWord: string) {
-      searchPostsUser(user.id, searchWord)
+      searchPostsUser(userProfile.id, searchWord)
           .then(data => {
             setPosts(data);
           })
