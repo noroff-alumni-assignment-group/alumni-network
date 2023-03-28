@@ -25,13 +25,27 @@
 
 /* Group page */
 
+
 .page-header {
     display: flex;
+    margin-bottom: 20px;
     justify-content: space-between;
+    
+}
+
+.group-join {
+    margin-top: 20px;
+    height: 40px !important;
+    max-width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .group-desc {
     padding-bottom: 20px;
+    max-width: 70%;
+    margin-bottom: 50px;
 }
 
 .member-card {
@@ -46,19 +60,22 @@
 
 .member-card-left {
     display: flex;
+    align-items: center;
+    padding-left: 30px;
 }
 
 .member-icons {
-    display: flex;
+   margin-top: -10px;
 }
 
 .members-count {
-    margin: 10px;
+    margin-left: 30px;
 }
 
 .member-card-right {
     text-align: right;
     display: flex;
+    padding-right: 30px;
 }
 
 .invite-btn {

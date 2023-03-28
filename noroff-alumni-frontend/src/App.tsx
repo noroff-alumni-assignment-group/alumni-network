@@ -54,7 +54,7 @@ function App() {
                 <Route path="/topics" element={<Topics />} />
                 <Route path="/topic/:id" element={<TopicFeed />} />
                 <Route path="/" element={<Timeline />} />
-                <Route path="/404" element={<NotfoundPage />} />
+           
               </Routes>
             </div>
           </div>

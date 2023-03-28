@@ -16,7 +16,7 @@
   position: absolute;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: var(--bluewhite);
+  background-color: white;
   color: black;
     min-height: 60px;
   min-width: 160px;
@@ -24,6 +24,7 @@
   display: none;
   margin-bottom: 70px;
   border-radius: 20px;
+  box-shadow: var(--box-shadow);
 }
 
 .profilepicture-details p {
