@@ -168,6 +168,46 @@ public class EventController {
         }
     }
 
+    @GetMapping("/user/{userId}")
+    @PreAuthorize("hasRole('ROLE_ALUMNI')")
+    @Operation(summary = "Find all events for a specific user")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Success",
+                    content = { @Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = EventDTO.class)))
+                    }
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Bad request",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ProblemDetail.class))
+                    }
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "User not Found",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ProblemDetail.class))
+                    }
+            )
+    })
+    public ResponseEntity<List<EventDTO>> getEventsForUser(@PathVariable String userId) {
+        try {
+            List<Event> events = eventService.getEventsForUser(userId);
+            List<EventDTO> eventDTOs = eventMapper.eventsToEventDTOs(events);
+            return ResponseEntity.ok(eventDTOs);
+        } catch (UserNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+
+
 
 }
 

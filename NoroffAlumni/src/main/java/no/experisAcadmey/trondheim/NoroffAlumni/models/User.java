@@ -28,9 +28,10 @@ public class User {
    private String email;
    private String firstName;
    private String lastName;
-   private String title; // New field
-   private String biography; // New field
-   private String funfact; // New field
+   private String title;
+   private String biography;
+   private String funfact;
+
 
    @ManyToMany(mappedBy = "subscribers")
    private Set<Topic> topics;

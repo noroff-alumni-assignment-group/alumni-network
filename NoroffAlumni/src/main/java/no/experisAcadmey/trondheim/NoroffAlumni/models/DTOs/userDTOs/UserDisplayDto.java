@@ -24,4 +24,5 @@ public class UserDisplayDto {
     private String biography;
     private String funfact;
 
+
 }
