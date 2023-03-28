@@ -98,6 +98,49 @@ public class PostController {
         }
     }
 
+    @GetMapping("/user/received")
+    @PreAuthorize("hasRole('ROLE_ALUMNI')")
+    @Operation(summary = "Retrieve all posts received as direct messages")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "success", content = {
+                    @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = PostDto.class)))
+            }),
+            @ApiResponse(responseCode = "400", description = "Bad Request", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class))
+            })
+    })
+    public ResponseEntity getPostsForTargetUser(@RequestParam Optional<String> searchWord){
+        try {
+            return ResponseEntity.ok(postMapper.postToPostDto(postService.getPostsForTargetUser(searchWord)));
+        } catch (PostNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @GetMapping("/user/sent")
+    @PreAuthorize("hasRole('ROLE_ALUMNI')")
+    @Operation(summary = "Retrieve all posts sent as direct messages")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "success", content = {
+                    @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = PostDto.class)))
+            }),
+            @ApiResponse(responseCode = "400", description = "Bad Request", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class))
+            })
+    })
+    public ResponseEntity getPostsToTargetUser(@RequestParam Optional<String> searchWord){
+        try {
+            return ResponseEntity.ok(postMapper.postToPostDto(postService.getPostsToTargetUser(searchWord)));
+        } catch (PostNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+
     @PostMapping
     @PreAuthorize("hasRole('ROLE_ALUMNI')")
     @Operation(summary = "Create a new post by the requesting user")
