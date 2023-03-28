@@ -14,6 +14,15 @@
     .inbox .search-cnt {
         margin-right: 15px;
     }
+    .inbox {
+        width: 75%;
+    }
+}
+
+@media screen and (max-width: 1500px) {
+    .inbox {
+        width: 100%;
+    }
 }
 
 @media screen and (max-width: 800px) {
@@ -28,13 +37,15 @@
     .inbox .search-cnt {
         margin-right: 15px;
     }
+    .inbox {
+        width: 100%;
+    }
 }
 
 
 .inbox {
     display: flex;
     flex-direction: column;
-    width: 80%;
     margin: 0 auto 0 auto;
 }
 .inbox-content {
