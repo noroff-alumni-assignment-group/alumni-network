@@ -1,5 +1,6 @@
 package no.experisAcadmey.trondheim.NoroffAlumni.models;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import jakarta.persistence.Column;
@@ -36,5 +37,8 @@ public class User {
 
    @ManyToMany(mappedBy = "members")
    private Set<Group> groups;
+
+   @ManyToMany(mappedBy = "participants")
+   private Set<Event> events = new HashSet<>();
 
 }

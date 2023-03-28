@@ -1,7 +1,6 @@
 package no.experisAcadmey.trondheim.NoroffAlumni.services;
 
 import no.experisAcadmey.trondheim.NoroffAlumni.exceptions.UserNotFoundException;
-import no.experisAcadmey.trondheim.NoroffAlumni.models.DTOs.userDTOs.UserDto;
 import no.experisAcadmey.trondheim.NoroffAlumni.models.User;
 import no.experisAcadmey.trondheim.NoroffAlumni.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +10,7 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class UserService {
@@ -32,7 +26,7 @@ public class UserService {
      */
     public User getCurrentUser(){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        return userRepository.findById(auth.getName()).orElseThrow(UserNotFoundException::new);
+        return userRepository.findById(auth.getName()).orElseThrow(() -> new UserNotFoundException(""));
     }
 
     /**
@@ -41,7 +35,7 @@ public class UserService {
      * @return User identified by the provided Id
      */
     public User getUser(String id){
-        return userRepository.findById(id).orElseThrow(UserNotFoundException::new);
+        return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(""));
     }
 
     public List<User> getUsers(String searchWord) {
@@ -90,5 +84,11 @@ public class UserService {
             throw new NotFoundException("User not found");
         }
     }
+
+    public User getUserById(UUID userId) {
+        return userRepository.findById(userId.toString())
+                .orElseThrow(() -> new UserNotFoundException("User with ID " + userId + " not found."));
+    }
+
 
 }

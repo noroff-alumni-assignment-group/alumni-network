@@ -7,8 +7,11 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import no.experisAcadmey.trondheim.NoroffAlumni.exceptions.UserNotFoundException;
+import no.experisAcadmey.trondheim.NoroffAlumni.mappers.EventMapper;
 import no.experisAcadmey.trondheim.NoroffAlumni.mappers.TopicMapper;
 import no.experisAcadmey.trondheim.NoroffAlumni.mappers.UserMapper;
+import no.experisAcadmey.trondheim.NoroffAlumni.models.DTOs.eventDTOs.EventDTO;
 import no.experisAcadmey.trondheim.NoroffAlumni.models.DTOs.userDTOs.UserDto;
 import no.experisAcadmey.trondheim.NoroffAlumni.models.User;
 import no.experisAcadmey.trondheim.NoroffAlumni.services.UserService;
@@ -19,6 +22,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -30,6 +35,8 @@ public class UserController {
     private UserService userService;
 
     private UserMapper userMapper = Mappers.getMapper(UserMapper.class);
+    private EventMapper eventMapper = Mappers.getMapper(EventMapper.class);
+
 
 
     /**
@@ -132,4 +139,71 @@ public class UserController {
             return ResponseEntity.badRequest().build();
         }
     }
+
+    @GetMapping("/users/{id}/events")
+    @PreAuthorize("hasRole('ROLE_ALUMNI')")
+    @Operation(summary = "Get events for a specific user")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Success",
+                    content = { @Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = EventDTO.class)))
+                    }
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Bad Request",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ProblemDetail.class))
+                    }
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "User not found",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ProblemDetail.class))
+                    }
+            )
+    })
+    public ResponseEntity<List<EventDTO>> getUserEventsById(@PathVariable Long id) {
+        try {
+            Optional<User> user = userService.findUserById(String.valueOf(id));
+            List<EventDTO> events = eventMapper.eventsToEventDTOs(new ArrayList<>(user.get().getEvents()));
+            return ResponseEntity.ok(events);
+        } catch (UserNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_ALUMNI')")
+    @Operation(summary = "Get a user by their UUID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Success", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = UserDto.class))
+            }),
+            @ApiResponse(responseCode = "400", description = "Bad Request", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class))
+            }),
+            @ApiResponse(responseCode = "404", description = "Not Found", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class))
+            }),
+    })
+    public ResponseEntity<UserDto> getUserById(
+            @Parameter(description = "User UUID", required = true)
+            @PathVariable("id") String id) {
+        Optional<User> user = userService.findUserById(id);
+
+        if (user.isPresent()) {
+            return ResponseEntity.ok(userMapper.toUserDto(user.get()));
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+
+
 }
