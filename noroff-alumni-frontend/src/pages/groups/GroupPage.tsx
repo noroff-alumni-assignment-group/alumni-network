@@ -50,7 +50,7 @@ const GroupPage = () => {
     return (
 
             <div className="group-page">
-                {showInviteModulo ? <InviteModulo setHideInviteModulo={setShowInviteModulo}/> : null}
+                {showInviteModulo ? <InviteModulo group={group} setHideInviteModulo={setShowInviteModulo}/> : null}
                 {showPostForm && <Popup child={<PostForm editing={false} handler={setShowPostForm}/>}/>}
                 <div className="page-header">
                     <h1>{group?.name}</h1>
