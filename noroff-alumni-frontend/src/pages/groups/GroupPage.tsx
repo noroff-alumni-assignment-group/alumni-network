@@ -11,6 +11,7 @@ import groupService from "../../services/groupService"
 import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "../../store/store"
 import { setUser } from "../../store/userSlice"
+import PostFeed from "../../components/post/PostFeed"
 
 const GroupPage = () => {
 
@@ -74,9 +75,7 @@ const GroupPage = () => {
                     <button className="activity-btn" onClick={() => setShowPostForm(true)}>NEW POST</button>
                 </div>
                 <div className="group-feed">
-                    {posts.map((post) => (
-                        <Post key={post.id} post={post}/>
-                    ))}
+                    <PostFeed posts={posts}/>
                 </div>
             </div>
     )
