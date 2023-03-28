@@ -90,7 +90,7 @@ function Post({post}: Props) {
                 {topic}
               </div>
             ))}
-            {post.target_groups?.map((group) => (
+            {post.target_group?.map((group) => (
               <div className="group" key={group}>
                 {group}
               </div>
