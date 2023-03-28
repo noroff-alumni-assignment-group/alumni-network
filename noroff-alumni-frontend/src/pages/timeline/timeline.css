@@ -56,6 +56,7 @@
 
 .timeline-head {
     margin-top: 60px;
+    margin-bottom: 40px;
   display: flex;
   min-width: 100%;
 }
