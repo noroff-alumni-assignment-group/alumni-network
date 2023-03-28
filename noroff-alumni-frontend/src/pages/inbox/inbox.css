@@ -1,0 +1,103 @@
+
+
+@media screen and (min-width: 801px) {
+    .inbox-head {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    .inbox-action-btn-cnt {
+        flex-direction: row;
+    }
+    .inbox-tags {
+        max-width: 50%;
+    }
+    .inbox .search-cnt {
+        margin-right: 15px;
+    }
+    .inbox {
+        width: 75%;
+    }
+}
+
+@media screen and (max-width: 1500px) {
+    .inbox {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .inbox-head {
+        flex-direction: column;
+        justify-content: right;
+        gap: 15px;
+    }
+    .inbox-tags {
+        max-width: 100%;
+    }
+    .inbox .search-cnt {
+        margin-right: 15px;
+    }
+    .inbox {
+        width: 100%;
+    }
+}
+
+
+.inbox {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto 0 auto;
+}
+.inbox-content {
+    width: 100%;
+}
+
+.inbox-content h1 {
+    font-size: 2rem;
+}
+
+.inbox-head {
+    margin-top: 60px;
+    margin-bottom: 40px;
+    display: flex;
+    min-width: 100%;
+}
+
+.inbox-action-btn-cnt {
+    display: flex;
+    max-height: 50px;
+}
+
+.inbox-action-btn-cnt img {
+    width: 2.5rem;
+    height: 2.5rem;
+    margin-right: 20px;
+}
+
+.inbox .cancel-btn {
+    background-color: white;
+}
+.inbox-received-btn {
+    border-radius: 25px 0 0 25px;
+}
+.inbox-sent-btn {
+    border-radius: 0 25px 25px 0;
+    padding-left: 45px;
+    padding-right: 45px;
+}
+
+.no-content-tag {
+    display: flex;
+    width: 100%;
+    margin-top: 150px;
+}
+.no-content-tag p {
+    margin: auto;
+    text-align: center;
+    font-size: 1.2rem;
+    color: darkgray;
+}
+
+
+
+

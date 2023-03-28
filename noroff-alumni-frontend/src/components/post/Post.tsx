@@ -77,7 +77,7 @@ function Post({post}: Props) {
           <p>{setTimeSince(new Date(post.last_updated ?? ""))}</p>
         </div>
         <div className="post-body">
-          <p><SnarkdownText text={post.body}/></p>
+          <SnarkdownText text={post.body}/>
         </div>
         <div className="post-comments">
           <p>{post.comments?.length} comments</p>

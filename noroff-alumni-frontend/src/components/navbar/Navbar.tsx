@@ -7,9 +7,7 @@ import topics from "../../assets/icons/Speech Bubble.png";
 import events from "../../assets/icons/Calendar.png";
 import { NavLink } from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import { faBars } from "@fortawesome/free-solid-svg-icons";
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faArrowLeft, faSignOutAlt, faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import {useWindowSize} from "../../hooks/useWindowSize";
 import {useSelector} from "react-redux";
 import { RootState } from "../../store/store";
@@ -117,7 +115,14 @@ function Navbar() {
                 Events
               </NavLink>
             </h1>
-        </div>*/}
+          </div>*/}
+          <div className="tag-cnt">
+            <FontAwesomeIcon icon={faEnvelope} className="nav-icon"/>
+            <h1>
+              <NavLink to="/inbox" onClick={() => handleClick()}>
+                Inbox
+              </NavLink>
+            </h1>
         </div>
 
         {/*<div className="nav-events">
@@ -130,8 +135,8 @@ function Navbar() {
           <h1 className="subtitle">Your groups</h1>
           <p>Group Lorem</p>
           <p>Group Ipsum </p>
-    </div>*/}
-
+      </div>*/}
+        </div>
         <div className="tag-cnt logout-btn">
           <FontAwesomeIcon icon={faSignOutAlt} className={"nav-icon"} />
           <h1>

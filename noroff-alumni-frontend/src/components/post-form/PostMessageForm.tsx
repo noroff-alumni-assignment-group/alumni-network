@@ -19,7 +19,7 @@ function PostMessageForm (props: PostFormTypes) {
 
     let postId: number = 3;
 
-    let [title, setTitle] = useState("");
+    const [title, setTitle] = useState("");
     let [text, setText] = useState("");
     const [searchWord, setSearchWord] = useState("");
     const [users, setUsers] = useState<UserDisplayDTO[]>([]);
@@ -39,7 +39,6 @@ function PostMessageForm (props: PostFormTypes) {
     function fetchPost() {
         getPost(postId)
             .then(data => {
-                setTitle(data.title)
                 setText(data.body)
             })
     }
@@ -110,7 +109,11 @@ function PostMessageForm (props: PostFormTypes) {
                                 {(recipient?.firstName ?? "").charAt(0).toUpperCase()+(recipient?.lastName ??"") .charAt(0).toUpperCase()}
                             </div>
                             <p>{recipient?.firstName + " " + recipient?.lastName}</p>
-                            <button onClick={() => setRecipient(undefined)}>
+                            <button onClick={() => {
+                                setRecipient(undefined);
+                                setSearchWord("");
+                                setUsers([]);
+                            }}>
                                 <FontAwesomeIcon icon={faTimes}/>
                             </button>
                         </div>
@@ -120,7 +123,7 @@ function PostMessageForm (props: PostFormTypes) {
                             <input
                                 type="text"
                                 className={"user-search-field"}
-                                placeholder="Search topic..."
+                                placeholder="Search users..."
                                 onChange={(event) => setSearchWord(event.target.value)}
                                 value={searchWord}
                             />
@@ -138,7 +141,8 @@ function PostMessageForm (props: PostFormTypes) {
                         </div>
                     }
                 </div>
-                <input type="text" className={"input " + (erroneous && title === "" ? "border-blink" : "")} placeholder="Title.." onChange={(e => setTitle(e.target.value))} value={title}/>
+                <input type="text" className={"input " + (erroneous && title === "" ? "border-blink" : "")}
+                       placeholder="Title.." onChange={(e => setTitle(e.target.value))} value={title}/>
                 <div className="text-content-container">
                     <button type="button" className={"round-toggle " + (previewing ? "button-active" : "button-inactive")}
                             onClick={() => setPreviewing(!previewing)}><FontAwesomeIcon icon={faEye}/></button>
