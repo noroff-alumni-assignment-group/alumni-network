@@ -8,6 +8,8 @@ import {createPost, editPost, getPost} from "../../services/postService";
 import TopicService from "../../services/topicService";
 import TopicListItem from "../../models/TopicListItemDTO";
 import SnarkdownText from "../SnarkdownText/SnarkdownText";
+import GroupService from "../../services/groupService";
+import GroupListItem from "../../models/Group/GroupListItem";
 
 type PostFormTypes = {
     editing: boolean,
@@ -57,6 +59,10 @@ function PostForm (props: PostFormTypes) {
             .then(data => {
                 setTopics(data.map((topic: TopicListItem) => topic.name));
             })
+        GroupService.getUserGroups()
+            .then(data => {
+                setGroups(data.map((group: GroupListItem) => group.name));
+            })
     }
 
     function handleSubmit(){
@@ -71,7 +77,7 @@ function PostForm (props: PostFormTypes) {
                 body: text,
                 target_user: "",
                 target_topics: selectedTopics,
-                target_groups: []
+                target_groups: selectedGroups
             }
             if(!props.editing) {
                 createPost(newPost)
@@ -94,7 +100,7 @@ function PostForm (props: PostFormTypes) {
         <div className="post-form">
             <div className="post-content">
                 <h1>{props.editing ? "Edit post" : "Write a new post"}</h1>
-                <input type="text" className={"input " + (erroneous && title === "" ? "border-blink" : "")}
+                <input type="text" className={"post-form-title input " + (erroneous && title === "" ? "border-blink" : "")}
                        placeholder="Title.." onChange={(e => setTitle(e.target.value))} value={title}/>
                 <div className="text-content-container">
                     <button type="button" className={"round-toggle " + (previewing ? "button-active" : "button-inactive")}
@@ -122,9 +128,9 @@ function PostForm (props: PostFormTypes) {
                         return <button type="button" disabled={props.editing} className={"entity-tag " +
                             (selectedGroups.includes(group) ? "group-tag-active" : "group-tag-inactive")} key={index}
                                onClick={() => {
-                                   let arr = selectedTopics.includes(group)
-                                       ? selectedTopics.filter(e => e !== group) : [...selectedTopics, group];
-                                   setSelectedTopics(arr);
+                                   let arr = selectedGroups.includes(group)
+                                       ? selectedGroups.filter(e => e !== group) : [...selectedGroups, group];
+                                   setSelectedGroups(arr);
                                }}>{group}</button>
                     })}
                 </div>
@@ -140,7 +146,6 @@ function PostForm (props: PostFormTypes) {
                                        }}>{topic}</button>
                     })}
                 </div>
-                <input type="text" className="input" placeholder="or create a topic..."/>
             </div>
             <div className="submit-row">
                 <button type="button" className="cancel-btn" onClick={() => props.handler(false)}>Cancel</button>

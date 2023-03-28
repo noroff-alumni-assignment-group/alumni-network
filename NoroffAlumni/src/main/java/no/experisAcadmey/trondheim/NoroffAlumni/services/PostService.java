@@ -21,6 +21,8 @@ public class PostService {
     private UserService userService;
     @Autowired
     private TopicService topicService;
+    @Autowired
+    private GroupService groupService;
 
     public Post getPost(Long id) {
         return postRepository.findById(id).orElseThrow(PostNotFoundException::new);
@@ -70,6 +72,9 @@ public class PostService {
         }
         for (String topicName : newPostDto.getTarget_topics()) {
             post.addTopic(topicService.getTopicByName(topicName));
+        }
+        for (String groupName : newPostDto.getTarget_groups()) {
+            post.addGroup(groupService.findGroupByName(groupName));
         }
 
         postRepository.save(post);

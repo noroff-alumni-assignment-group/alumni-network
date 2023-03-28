@@ -53,6 +53,10 @@ public class GroupService {
         return group.orElse(null);
     }
 
+    public Group findGroupByName(String name) {
+        return groupRepository.findByName(name).orElseThrow(GroupNotFoundException::new);
+    }
+
     /**
      * Creates a new group from the provided data.
      *
