@@ -1,12 +1,15 @@
 package no.experisAcadmey.trondheim.NoroffAlumni.models;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -30,7 +33,9 @@ public class Post {
     @ManyToMany
     @JoinTable(name="topic_posts",joinColumns = @JoinColumn(name = "post_id"),inverseJoinColumns = @JoinColumn(name = "topic_id"))
     private List<Topic> targetTopics = new ArrayList<>();
-    private List<Long> targetGroup;
+    @ManyToMany
+    @JoinTable(name="group_posts", joinColumns =@JoinColumn(name = "post_id"), inverseJoinColumns = @JoinColumn(name = "group_id"))
+    private List<Group> targetGroups = new ArrayList<>();
     @OneToMany(mappedBy = "targetPost")
     private List<Reply> replies = new ArrayList<>();
 
@@ -38,5 +43,7 @@ public class Post {
         targetTopics.add(topic);
         return this;
     }
+
+
 
 }

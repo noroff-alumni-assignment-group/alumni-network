@@ -1,25 +1,35 @@
 package no.experisAcadmey.trondheim.NoroffAlumni.services;
 
 import no.experisAcadmey.trondheim.NoroffAlumni.exceptions.GroupNotFoundException;
+import no.experisAcadmey.trondheim.NoroffAlumni.models.DTOs.groupDTOs.GroupPostDto;
 import no.experisAcadmey.trondheim.NoroffAlumni.models.Group;
+import no.experisAcadmey.trondheim.NoroffAlumni.models.Post;
 import no.experisAcadmey.trondheim.NoroffAlumni.models.User;
 import no.experisAcadmey.trondheim.NoroffAlumni.repositories.GroupRepository;
+import no.experisAcadmey.trondheim.NoroffAlumni.repositories.PostRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 
 @Service
 public class GroupService {
 
-
+    @Autowired
     private final GroupRepository groupRepository;
+    @Autowired
+    private final PostRepository postRepository;
+    @Autowired
     private final UserService userService;
 
 
-    public GroupService(GroupRepository groupRepository, UserService userService) {
+    public GroupService(GroupRepository groupRepository, PostRepository postRepository, UserService userService) {
         this.groupRepository = groupRepository;
+        this.postRepository = postRepository;
         this.userService = userService;
     }
 
@@ -38,25 +48,28 @@ public class GroupService {
      * @return the group with the matching ID
      */
     public Group findGroupById(Long group_id) {
-        User currentUser = userService.getCurrentUser();
-        Optional<Group> group = groupRepository.findByIdAndIsPrivateFalseOrMembersContains(group_id, currentUser);
+
+        Optional<Group> group = groupRepository.findById(group_id);
         return group.orElse(null);
     }
 
     /**
      * Creates a new group from the provided data.
+     *
      * @param group the group to be created
      * @return the created group
      */
-    public Group createGroup(Group group) {
+    public Long createGroup(GroupPostDto group) {
 
         Group g = new Group();
         g.setName(group.getName());
         g.setDescription(group.getDescription());
         g.setIsPrivate(group.getIsPrivate());
+        g.setMembers(Set.of(userService.getCurrentUser()));
+        g.setPosts(new ArrayList<>());
         groupRepository.save(g);
 
-        return g;
+        return g.getId();
     }
 
     /**
@@ -69,5 +82,26 @@ public class GroupService {
         group.addMember(userService.getCurrentUser());
         return groupRepository.save(group);
     }
+
+    public void leaveGroup(Long group_id) {
+        Group group = groupRepository.findById(group_id).orElseThrow(GroupNotFoundException::new);
+        group.removeMember(userService.getCurrentUser());
+        groupRepository.save(group);
+    }
+
+    /**
+     * Gets all the posts in a group
+     * @param group_id the ID of the group to get all posts for
+     * @return posts
+     */
+    public List<Post> getPostsInGroup(Long group_id) {
+        return postRepository.findAllByTargetGroupsIdOrderByLastUpdated(group_id);
+    }
+
+    public List<Group> findUserGroups(){
+        User currentUser = userService.getCurrentUser();
+        return groupRepository.findByMembersContains(currentUser);
+    }
+
 
 }

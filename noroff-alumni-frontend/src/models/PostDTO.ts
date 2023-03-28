@@ -9,7 +9,7 @@ type PostDTO = {
     author: UserDisplayDTO,
     target_user?: UserDisplayDTO,
     target_topics?: string[],
-    target_groups?: string[],
+    target_group?: string[],
     replies?: ReplyDTO[];
 }
 
