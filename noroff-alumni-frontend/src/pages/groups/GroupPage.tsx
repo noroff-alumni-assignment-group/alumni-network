@@ -1,72 +1,79 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
-import MemberIcon from "../../components/Group/MemberIcon"
-import { Group } from "../../models/Group/Group"
+import Group from "../../models/Group/Group"
 import './groups.css'
-import api from "../../services/api"
 import Popup from "../../components/popup/Popup"
 import PostForm from "../../components/post-form/PostForm"
-import Post from "../../components/post/Post"
-import UserDisplayDTO from "../../models/UserDisplayDTO"
 import PostDTO from "../../models/PostDTO"
-
-type params = {
-    groupId: string
-}
+import InviteModulo from "../../components/Group/InviteModulo"
+import groupService from "../../services/groupService"
+import { useDispatch, useSelector } from "react-redux"
+import { RootState } from "../../store/store"
+import { setUser } from "../../store/userSlice"
+import PostFeed from "../../components/post/PostFeed"
 
 const GroupPage = () => {
 
-    const [group, setGroup] = useState<Group>()
-    const { groupId } = useParams<params>()
+    let { id } = useParams()
+    const dispatch = useDispatch()
+    const user = useSelector((state: RootState) => state.user)
+    const [group, setGroup] = useState({} as Group)
+    const [posts, setPosts] = useState<Array<PostDTO>>([])
     const [showPostForm, setShowPostForm] = useState(false)
-    const [isPrivate, setIsPrivate] = useState(false)
-
+    const [showInviteModulo, setShowInviteModulo] = useState(false)
     
     useEffect(() => {
         async function getGroup() {
-            const response = await api.get(`"/group/${groupId}"`)
-            setGroup(response.data)
+            if (id) {
+                setGroup(await groupService.getGroup(parseInt(id)))
+                setPosts(await groupService.getGroupPosts(parseInt(id)))
+            }
         }
         getGroup()
-        if (group?.isPrivate === true) {
-            setIsPrivate(true)
-        }
-          
-    }, [groupId])
 
-    useEffect(() => {
-        async function getGroupPosts() {
-           
-        }
-    })
+    }, [])
 
-    if (!group) {
-        return null;
-      } 
+    async function joinGroup() {
+        await groupService.joinGroup(group.id)
+        let userGroups = Array.isArray(user.groups) ? [...user.groups!] : []
+        userGroups.push(group.name)
+        dispatch(setUser({...user, groups: userGroups}))
+    }
 
+    async function leaveGroup() {
+        await groupService.leaveGroup(group.id)
+        let userGroups = [...user.groups!]
+        userGroups = userGroups.filter((g) => g !== group.name)
+        dispatch(setUser({ ...user, groups: userGroups }))
+      }
+    
     return (
-        <>
+
             <div className="group-page">
+                {showInviteModulo ? <InviteModulo setHideInviteModulo={setShowInviteModulo}/> : null}
                 {showPostForm && <Popup child={<PostForm editing={false} handler={setShowPostForm}/>}/>}
                 <div className="page-header">
-                    <h3>{group?.name}</h3>
+                    <h1>{group?.name}</h1>
+                    <button className="activity-btn" onClick={user.groups?.includes(group.name) ? leaveGroup : joinGroup}>
+                        {user.groups?.includes(group.name) ? "Leave" : "Join"}
+                    </button>      
+                </div>
+                <div className="group-desc">
+                    <p>{group.description}</p>
                 </div>
                 <div className="member-card">
                     <div className="member-card-left">
                         <div className="member-icons">
-                            {group?.members?.map((member: UserDisplayDTO) => (
-                                <MemberIcon key={member.id} firstName={member.firstName} lastName={member.lastName} />
-                            ))}
+                            {/*group?.members?.map((member: UserDisplayDTO) => (
+                                <MemberIcon key={member.id} member={member} />
+                            ))*/}
                         </div>
                         <div className="members-count">
                             <p>{`${group?.members?.length}`}</p>
                         </div>
                     </div>
                     <div className="member-card-right">
-                        <button className="invite-btn">Invite</button>
-                        <div className={(isPrivate ? "private-label" : "")}>
-                            {isPrivate && <p>Private</p>}
-                        </div>
+                        <button className="invite-btn" onClick={() => setShowInviteModulo(true)}>Invite</button>
                     </div>
                 </div>
                 <div className="feed-actions">
@@ -76,12 +83,9 @@ const GroupPage = () => {
                     <button className="activity-btn" onClick={() => setShowPostForm(true)}>NEW POST</button>
                 </div>
                 <div className="group-feed">
-                    {group?.posts?.map((post: PostDTO) => (
-                        <Post key={post.id} post={post}/>
-                    ))}
+                    <PostFeed posts={posts}/>
                 </div>
             </div>
-        </>
     )
 }
 export default GroupPage

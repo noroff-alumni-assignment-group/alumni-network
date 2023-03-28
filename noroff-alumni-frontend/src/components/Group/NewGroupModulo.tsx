@@ -1,6 +1,6 @@
+import './group-comps.css'
 import { useState } from "react";
-import { NewGroup } from "../../models/Group/NewGroup";
-import api from "../../services/api";
+import GroupService from "../../services/groupService";
 
 type NewGroupProps = {
     setHideModulo: Function
@@ -14,14 +14,10 @@ const NewGroupModulo = ({setHideModulo}: NewGroupProps) => {
     const [isPrivate, setIsPrivate] = useState(false)
     const [isToggled, setToggled] = useState(false)
 
-    async function createGroup(newGroup: NewGroup) {
-        await api.post("/group", newGroup);
-    }
-
     async function submitNewGroup() {
         if (name && description) {
-            createGroup({name: name, description: description, isPrivate: isPrivate});
-            setHideModulo(true)
+            GroupService.createGroup({name: name, description: description, isPrivate: isPrivate});
+            setHideModulo(false)
         }
     }
 
@@ -32,7 +28,7 @@ const NewGroupModulo = ({setHideModulo}: NewGroupProps) => {
     
     return (
         <div className="modulo-wrapper">
-            <div className="new-group-modulo">
+            <div className="modulo-box">
                 <h3>Create a new group</h3>
                 <input 
                     className="new-group-name" 
@@ -57,7 +53,7 @@ const NewGroupModulo = ({setHideModulo}: NewGroupProps) => {
                         <span className="private-input-span"/>
                     </label>
                 </div>
-                <div className="new-group-actions">
+                <div className="modulo-actions">
                     <button className="cancel-btn" onClick={() => setHideModulo(false)}>Cancel</button>
                     <button className="activity-btn" onClick={submitNewGroup}>Create</button>
                 </div>

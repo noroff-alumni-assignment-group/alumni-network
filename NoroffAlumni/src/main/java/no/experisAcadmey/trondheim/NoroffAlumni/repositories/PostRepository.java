@@ -10,6 +10,8 @@ import org.springframework.stereotype.Repository;
 import java.util.Date;
 import java.util.List;
 
+import java.util.List;
+
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long> {
 
@@ -47,4 +49,6 @@ public interface PostRepository extends JpaRepository<Post, Long> {
             "and (upper(post.body) like upper(?2) or upper(post.title) like upper(?2))",
             nativeQuery = true)
     List<Post> findMessagesSentBySearchWord(String authorId, String searchWord);
+
+    List<Post> findAllByTargetGroupsIdOrderByLastUpdated(Long groupId);
 }

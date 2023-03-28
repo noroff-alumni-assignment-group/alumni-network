@@ -46,7 +46,7 @@ function App() {
                 {/*<Route path="/events" element={<Event />} />*/}
                 <Route path="/inbox" element={<Inbox/>} />
                 <Route path="/groups" element={<Groups />} />
-                <Route path="/groups/:groupId" element={<GroupPage />} />
+                <Route path="/groups/:id" element={<GroupPage />} />
                 <Route path="/topics" element={<Topics />} />
                 <Route path="/topic/:id" element={<TopicFeed />} />
                 <Route path="/" element={<Timeline />} />

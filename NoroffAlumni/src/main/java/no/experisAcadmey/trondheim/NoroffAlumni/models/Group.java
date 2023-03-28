@@ -1,5 +1,6 @@
 package no.experisAcadmey.trondheim.NoroffAlumni.models;
 
+import java.util.List;
 import java.util.Set;
 
 import jakarta.persistence.*;
@@ -20,7 +21,7 @@ public class Group {
     @Column(length = 150)
     private String description;
 
-    @Column(nullable = false)
+    @Column
     private Boolean isPrivate;
 
     @ManyToMany
@@ -31,7 +32,16 @@ public class Group {
     )
     private Set<User> members;
 
-    public void addMember(User user){
+    @ManyToMany(mappedBy = "targetGroups")
+    private List<Post> posts;
+
+    public Group addMember(User user){
         members.add(user);
+        return this;
+    }
+
+    public Group removeMember(User user){
+        members.remove(user);
+        return this;
     }
 }
