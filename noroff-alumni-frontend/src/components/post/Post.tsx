@@ -11,6 +11,8 @@ import SnarkdownText from "../SnarkdownText/SnarkdownText";
 import {createReply, getReply} from "../../services/replyService";
 import {setTimeSince} from "../../services/utilService";
 import ReplyDTO from "../../models/ReplyDTO";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 
 interface Props {
   post:PostDTO;
@@ -25,7 +27,7 @@ function Post({post}: Props) {
 
   useEffect(() => {
     setComments(post.replies);
-  }, [])
+  }, [post])
 
   const handleAddComment = () => {
     if(newCommentText.length <= 0){return;}
@@ -35,6 +37,7 @@ function Post({post}: Props) {
               .then(data => {
                 // @ts-ignore
                 setComments([...comments, data]);
+                setNewCommentText("");
               })
         })
   };
@@ -43,6 +46,7 @@ function Post({post}: Props) {
     setShowComments(!showComments);
   };
 
+  // @ts-ignore
   return (
     <div className="post">
       <div className="post-cnt" onClick={handleToggleComments}>
@@ -79,8 +83,9 @@ function Post({post}: Props) {
       {showComments && (
         <div>
           <h2 className="all-comments-h2">All comments</h2>
+          {(comments != undefined && comments.length) <= 0 && (<div className="no-comments-tag"><p>No comments...</p></div>)}
           {comments?.map((reply, i) => (
-              <div key={i}>
+              <div className="post-comments-list" key={i}>
                 <PostResponse reply={reply}/>
               </div>
           ))}
@@ -93,7 +98,7 @@ function Post({post}: Props) {
               onChange={(e) => setNewCommentText(e.target.value)}
             />
             <button type="button" onClick={() => handleAddComment()} className="post-response-submit activity-btn">
-              Submit
+              <FontAwesomeIcon icon={faPaperPlane} className={"post-response-submit-icon"}/>
             </button>
           </div>
         </div>

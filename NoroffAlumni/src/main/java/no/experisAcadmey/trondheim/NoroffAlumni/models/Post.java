@@ -17,7 +17,7 @@ public class Post {
     private Long id;
     @Column(length=100, nullable = false)
     private String title;
-    @Column(length=500, nullable = false)
+    @Column(length=1500, nullable = false)
     private String body;
     private Date lastUpdated;
 
