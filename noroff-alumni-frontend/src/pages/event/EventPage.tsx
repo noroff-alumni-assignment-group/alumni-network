@@ -133,7 +133,7 @@ function EventPage() {
                       >
                         <Profilepicture
                           author={participant}
-                          showDetails={false}
+                          showDetails={true}
                         />
                       </div>
                     ))}
