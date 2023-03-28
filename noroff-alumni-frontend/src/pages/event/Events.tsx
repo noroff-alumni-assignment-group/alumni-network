@@ -3,9 +3,14 @@ import Event from "./Event";
 import "./event.css";
 import NewEvent from "./NewEvent";
 import api from "../../services/api";
+import { useSelector } from "react-redux";
+import User from "../../models/User";
+import { RootState } from "../../store/store";
 
 function Events() {
   const [events, setEvents] = useState([]);
+  const [userEvents, setUserEvents] = useState([]);
+  const user = useSelector((state: any) => state.user);
 
   useEffect(() => {
     async function fetchEvents() {
@@ -17,37 +22,30 @@ function Events() {
       }
     }
 
-    fetchEvents();
-  }, []);
+    if (user.id) {
 
-  const confirmedEvents = [
-    {
-      id: 2,
-      title: "Lorem ipsum",
-      description: "Test",
-      participants: 1,
-      location: "Trondheim",
-      address: "Trondheimsveien 15",
-      theme: 1,
-    },
-    {
-      id: 1,
-      title: "EVENT 1",
-      description: "Test",
-      participants: 10,
-      location: "Trondheim",
-      address: "Trondheimsveien 15",
-      theme: 3,
-    },
-  ];
+      fetchUserEvents();
+    }
+
+    fetchEvents();
+  }, [user.id]); 
+
+  async function fetchUserEvents() {
+    try {
+      const response = await api.get(`/event/user/${user.id}`);
+      setUserEvents(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  const confirmedEvents = [{}];
 
   const [renderNewEvent, setRenderNewEvent] = useState(false);
-  
+
   const handleEventClick = () => {
     setRenderNewEvent(!renderNewEvent);
   };
-
- 
 
   return (
     <div>
@@ -74,11 +72,13 @@ function Events() {
       <div className="your-event-cnt">
         <h1>Your Events</h1>
         <div className="your-events">
-          {confirmedEvents.length === 0 ? (
-            <div className="event-upcoming-cnt">You dont have any upcoming events.</div>
+          {userEvents.length === 0 ? (
+            <div className="event-upcoming-cnt">
+              You dont have any upcoming events.
+            </div>
           ) : (
-            confirmedEvents.map((event, i) => (
-              <div key={event.id}>
+            userEvents.map((event, i) => (
+              <div key={i}>
                 <Event event={event} />
               </div>
             ))

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import "./navbar.css";
 import people from "../../assets/icons/User.png";
 import timeline from "../../assets/icons/Activity Feed.png";
@@ -6,52 +6,72 @@ import groups from "../../assets/icons/People.png";
 import topics from "../../assets/icons/Speech Bubble.png";
 import events from "../../assets/icons/Calendar.png";
 import { NavLink, useNavigate } from "react-router-dom";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import { faBars, faArrowLeft, faSignOutAlt, faEnvelope } from "@fortawesome/free-solid-svg-icons";
-import {useWindowSize} from "../../hooks/useWindowSize";
-import {useSelector} from "react-redux";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faBars,
+  faArrowLeft,
+  faSignOutAlt,
+  faEnvelope,
+} from "@fortawesome/free-solid-svg-icons";
+import { useWindowSize } from "../../hooks/useWindowSize";
+import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import User from "../../models/User";
 import UserService from "../../services/UserService";
 import api from "../../services/api";
+import EventDTO from "../../models/EventDTO";
 
 function Navbar() {
+  const user = useSelector((state: any) => state.user);
+  const [userEvents, setUserEvents] = useState<EventDTO[]>([]);
 
-  const user:User = useSelector((state:RootState)=>state.user);
+  const [collapsed, setCollapsed] = useState(window.innerWidth < 1100);
+  const windowSize = useWindowSize();
+  let navigate = useNavigate();
 
-    const [collapsed, setCollapsed] = useState(window.innerWidth < 1100);
-    const windowSize = useWindowSize();
-    let navigate = useNavigate()
+  useEffect(() => {
+    if (window.innerWidth > 1100) {
+      setCollapsed(false);
+    } else if (window.innerWidth <= 1100) {
+      setCollapsed(true);
+    }
+  }, [windowSize]);
 
-    useEffect(() => {
-      if(window.innerWidth > 1100){
-          setCollapsed(false)
-      } else if (window.innerWidth <= 1100) {
-          setCollapsed(true)
+  function handleClick() {
+    if (window.innerWidth <= 1100) {
+      setCollapsed(true);
+    }
+  }
+
+  function handleLogout() {
+    UserService.logout();
+  }
+
+useEffect(() => {
+  if (user && user.id) {
+    fetchUserEvents();
+  }
+}, [user]);
+
+
+  function handleIconClick() {
+    navigate("/profile/" + user.username);
+  }
+
+  async function fetchUserEvents() {
+    if (user) {
+      try {
+        const response = await api.get(`/event/user/${user.id}`);
+        setUserEvents(response.data);
+      } catch (error) {
+        console.error(error);
       }
-    }, [windowSize])
-
-
-    function handleClick() {
-        if(window.innerWidth <= 1100) {
-            setCollapsed(true);
-        }
     }
+  }
 
-    function handleLogout(){
-      UserService.logout();
-    }
-
-    useEffect(() => {
-      //
-    }, []);
-
-    function handleIconClick() {
-      navigate("/profile/" + user.username)
-    }
-
-    
-
+  const handleClickEvent = (id: any) => {
+    navigate("/events/" + id)
+  }
 
   return (
     <div className="navbar-container">
@@ -84,7 +104,10 @@ function Navbar() {
           <div className="tag-cnt">
             <img src={people} alt="profile" />
             <h1>
-              <NavLink to={`/profile/${user.username}`} onClick={() => handleClick()}>
+              <NavLink
+                to={`/profile/${user.username}`}
+                onClick={() => handleClick()}
+              >
                 Profile
               </NavLink>
             </h1>
@@ -122,21 +145,24 @@ function Navbar() {
             </h1>
           </div>
           <div className="tag-cnt">
-            <FontAwesomeIcon icon={faEnvelope} className="nav-icon"/>
+            <FontAwesomeIcon icon={faEnvelope} className="nav-icon" />
             <h1>
               <NavLink to="/inbox" onClick={() => handleClick()}>
                 Inbox
               </NavLink>
             </h1>
-        </div>
+          </div>
 
-        {/*<div className="nav-events">
-          <h1 className="subtitle">Your upcoming events</h1>
-          <p>Event 1 - Trondheim</p>
-          <p>Event 2 - Oslo</p>
-      </div>*/}
+          <div className="nav-events">
+            <h1 className="subtitle">Your upcoming events</h1>
+            {userEvents.map((event, index) => (
+              <p onClick={() => handleClickEvent(event.id)}>
+               {event.name}
+              </p>
+            ))}
+          </div>
 
-        {/*<div className="nav-groups">
+          {/*<div className="nav-groups">
           <h1 className="subtitle">Your groups</h1>
           <p>Group Lorem</p>
           <p>Group Ipsum </p>

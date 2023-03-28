@@ -13,8 +13,6 @@ export default function NewEvent(props: any) {
   const [startTime, setStartTime] = useState("");
   const [description, setDescription] = useState("");
 
-  let navigate = useNavigate();
-
   const handleColorThemeSelect = (theme: number) => {
     setSelectedColorTheme(theme);
   };
@@ -33,8 +31,6 @@ export default function NewEvent(props: any) {
       name: title,
       theme: selectedColorTheme,
     };
-
-    console.log(newEventData);
 
     try {
       const response = await api.post("/event", newEventData);

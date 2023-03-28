@@ -186,3 +186,11 @@
     cursor: pointer;
 }
 
+.nav-events p {
+    cursor: pointer;
+}
+
+.nav-events p:hover {
+    color: rgb(234, 234, 234);
+}
+

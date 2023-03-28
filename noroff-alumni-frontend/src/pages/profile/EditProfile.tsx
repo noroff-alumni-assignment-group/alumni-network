@@ -40,12 +40,24 @@ export default function EditProfile(props: any) {
           <div className="p-pic-cnt">
             <p>Profile picture</p>
             <div className="themes">
-              <div className="profile-theme option1">AA</div>
-              <div className="profile-theme option2">AA</div>
-              <div className="profile-theme option3">AA</div>
-              <div className="profile-theme option4">AA</div>
-              <div className="profile-theme option5">AA</div>
-              <div className="profile-theme option5">AA</div>
+              <div className="profilebubble profile-theme option1">
+                {userData.firstName[0] + userData.lastName[0].toUpperCase()}
+              </div>
+              <div className="profilebubble profile-theme option2">
+                {userData.firstName[0] + userData.lastName[0].toUpperCase()}
+              </div>
+              <div className="profilebubble profile-theme option3">
+                {userData.firstName[0] + userData.lastName[0].toUpperCase()}
+              </div>
+              <div className="profilebubble profile-theme option4">
+                {userData.firstName[0] + userData.lastName[0].toUpperCase()}
+              </div>
+              <div className="profilebubble profile-theme option5">
+                {userData.firstName[0] + userData.lastName[0].toUpperCase()}
+              </div>
+              <div className="profilebubble profile-theme option6">
+                {userData.firstName[0] + userData.lastName[0].toUpperCase()}
+              </div>
             </div>
           </div>
           <div className="edit-title-cnt">
