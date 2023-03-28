@@ -2,6 +2,7 @@ package no.experisAcadmey.trondheim.NoroffAlumni.mappers;
 
 import no.experisAcadmey.trondheim.NoroffAlumni.models.DTOs.postDTOs.PostDto;
 import no.experisAcadmey.trondheim.NoroffAlumni.models.DTOs.userDTOs.UserDisplayDto;
+import no.experisAcadmey.trondheim.NoroffAlumni.models.Group;
 import no.experisAcadmey.trondheim.NoroffAlumni.models.Post;
 import no.experisAcadmey.trondheim.NoroffAlumni.models.Topic;
 import no.experisAcadmey.trondheim.NoroffAlumni.models.User;
@@ -25,6 +26,7 @@ public abstract class PostMapper {
     @Mapping(target = "target_topics", qualifiedByName = "mapTopicToTopicName", source = "targetTopics")
     @Mapping(target = "author", qualifiedByName = "mapUserToUserDisplayDto", source = "author")
     @Mapping(target = "target_user", qualifiedByName = "mapUserToUserDisplayDto", source = "targetUser")
+    @Mapping(target="target_group",qualifiedByName = "mapGroupToGroupName", source = "targetGroups")
     @Mapping(target = "last_updated", source = "lastUpdated")
     public abstract PostDto postToPostDto(Post post);
 
@@ -38,6 +40,11 @@ public abstract class PostMapper {
     @Named("mapUserToUserDisplayDto")
     public UserDisplayDto maptUserToUserDisplayDto(User user) {
         return userMapper.toUserDisplayDto(user);
+    }
+
+    @Named("mapGroupToGroupName")
+    public List<String> mapGroupToGroupName(List<Group> groups){
+        return groups.stream().map(Group::getName).toList();
     }
 
 }
