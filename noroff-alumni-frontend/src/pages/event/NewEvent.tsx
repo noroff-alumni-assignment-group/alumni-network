@@ -1,21 +1,58 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import api from "../../services/api";
 
 export default function NewEvent(props: any) {
   const user = useSelector((state: any) => state.user);
 
   const [selectedColorTheme, setSelectedColorTheme] = useState(1);
-
   const [title, setTitle] = useState("");
   const [date, setDate] = useState("");
   const [location, setLocation] = useState("");
   const [startTime, setStartTime] = useState("");
   const [description, setDescription] = useState("");
 
+  let navigate = useNavigate();
 
-  const handleColorThemeSelect = (theme: any) => {
+  const handleColorThemeSelect = (theme: number) => {
     setSelectedColorTheme(theme);
+  };
+
+  const handleSave = async (event: any) => {
+    event.preventDefault();
+
+    const newEventData = {
+      createdBy: user.id,
+      groupId: "", // set the correct value based on the selected group
+      title: title,
+      description: description,
+      date: date,
+      time: startTime,
+      location: location,
+      name: title,
+      theme: selectedColorTheme,
+    };
+
+    console.log(newEventData);
+
+    try {
+      const response = await api.post("/event", newEventData);
+
+      // Reset the form
+      setTitle("");
+      setDate("");
+      setLocation("");
+      setStartTime("");
+      setDescription("");
+      setSelectedColorTheme(1);
+
+      props.setRenderNewEvent(false);
+  
+    } catch (error) {
+      console.error(error);
+      // Handle any errors here
+    }
   };
 
   return (
@@ -129,17 +166,30 @@ export default function NewEvent(props: any) {
               className="activity-btn"
               onClick={(event) => {
                 event.preventDefault();
-                props.setShowEditProfile(false);
+                props.setRenderNewEvent(false);
               }}
             >
               CANCEL
             </button>
-            <button className="activity-btn">SAVE</button>
+            <button
+              onClick={(event) => {
+                handleSave(event);
+              }}
+              className="activity-btn"
+            >
+              SAVE
+            </button>
           </div>
         </div>
       </form>
 
-      <div className="backgroundcolor"></div>
+      <div
+        onClick={(event) => {
+          event.preventDefault();
+          props.setRenderNewEvent(false);
+        }}
+        className="backgroundcolor"
+      ></div>
     </div>
   );
 }

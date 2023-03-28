@@ -3,26 +3,28 @@ import { useNavigate } from "react-router-dom";
 import "./event.css";
 
 function Event(props: any) {
-  const { title, location, colortheme, id } = props.event;
+  const { title, location, theme, id } = props.event;
   
   let navigate = useNavigate();
+
+  
 
   const getColorClass = (theme: any) => {
     switch (theme) {
       case 1:
-        return "event-color-1";
+        return "themeoption1";
       case 2:
-        return "event-color-2";
+        return "themeoption2";
       case 3:
-        return "event-color-3";
+        return "themeoption3";
       case 4:
-        return "event-color-4";
+        return "themeoption4";
       default:
         return "";
     }
   };
 
-  const colorClass = getColorClass(colortheme);
+  const colorClass = getColorClass(theme);
 
   const handleClick = () => {
     navigate("/events/" + id)

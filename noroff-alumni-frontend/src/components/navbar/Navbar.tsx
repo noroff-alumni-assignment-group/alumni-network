@@ -5,7 +5,7 @@ import timeline from "../../assets/icons/Activity Feed.png";
 import groups from "../../assets/icons/People.png";
 import topics from "../../assets/icons/Speech Bubble.png";
 import events from "../../assets/icons/Calendar.png";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
@@ -23,6 +23,7 @@ function Navbar() {
 
     const [collapsed, setCollapsed] = useState(window.innerWidth < 1100);
     const windowSize = useWindowSize();
+    let navigate = useNavigate()
 
     useEffect(() => {
       if(window.innerWidth > 1100){
@@ -47,6 +48,10 @@ function Navbar() {
       //
     }, []);
 
+    function handleIconClick() {
+      navigate("/profile/" + user.username)
+    }
+
     
 
 
@@ -64,7 +69,7 @@ function Navbar() {
       </button>
       <div className={"navbar " + (collapsed ? "navbar-collapsed" : "")}>
         <div className="nav-profile-cnt">
-          <div className="circleprofile">
+          <div className="circleprofile" onClick={() => handleIconClick()}>
             {(user.firstName ?? "").charAt(0).toUpperCase() +
               (user.lastName ?? "").charAt(0).toUpperCase()}
           </div>

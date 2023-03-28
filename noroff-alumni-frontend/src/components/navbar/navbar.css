@@ -181,4 +181,7 @@
     margin-right: 15px;
 }
 
+.circleprofile:hover {
+    cursor: pointer;
+}
 
