@@ -17,7 +17,7 @@ public class Group {
     @Column(length = 50, nullable = false)
     private String name;
 
-    @Column(length = 150)
+    @Column(length = 500)
     private String description;
 
     @Column(nullable = false)
