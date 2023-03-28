@@ -120,7 +120,7 @@ function Post({post}: Props) {
               value={newCommentText}
               onChange={(e) => setNewCommentText(e.target.value)}
             />
-            <button type="submit" className="post-response-submit">
+            <button type="submit" className="post-response-submit activity-btn">
               Submit
             </button>
           </form>
