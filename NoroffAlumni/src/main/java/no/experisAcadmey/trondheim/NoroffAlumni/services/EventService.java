@@ -59,6 +59,5 @@ public class EventService {
         User user = userRepository.findById(String.valueOf(UUID.fromString(userId))).orElseThrow(() -> new UserNotFoundException(userId));
         return new ArrayList<>(user.getEvents());
     }
-
 }
 
