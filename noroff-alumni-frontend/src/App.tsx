@@ -16,6 +16,8 @@ import UserService from "./services/UserService";
 import TopicFeed from "./pages/TopicFeed/TopicFeed";
 import GroupPage from "./pages/groups/GroupPage";
 import NotfoundPage from "./pages/404/NotfoundPage";
+import EventPage from "./pages/event/EventPage";
+import Events from "./pages/event/Events";
 import Inbox from "./pages/inbox/Inbox";
 
 function App() {
@@ -43,6 +45,8 @@ function App() {
               <Routes>
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/profile/*" element={<Profile />} />
+                <Route path="/events" element={<Events />} />
+                <Route path="/events/:id" element={<EventPage />} />
                 {/*<Route path="/events" element={<Event />} />*/}
                 <Route path="/inbox" element={<Inbox/>} />
                 <Route path="/groups" element={<Groups />} />

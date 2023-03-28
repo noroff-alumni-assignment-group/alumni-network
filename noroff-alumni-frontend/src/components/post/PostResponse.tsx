@@ -1,5 +1,6 @@
 import React from "react";
 import UserDisplayDTO from "../../models/UserDisplayDTO";
+import Profilepicture from "../profilepicture/Profilepicure";
 
 interface Props {
   author: UserDisplayDTO;
@@ -7,10 +8,11 @@ interface Props {
 }
 
 function PostResponse({ author, text }: Props) {
+  
   return (
     <div className="post-response">
       <div className="post-author-cnt">
-        <div className="profilebubble post-profile-pic">{author.firstName && author.lastName ? (author.firstName[0]+author.lastName[0]).toUpperCase():"OO"}</div>
+        <Profilepicture author={author}/>
         <div className="response-author">
           <p className="post-time">7</p>
           <div className="post-response-author">

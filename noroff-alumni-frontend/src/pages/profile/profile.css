@@ -38,6 +38,9 @@
   padding: 80px 50px 80px 50px;
 }
 
+.profile-post-header {
+  margin-bottom: 20px;
+}
 .profiledata-head {
   width: 50%;
   display: flex;
@@ -230,8 +233,7 @@ min-width: 700px;
 }
 
 .option5 {
-  background: rgb(0,255,147);
-background: linear-gradient(270deg, rgba(0,255,147,1) 0%, rgba(0,255,216,1) 100%);
+background-color: lightgray;
 }
 
 .option3 {
@@ -245,6 +247,10 @@ background-color: red;
 
 .option2 {
   background-color: var(--green);
+}
+
+.option6 {
+  background-color: cyan;
 }
 
 .work-input, .bio-input, .funfact-input{
