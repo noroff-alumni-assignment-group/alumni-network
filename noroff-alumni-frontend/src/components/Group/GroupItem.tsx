@@ -14,10 +14,8 @@ const GroupItem = ({ group }: propsGroup) => {
                     <h3>{group.name}</h3>
                     <p>Members: {group.members.length}</p>
                 </div>
-                <div className="">
-                    {/*group.members?.map((member: any) => (
-                        <MemberIcon key={member.id} firstName={member.firstName} lastName={member.lastName}/>
-                    ))*/}
+                <div className={group.isPrivate ? "private-item" : ""}>
+                    {group.isPrivate && <p>Private</p>}
                 </div>
             </div>
         </>

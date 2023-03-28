@@ -16,6 +16,16 @@
   }
 
 
+.private-item {
+  
+  margin-right: 40px;
+  color: white;
+  padding: 8px;
+  border-radius: 20px;
+  background-color: var(--blue);
+}
+
+
 /* MEMBER ICON */
 
 .profile-icon {
