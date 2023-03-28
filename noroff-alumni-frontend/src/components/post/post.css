@@ -52,7 +52,7 @@
 }
 
 .post-comments-list {
-  margin-bottom: 40px;
+  margin-bottom: 25px;
 }
 
 .post-comments img {
@@ -91,19 +91,18 @@
 
 .post-response {
   background-color: var(--offwhite);
-  padding: 20px 50px;
+  padding: 20px 30px;
   border-radius: 20px;
   margin-top: 20px;
   margin-bottom: 10px;
   display: flex;
   align-items: center;
-  box-shadow: var(--box-shadow);
 }
 
 .post-author-cnt {
   display: flex;
   align-items: center;
-  min-width: 22%;
+  width: 25%;
 }
 
 .post-profile-pic {
@@ -130,14 +129,27 @@
   font-size: 0.7rem;
 }
 
-.vertical-stroke {
-  width: 1px;
-  height: 90%;
-  background-color: black;
+.post-response-form {
+  margin-top: 50px;
+  display: flex;
 }
 
+.post-response-text {
+  border-left: solid 1px darkgray;
+  min-height: 50px;
+  padding-left: 20px;
+  display: flex;
+  width: 75%;
+}
 .post-response-text p {
-  font-size: 0.8rem;
+  font-size: .9rem;
+  margin: auto 0 auto 0;
+}
+.post-response-counter {
+  margin: auto 0 auto 0;
+  color: #c7c7c7;
+  width: 100px;
+  text-align: right;
 }
 
 .post-response-input {
@@ -147,7 +159,6 @@
   width: 500px;
   height: 60px;
   padding: 10px 20px;
-  margin-top: 15px;
   font-size: 1rem;
   outline: none;
 }

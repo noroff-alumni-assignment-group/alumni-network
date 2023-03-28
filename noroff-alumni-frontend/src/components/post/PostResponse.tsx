@@ -22,11 +22,9 @@ function PostResponse(props: Props) {
         </div>
       </div>
 
-      <div className="vertical-stroke"></div>
       <div className="post-response-text">
         <p>{props.reply.body}</p>
       </div>
-      <div className="post-response-initals"></div>
     </div>
   );
 }

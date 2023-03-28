@@ -23,6 +23,7 @@ function Post({post}: Props) {
   const [showComments, setShowComments] = useState(false);
   const [newCommentText, setNewCommentText] = useState("");
 
+  const maxLength: number = 255;
   const user = useSelector((state: any) => state.user);
 
   useEffect(() => {
@@ -37,6 +38,7 @@ function Post({post}: Props) {
               .then(data => {
                 // @ts-ignore
                 setComments([...comments, data]);
+                post.replies?.push(data)
                 setNewCommentText("");
               })
         })
@@ -83,7 +85,7 @@ function Post({post}: Props) {
       {showComments && (
         <div>
           <h2 className="all-comments-h2">All comments</h2>
-          {(comments != undefined && comments.length) <= 0 && (<div className="no-comments-tag"><p>No comments...</p></div>)}
+          {(comments != undefined && comments.length) <= 0 && (<div className="no-comments-tag"><p>Be the first to comment!</p></div>)}
           {comments?.map((reply, i) => (
               <div className="post-comments-list" key={i}>
                 <PostResponse reply={reply}/>
@@ -95,11 +97,14 @@ function Post({post}: Props) {
               type="text"
               placeholder="Write your comment..."
               value={newCommentText}
-              onChange={(e) => setNewCommentText(e.target.value)}
+              onChange={(e) => {
+                  if(e.target.value.length <= maxLength){setNewCommentText(e.target.value)}
+              }}
             />
             <button type="button" onClick={() => handleAddComment()} className="post-response-submit activity-btn">
               <FontAwesomeIcon icon={faPaperPlane} className={"post-response-submit-icon"}/>
             </button>
+            <p className={"post-response-counter " + (newCommentText.length >= maxLength ? "text-limit-reached" : "")}>{newCommentText.length + "/" + maxLength}</p>
           </div>
         </div>
       )}
