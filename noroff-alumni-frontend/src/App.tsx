@@ -30,8 +30,6 @@ function App() {
     checkLogin();
   }, []);
 
-  console.log(process.env.REACT_APP_API_URL);
-
   return (
     <div className="App">
       <BrowserRouter>
@@ -44,7 +42,7 @@ function App() {
               <Routes>
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/profile/*" element={<Profile />} />
-                <Route path="/events" element={<Event />} />
+                {/*<Route path="/events" element={<Event />} />*/}
                 <Route path="/groups" element={<Groups />} />
                 <Route path="/groups/:id" element={<GroupPage />} />
                 <Route path="/topics" element={<Topics />} />
