@@ -4,7 +4,6 @@ import Group from "../../models/Group/Group"
 import './groups.css'
 import Popup from "../../components/popup/Popup"
 import PostForm from "../../components/post-form/PostForm"
-import Post from "../../components/post/Post"
 import PostDTO from "../../models/PostDTO"
 import InviteModulo from "../../components/Group/InviteModulo"
 import groupService from "../../services/groupService"
@@ -16,8 +15,8 @@ import PostFeed from "../../components/post/PostFeed"
 const GroupPage = () => {
 
     let { id } = useParams()
-    const dispatch = useDispatch();
-    const user = useSelector((state: RootState) => state.user);
+    const dispatch = useDispatch()
+    const user = useSelector((state: RootState) => state.user)
     const [group, setGroup] = useState({} as Group)
     const [posts, setPosts] = useState<Array<PostDTO>>([])
     const [showPostForm, setShowPostForm] = useState(false)
@@ -34,12 +33,19 @@ const GroupPage = () => {
 
     }, [])
 
-    async function handleJoinClick() {
+    async function joinGroup() {
         await groupService.joinGroup(group.id)
-        let userGroups = [...user.groups!]
+        let userGroups = Array.isArray(user.groups) ? [...user.groups!] : []
         userGroups.push(group.name)
         dispatch(setUser({...user, groups: userGroups}))
     }
+
+    async function leaveGroup() {
+        await groupService.leaveGroup(group.id)
+        let userGroups = [...user.groups!]
+        userGroups = userGroups.filter((g) => g !== group.name)
+        dispatch(setUser({ ...user, groups: userGroups }))
+      }
     
     return (
 
@@ -48,7 +54,9 @@ const GroupPage = () => {
                 {showPostForm && <Popup child={<PostForm editing={false} handler={setShowPostForm}/>}/>}
                 <div className="page-header">
                     <h1>{group?.name}</h1>
-                    <button className="activity-btn" onClick={handleJoinClick}>Join</button>      
+                    <button className="activity-btn" onClick={user.groups?.includes(group.name) ? leaveGroup : joinGroup}>
+                        {user.groups?.includes(group.name) ? "Leave" : "Join"}
+                    </button>      
                 </div>
                 <div className="group-desc">
                     <p>{group.description}</p>
