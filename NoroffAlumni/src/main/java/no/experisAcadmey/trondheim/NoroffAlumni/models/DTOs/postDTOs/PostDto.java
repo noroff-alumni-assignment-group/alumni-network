@@ -1,6 +1,7 @@
 package no.experisAcadmey.trondheim.NoroffAlumni.models.DTOs.postDTOs;
 
 import lombok.Data;
+import no.experisAcadmey.trondheim.NoroffAlumni.models.DTOs.replyDTOs.ReplyDto;
 import no.experisAcadmey.trondheim.NoroffAlumni.models.DTOs.userDTOs.UserDisplayDto;
 import no.experisAcadmey.trondheim.NoroffAlumni.models.DTOs.userDTOs.UserDto;
 
@@ -19,4 +20,6 @@ public class PostDto {
     
     private List<String> target_topics;
     private List<String> target_group;
+
+    private List<ReplyDto> replies;
 }

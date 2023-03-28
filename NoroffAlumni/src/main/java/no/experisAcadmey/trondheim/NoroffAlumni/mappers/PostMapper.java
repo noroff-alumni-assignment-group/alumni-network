@@ -1,8 +1,10 @@
 package no.experisAcadmey.trondheim.NoroffAlumni.mappers;
 
 import no.experisAcadmey.trondheim.NoroffAlumni.models.DTOs.postDTOs.PostDto;
+import no.experisAcadmey.trondheim.NoroffAlumni.models.DTOs.replyDTOs.ReplyDto;
 import no.experisAcadmey.trondheim.NoroffAlumni.models.DTOs.userDTOs.UserDisplayDto;
 import no.experisAcadmey.trondheim.NoroffAlumni.models.Post;
+import no.experisAcadmey.trondheim.NoroffAlumni.models.Reply;
 import no.experisAcadmey.trondheim.NoroffAlumni.models.Topic;
 import no.experisAcadmey.trondheim.NoroffAlumni.models.User;
 import no.experisAcadmey.trondheim.NoroffAlumni.services.TopicService;
@@ -21,11 +23,14 @@ public abstract class PostMapper {
 
     @Autowired
     private UserMapper userMapper = Mappers.getMapper(UserMapper.class);
+    @Autowired
+    private ReplyMapper replyMapper = Mappers.getMapper(ReplyMapper.class);
 
     @Mapping(target = "target_topics", qualifiedByName = "mapTopicToTopicName", source = "targetTopics")
     @Mapping(target = "author", qualifiedByName = "mapUserToUserDisplayDto", source = "author")
     @Mapping(target = "target_user", qualifiedByName = "mapUserToUserDisplayDto", source = "targetUser")
     @Mapping(target = "last_updated", source = "lastUpdated")
+    @Mapping(target = "replies", qualifiedByName = "mapReplyToReplyDto", source = "replies")
     public abstract PostDto postToPostDto(Post post);
 
     public abstract Collection<PostDto> postToPostDto(Collection<Post> posts);
@@ -38,6 +43,11 @@ public abstract class PostMapper {
     @Named("mapUserToUserDisplayDto")
     public UserDisplayDto maptUserToUserDisplayDto(User user) {
         return userMapper.toUserDisplayDto(user);
+    }
+
+    @Named("mapReplyToReplyDto")
+    public List<ReplyDto> mapReplyToReplyDto(List<Reply> replies) {
+        return replyMapper.toReplyDto(replies);
     }
 
 }

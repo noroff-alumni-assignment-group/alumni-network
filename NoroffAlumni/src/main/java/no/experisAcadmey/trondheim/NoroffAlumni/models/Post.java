@@ -31,6 +31,8 @@ public class Post {
     @JoinTable(name="topic_posts",joinColumns = @JoinColumn(name = "post_id"),inverseJoinColumns = @JoinColumn(name = "topic_id"))
     private List<Topic> targetTopics = new ArrayList<>();
     private List<Long> targetGroup;
+    @OneToMany(mappedBy = "targetPost")
+    private List<Reply> replies = new ArrayList<>();
 
     public Post addTopic(Topic topic){
         targetTopics.add(topic);
