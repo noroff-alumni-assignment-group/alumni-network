@@ -18,6 +18,7 @@ import GroupPage from "./pages/groups/GroupPage";
 import NotfoundPage from "./pages/404/NotfoundPage";
 import EventPage from "./pages/event/EventPage";
 import Events from "./pages/event/Events";
+import Inbox from "./pages/inbox/Inbox";
 
 function App() {
   const user = useSelector((state: RootState) => state.user);
@@ -31,8 +32,6 @@ function App() {
 
     checkLogin();
   }, []);
-
-  console.log(process.env.REACT_APP_API_URL);
 
   return (
     <div className="App">
@@ -48,8 +47,10 @@ function App() {
                 <Route path="/profile/*" element={<Profile />} />
                 <Route path="/events" element={<Events />} />
                 <Route path="/events/:id" element={<EventPage />} />
+                {/*<Route path="/events" element={<Event />} />*/}
+                <Route path="/inbox" element={<Inbox/>} />
                 <Route path="/groups" element={<Groups />} />
-                <Route path="/groups/:groupId" element={<GroupPage />} />
+                <Route path="/groups/:id" element={<GroupPage />} />
                 <Route path="/topics" element={<Topics />} />
                 <Route path="/topic/:id" element={<TopicFeed />} />
                 <Route path="/" element={<Timeline />} />

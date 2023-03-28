@@ -176,9 +176,10 @@
     white-space: nowrap;
 }
 .nav-icon {
-    font-size: 1.6rem;
+    font-size: 1.4rem;
     color: white;
-    margin-right: 15px;
+    margin-right: 17px;
+    margin-left: 5px;
 }
 
 .circleprofile:hover {

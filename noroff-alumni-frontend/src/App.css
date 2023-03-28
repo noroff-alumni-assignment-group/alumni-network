@@ -144,7 +144,7 @@ REUSABLE COMPONENT STYLING
   cursor: pointer;
   margin-right: 10px;
   box-shadow: var(--box-shadow);
-  transition: .05s ease-in-out;
+  transition: .12s ease-in-out;
 }
 
 .topic:hover,
@@ -166,7 +166,7 @@ REUSABLE COMPONENT STYLING
   align-items: center;
   cursor: pointer;
   box-shadow: var(--box-shadow);
-  transition: .05s ease-in-out;
+  transition: .12s ease-in-out;
 }
 
 .timeline-sort-tag:hover {
@@ -223,7 +223,7 @@ REUSABLE COMPONENT STYLING
   cursor: pointer;
   height: 50px;
   box-shadow: var(--box-shadow);
-  transition: .05s ease-in-out;
+  transition: .12s ease-in-out;
 }
 
 .activity-btn {

@@ -57,7 +57,6 @@ function Profile() {
           lastName: userData.lastName,
         });
 
-        console.log("res", response.data);
       } catch (error) {
         navigate("/404");
       }
@@ -74,7 +73,6 @@ function Profile() {
   function onSearch(searchWord: string) {
       searchPostsUser(user.id, searchWord)
           .then(data => {
-            console.log(data)
             setPosts(data);
           })
   }

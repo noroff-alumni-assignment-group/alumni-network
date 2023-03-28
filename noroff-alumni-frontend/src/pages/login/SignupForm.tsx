@@ -105,7 +105,7 @@ export default function SignupForm(props: any) {
           </p>
           <div className="signin-btn-cnt">
             <button type="submit" className="submit-btn">
-              Sign in
+              Sign up
             </button>
           </div>
         </form>

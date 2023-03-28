@@ -10,13 +10,13 @@ import axios from "axios";
 class UserService {
 
    async login(loginData:LoginRequest) {
-      await api
+      return await api
         .post("/authenticate", loginData)
         .then((response) => {
-          console.log(response.status);
           if (response.status === 200) {
             tokenService.setAuth(response.data);
           }
+          return response;
         })
         .catch((error) => error);
       

@@ -77,7 +77,7 @@ function Post({post}: Props) {
           <p>{setTimeSince(new Date(post.last_updated ?? ""))}</p>
         </div>
         <div className="post-body">
-          <p><SnarkdownText text={post.body}/></p>
+          <SnarkdownText text={post.body}/>
         </div>
         <div className="post-comments">
           <p>{post.comments?.length} comments</p>
@@ -120,7 +120,7 @@ function Post({post}: Props) {
               value={newCommentText}
               onChange={(e) => setNewCommentText(e.target.value)}
             />
-            <button type="submit" className="post-response-submit">
+            <button type="submit" className="post-response-submit activity-btn">
               Submit
             </button>
           </form>
