@@ -49,7 +49,7 @@ function Post({post}: Props) {
   // @ts-ignore
   return (
     <div className="post">
-      <div className="post-cnt" onClick={handleToggleComments}>
+      <div className="post-cnt">
         <div className="post-head">
           <h2>{post.title}</h2>
           <p>{setTimeSince(new Date(post.last_updated ?? ""))}</p>
@@ -57,22 +57,22 @@ function Post({post}: Props) {
         <div className="post-body">
           <SnarkdownText text={post.body}/>
         </div>
-        <div className="post-comments">
-          <p>{comments?.length} comments</p>
-        </div>
-
-        <div className="post-footer">
-          <div className="post-tags">
-            {post.target_topics?.map((topic) => (
+        <div className="post-tags">
+          {post.target_topics?.map((topic) => (
               <div className="topic" key={topic}>
                 {topic}
               </div>
-            ))}
-            {post.target_groups?.map((group) => (
+          ))}
+          {post.target_groups?.map((group) => (
               <div className="group" key={group}>
                 {group}
               </div>
-            ))}
+          ))}
+        </div>
+
+        <div className="post-footer">
+          <div className="post-comments">
+            <p onClick={handleToggleComments}>{comments?.length} comments</p>
           </div>
           <div className="post-author">
             <Profilepicture author={post.author ?? {firstName:"",lastName:""}} />
