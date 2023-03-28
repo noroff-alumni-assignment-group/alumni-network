@@ -8,70 +8,50 @@ import "./post.css";
 import PostResponse from "./PostResponse";
 import PostDTO from "../../models/PostDTO";
 import SnarkdownText from "../SnarkdownText/SnarkdownText";
+import {createReply, getReply} from "../../services/replyService";
+import {setTimeSince} from "../../services/utilService";
+import ReplyDTO from "../../models/ReplyDTO";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 
 interface Props {
   post:PostDTO;
 }
 
 function Post({post}: Props) {
+  const [comments, setComments] = useState<ReplyDTO[] | undefined>([]);
   const [showComments, setShowComments] = useState(false);
   const [newCommentText, setNewCommentText] = useState("");
 
+  const maxLength: number = 255;
   const user = useSelector((state: any) => state.user);
 
+  useEffect(() => {
+    setComments(post.replies);
+  }, [post])
 
-  const handleAddComment = (e: any) => {
-    e.preventDefault();
-
-
+  const handleAddComment = () => {
+    if(newCommentText.length <= 0){return;}
+    createReply({body: newCommentText}, post.id)
+        .then(data => {
+          getReply(data)
+              .then(data => {
+                // @ts-ignore
+                setComments([...comments, data]);
+                post.replies?.push(data)
+                setNewCommentText("");
+              })
+        })
   };
-
-
-  const sendCommentToAPI = async (postId: string, commentText: string) => {
-    try {
-      const response = await fetch(
-        `https://your-api-url.com/posts/${postId}/comments`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            author: "Your Name", // Replace with the current user's name
-            authorInitials: "YN", // Replace with the current user's initials
-            response: commentText,
-            date: new Date().toISOString(),
-          }),
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error("Failed to send comment to the API");
-      }
-
-      // You can update the local state with the new comment data received from the API
-      const newComment = await response.json();
-    
-    } catch (error) {
-      console.error("Error sending comment to the API:", error);
-    }
-  };
-
-  function setTimeSince(date: Date) {
-    let minutes = date.getMinutes();
-    return date.getDate() + " " + date.toLocaleString('default', { month: 'short' })
-        + " - " + date.getHours() + ":" + (minutes > 9 ? minutes: "0" + minutes);
-  }
-
-  // Replace the comments prop with the new localComments state variable
 
   const handleToggleComments = () => {
     setShowComments(!showComments);
   };
 
+  // @ts-ignore
   return (
     <div className="post">
-      <div className="post-cnt" onClick={handleToggleComments}>
+      <div className="post-cnt">
         <div className="post-head">
           <h2>{post.title}</h2>
           <p>{setTimeSince(new Date(post.last_updated ?? ""))}</p>
@@ -79,13 +59,8 @@ function Post({post}: Props) {
         <div className="post-body">
           <SnarkdownText text={post.body}/>
         </div>
-        <div className="post-comments">
-          <p>{post.comments?.length} comments</p>
-        </div>
-
-        <div className="post-footer">
-          <div className="post-tags">
-            {post.target_topics?.map((topic) => (
+        <div className="post-tags">
+          {post.target_topics?.map((topic) => (
               <div className="topic" key={topic}>
                 {topic}
               </div>
@@ -94,7 +69,12 @@ function Post({post}: Props) {
               <div className="group" key={group}>
                 {group}
               </div>
-            ))}
+          ))}
+        </div>
+
+        <div className="post-footer">
+          <div className="post-comments">
+            <p onClick={handleToggleComments}>{comments?.length} comments</p>
           </div>
           <div className="post-author">
             <Profilepicture author={post.author ?? {firstName:"",lastName:""}} />
@@ -105,25 +85,27 @@ function Post({post}: Props) {
       {showComments && (
         <div>
           <h2 className="all-comments-h2">All comments</h2>
-          {post.comments?.map((comment) => (
-            <PostResponse
-              author={comment.author}
-              text={comment.response}
-              key={comment.author + comment.response}
-            />
+          {(comments != undefined && comments.length) <= 0 && (<div className="no-comments-tag"><p>Be the first to comment!</p></div>)}
+          {comments?.map((reply, i) => (
+              <div className="post-comments-list" key={i}>
+                <PostResponse reply={reply}/>
+              </div>
           ))}
-          <form onSubmit={handleAddComment} className="post-response-form">
+          <div className="post-response-form">
             <input
               className="post-response-input"
               type="text"
               placeholder="Write your comment..."
               value={newCommentText}
-              onChange={(e) => setNewCommentText(e.target.value)}
+              onChange={(e) => {
+                  if(e.target.value.length <= maxLength){setNewCommentText(e.target.value)}
+              }}
             />
-            <button type="submit" className="post-response-submit activity-btn">
-              Submit
+            <button type="button" onClick={() => handleAddComment()} className="post-response-submit activity-btn">
+              <FontAwesomeIcon icon={faPaperPlane} className={"post-response-submit-icon"}/>
             </button>
-          </form>
+            <p className={"post-response-counter " + (newCommentText.length >= maxLength ? "text-limit-reached" : "")}>{newCommentText.length + "/" + maxLength}</p>
+          </div>
         </div>
       )}
     </div>

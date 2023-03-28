@@ -1,4 +1,5 @@
 import UserDisplayDTO from "./UserDisplayDTO";
+import ReplyDTO from "./ReplyDTO";
 
 type PostDTO = {
     id: number,
@@ -9,10 +10,7 @@ type PostDTO = {
     target_user?: UserDisplayDTO,
     target_topics?: string[],
     target_group?: string[],
-    comments?: {
-        author: UserDisplayDTO;
-        response: string;
-      }[];
+    replies?: ReplyDTO[];
 }
 
 export default PostDTO;
