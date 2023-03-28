@@ -1,6 +1,5 @@
 import './group-comps.css';
-import { Group } from '../../models/Group/Group';
-import MemberIcon from './MemberIcon';
+import Group from '../../models/Group/Group';
 
 type propsGroup = {
     group: Group
@@ -11,14 +10,12 @@ const GroupItem = ({ group }: propsGroup) => {
     return (
         <>
             <div className="group-item">
-                <div className="group-name">
-                    <p>{group.name}</p>
+                <div className="group-left">
+                    <h3>{group.name}</h3>
+                    <p>Members: {group.members.length}</p>
                 </div>
-                   
-                <div className="profile-icon">
-                    {group.members?.map((member: any) => (
-                        <MemberIcon key={member.id} firstName={member.firstName} lastName={member.lastName}/>
-                    ))}
+                <div className={group.isPrivate ? "private-item" : ""}>
+                    {group.isPrivate && <p>Private</p>}
                 </div>
             </div>
         </>

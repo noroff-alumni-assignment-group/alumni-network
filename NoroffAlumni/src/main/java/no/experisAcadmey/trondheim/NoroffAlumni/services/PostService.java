@@ -22,6 +22,10 @@ public class PostService {
     @Autowired
     private TopicService topicService;
 
+    public Post getPost(Long id) {
+        return postRepository.findById(id).orElseThrow(PostNotFoundException::new);
+    }
+
     // TODO: Should return based on user's subscribed topics and groups, not "findAll"
     public List<Post> getPosts(Optional<String> searchWord){
         if(searchWord.isPresent()){
@@ -33,14 +37,26 @@ public class PostService {
 
     public List<Post> getPostsUser(String authorId, Optional<String> searchWord){
         if(searchWord.isPresent()){
-            return postRepository.findAllBySearchWord("%" + searchWord.get() + "%", authorId);
+            return postRepository.findAllAuthoredBySearchWord("%" + searchWord.get() + "%", authorId);
         }else {
             return postRepository.findAllByAuthorIdOrderByLastUpdated(authorId);
         }
     }
 
-    public Post getPost(Long id) {
-        return postRepository.findById(id).orElseThrow(PostNotFoundException::new);
+    public List<Post> getPostsForTargetUser(Optional<String> searchWord){
+        if(searchWord.isPresent()){
+            return postRepository.findAllMessagesReceivedBySearchWord(userService.getCurrentUser().getId(), "%" + searchWord.get() + "%");
+        } else {
+            return postRepository.findAllByTargetUserIdOrderByLastUpdatedDesc(userService.getCurrentUser().getId());
+        }
+    }
+
+    public List<Post> getPostsToTargetUser(Optional<String> searchWord){
+        if(searchWord.isPresent()){
+            return postRepository.findMessagesSentBySearchWord(userService.getCurrentUser().getId(), "%" + searchWord.get() + "%");
+        } else {
+            return postRepository.findAllByAuthorIdAndTargetUserIdIsNotNull(userService.getCurrentUser().getId());
+        }
     }
 
     public Long createPost(NewPostDto newPostDto){

@@ -1,10 +1,11 @@
 import GroupItem from "../../components/Group/GroupItem"
 import './groups.css'
-import { Group } from "../../models/Group/Group"
+import Group from "../../models/Group/Group"
 import { useEffect, useState } from "react"
 import { useNavigate } from 'react-router-dom'
-import api from "../../services/api"
 import NewGroupModulo from "../../components/Group/NewGroupModulo"
+import GroupService from "../../services/groupService"
+import GroupListItem from "../../models/Group/GroupListItem"
 
 function Groups() {
 
@@ -14,17 +15,20 @@ function Groups() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    async function getGroups() {
-      const response = await api.get("/group")
-        setGroups(response.data)
+    async function getAllGroups() {
+      await GroupService.getGroups().then((data) => {
+        setGroups(data)
+      })
     }
-    getGroups()
+    getAllGroups()
   }, [])
 
   useEffect(() => {
     async function getMyGroups() {
-      const response = await api.get("/user/groups")
-      setMyGroups(response.data)
+      await GroupService.getUserGroups().then((data) => {
+        setMyGroups(data)
+      })
+      
     }
     getMyGroups()
   }, [])
@@ -34,15 +38,17 @@ function Groups() {
     navigate(page)
   }
 
+
+
   return (
       <>
         <div className="group-container">
-          {showNewGroupModulo ?<NewGroupModulo setHideModulo={setShowNewGroupModulo}/> : null}
+          {showNewGroupModulo ? <NewGroupModulo setHideModulo={setShowNewGroupModulo}/> : null}
           <div className="groups-actions">
                 <div className="group-list-header">
-                  <h3>All groups</h3>
+                  <h1>All groups</h1>
                 </div>
-                <button className="activity-btn" onClick={()=>setShowNewGroupModulo(true)}>NEW GROUP</button>
+                <button className="activity-btn" onClick={() => setShowNewGroupModulo(true)}>NEW GROUP</button>
           </div>
           <div className="groupslist">
                 {groups.map(group => (
@@ -53,12 +59,12 @@ function Groups() {
           </div>
 
           <div className="group-list-header">
-              <h3>My groups</h3>
+              <h1>My groups</h1>
           </div>
           <div className="groupslist">
               {myGroups.map(group => (
                   <div key={group.id} onClick={() => handleGroupClick(group)}>
-                    <GroupItem key={group.id} group={group} />
+                    <GroupItem key={group.id} group={group}/>
                   </div>
                 ))}
           </div>

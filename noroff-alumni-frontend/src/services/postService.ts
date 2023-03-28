@@ -62,6 +62,47 @@ export async function searchPostsUser(authorId: string, searchWord: string){
         .then(response => response.data)
 }
 
+/**
+ * Retrieves all direct messages received
+ */
+export async function getPostsForTargetUser(){
+    return await api.get("/post/user/received")
+        .then(response => response.data);
+}
+
+/**
+ * Searches all direct messages received
+ * @param searchWord search term
+ */
+export async function searchPostsForTargetUser(searchWord: string) {
+    return await api.get("/post/user/received", {
+            params: {
+                searchWord: searchWord
+            }
+        })
+        .then(response => response.data);
+}
+
+/**
+ * Retrieves all direct messages sent
+ */
+export async function getPostsToTargetUser() {
+    return await api.get("/post/user/sent")
+        .then(response => response.data);
+}
+
+/**
+ * Searches all direct messages sent
+ * @param searchWord
+ */
+export async function searchPostsToTargetUser(searchWord: string) {
+    return await api.get("/post/user/sent", {
+            params: {
+                searchWord: searchWord
+            }
+        })
+        .then(response => response.data);
+}
 
 /**
  * Creates a new post

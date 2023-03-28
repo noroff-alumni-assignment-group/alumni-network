@@ -11,11 +11,16 @@ INSERT INTO topic(name,description) VALUES('Ice bathing','All about ice bathing'
 INSERT INTO topic(name,description) VALUES('Java','All about java');
 INSERT INTO topic(name,description) VALUES('C ++','All about C ++');
 
+
 INSERT INTO groups(is_private,name,description) VALUES (false,'Code Wizards', 'This group is dedicated to all things programming. Whether you´re a beginner or an experienced developer, you`ll find resources and support for everything from learning new languages to solving complex coding challenges.');
 INSERT INTO groups(is_private,name,description) VALUES (false,'DevOps Heroes', 'DevOps Heroes is a group for professionals interested in the intersection of software development and IT operations. Members share knowledge and expertise on topics like automation, continuous integration and delivery, and containerization to help streamline software delivery pipelines.');
 INSERT INTO groups(is_private,name,description) VALUES (false,'Tech Innovators', 'Tech Innovators is a community of forward-thinking developers, designers, and entrepreneurs who are passionate about pushing the boundaries of technology. Members collaborate on projects and share insights on emerging trends in areas like artificial intelligence, blockchain, and the Internet of Things.');
 
-
+INSERT INTO groups(name,description,is_private) VALUES('Trondheim teams','For everyone based in nidaros', false);
+INSERT INTO groups(name,description,is_Private) VALUES('Experis book club','All about books', false);
+INSERT INTO groups(name,description,is_private) VALUES('Java discussions','For everything Java', false);
+INSERT INTO groups(name,description,is_private) VALUES('Newbies corner','No stupid questions', false);
+INSERT INTO groups(name,description,is_private) VALUES('Secret group','Youre not supposed to see this', true);
 
 
 INSERT INTO users(id,title,username,email,first_name,last_name,biography,funfact) VALUES ('48cec1a0-ffd8-465b-97f1-b6cbcd07ab8d','Ms.','oliviamiller','olivia.miller@example.com','Olivia','Miller','Just a girl trying to make her way in the world, one day at a time.','Olivia is fluent in four languages.');
@@ -140,3 +145,7 @@ INSERT INTO topic_posts(topic_id, post_id) VALUES (9, 11);
 INSERT INTO topic_posts(topic_id, post_id) VALUES (10, 12);
 INSERT INTO topic_posts(topic_id, post_id) VALUES (11, 1);
 INSERT INTO topic_posts(topic_id, post_id) VALUES (12, 2);
+
+INSERT INTO group_posts(group_id, post_id) VALUES(1, 1);
+INSERT INTO group_posts(group_id, post_id) VALUES(1, 3);
+INSERT INTO group_posts(group_id, post_id) VALUES(4, 2);

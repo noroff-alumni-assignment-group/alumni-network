@@ -1,12 +1,14 @@
 /* Groups */
 
+.group-container {
+    min-width: 100%;
+}
+
 .groupslist {
-    margin-bottom: 30px;
-    width: fit-content;
+    min-width: 100%;
 }
 
 .group-list-header {
-    font-size: 20px;
     padding-top: 10px;
     padding-bottom: 20px;
     width: fit-content;
@@ -24,8 +26,12 @@
 /* Group page */
 
 .page-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.group-desc {
     padding-bottom: 20px;
-    font-size: 25px;
 }
 
 .member-card {
