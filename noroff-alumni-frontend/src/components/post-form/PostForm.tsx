@@ -83,13 +83,13 @@ function PostForm (props: PostFormTypes) {
                 createPost(newPost)
                     .then(result => {
                         alert.success("Published successfully");
-                        props.handler(false);
+                        props.handler(true);
                     })
             } else if (props.postId) {
                 editPost({title: newPost.title, body: newPost.body}, props.postId)
                     .then(result => {
                         alert.success("Updated successfully");
-                        props.handler(false);
+                        props.handler(true);
                     })
             }
         }

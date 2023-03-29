@@ -71,13 +71,13 @@ function PostMessageForm (props: PostFormTypes) {
                 createPost(newPost)
                     .then(result => {
                         alert.success("Message sent");
-                        props.handler(false);
+                        props.handler(true);
                     })
             } else {
                 editPost({title: newPost.title, body: newPost.body}, postId)
                     .then(result => {
                         alert.success("Updated successfully");
-                        props.handler(false);
+                        props.handler(true);
                     })
             }
         }

@@ -34,13 +34,11 @@ const Inbox = () => {
         if(showSent){
             getPostsToTargetUser()
                 .then(data => {
-                    console.log(data)
                     setPosts(data)
                 })
         } else {
             getPostsForTargetUser()
                 .then(data => {
-                    console.log(data)
                     setPosts(data)
                 })
         }
@@ -60,10 +58,27 @@ const Inbox = () => {
         }
     }
 
+    const formHandler = (success: boolean) => {
+        if(success) {
+            if(showSent){
+                getPostsToTargetUser()
+                    .then(data => {
+                        setPosts(data);
+                    })
+            }else {
+                getPostsForTargetUser()
+                    .then(data => {
+                        setPosts(data);
+                    })
+            }
+        }
+        setShowPostForm(false)
+    }
+
     return (
         <div className="inbox">
 
-            {showPostForm && <Popup child={<PostMessageForm editing={false} handler={setShowPostForm}/>}/>}
+            {showPostForm && <Popup child={<PostMessageForm editing={false} handler={formHandler}/>}/>}
 
             <div className="inbox-content">
                 <h1>Inbox</h1>
