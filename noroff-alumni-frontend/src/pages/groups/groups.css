@@ -78,6 +78,10 @@
     padding-right: 30px;
 }
 
+.group-item:hover {
+    background-color: rgb(231, 231, 231);
+}
+
 .invite-btn {
     padding: 8px;
     margin-right: 5px;
