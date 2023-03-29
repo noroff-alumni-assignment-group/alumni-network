@@ -57,18 +57,18 @@ function Post({post}: Props) {
           <p>{setTimeSince(new Date(post.last_updated ?? ""))}</p>
         </div>
         <div className="post-body">
-          <SnarkdownText text={post.body}/>
+          <SnarkdownText text={post.body} />
         </div>
         <div className="post-tags">
           {post.target_topics?.map((topic) => (
-              <div className="topic" key={topic}>
-                {topic}
-              </div>
-            ))}
-            {post.target_group?.map((group) => (
-              <div className="group" key={group}>
-                {group}
-              </div>
+            <div className="topic" key={topic}>
+              {topic}
+            </div>
+          ))}
+          {post.target_group?.map((group) => (
+            <div className="group" key={group}>
+              {group}
+            </div>
           ))}
         </div>
 
@@ -77,7 +77,10 @@ function Post({post}: Props) {
             <p onClick={handleToggleComments}>{comments?.length} comments</p>
           </div>
           <div className="post-author">
-            <Profilepicture author={post.author ?? {firstName:"",lastName:""}} />
+            <Profilepicture
+              profileTheme={user.theme}
+              author={post.author ?? { firstName: "", lastName: "" }}
+            />
           </div>
         </div>
       </div>
@@ -85,11 +88,15 @@ function Post({post}: Props) {
       {showComments && (
         <div>
           <h2 className="all-comments-h2">All comments</h2>
-          {(comments != undefined && comments.length) <= 0 && (<div className="no-comments-tag"><p>Be the first to comment!</p></div>)}
+          {(comments != undefined && comments.length) <= 0 && (
+            <div className="no-comments-tag">
+              <p>Be the first to comment!</p>
+            </div>
+          )}
           {comments?.map((reply, i) => (
-              <div className="post-comments-list" key={i}>
-                <PostResponse reply={reply}/>
-              </div>
+            <div className="post-comments-list" key={i}>
+              <PostResponse reply={reply} />
+            </div>
           ))}
           <div className="post-response-form">
             <input
@@ -98,13 +105,29 @@ function Post({post}: Props) {
               placeholder="Write your comment..."
               value={newCommentText}
               onChange={(e) => {
-                  if(e.target.value.length <= maxLength){setNewCommentText(e.target.value)}
+                if (e.target.value.length <= maxLength) {
+                  setNewCommentText(e.target.value);
+                }
               }}
             />
-            <button type="button" onClick={() => handleAddComment()} className="post-response-submit activity-btn">
-              <FontAwesomeIcon icon={faPaperPlane} className={"post-response-submit-icon"}/>
+            <button
+              type="button"
+              onClick={() => handleAddComment()}
+              className="post-response-submit activity-btn"
+            >
+              <FontAwesomeIcon
+                icon={faPaperPlane}
+                className={"post-response-submit-icon"}
+              />
             </button>
-            <p className={"post-response-counter " + (newCommentText.length >= maxLength ? "text-limit-reached" : "")}>{newCommentText.length + "/" + maxLength}</p>
+            <p
+              className={
+                "post-response-counter " +
+                (newCommentText.length >= maxLength ? "text-limit-reached" : "")
+              }
+            >
+              {newCommentText.length + "/" + maxLength}
+            </p>
           </div>
         </div>
       )}

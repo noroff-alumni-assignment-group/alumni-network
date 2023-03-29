@@ -3,7 +3,7 @@
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background-color: var(--blue);
+  box-shadow: var(--box-shadow);
   color: white;
   font-size: 20px;
   display: flex;
@@ -36,3 +36,36 @@
   justify-content: center;
   align-items: center;
 }
+
+.large-profile {
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 10px;
+    width: 100px;
+    height: 100px;
+}
+
+
+
+
+.profilepicture-container.color1 {
+  background-color: var(--blue);
+}
+
+.profilepicture-container.color2 {
+  background-color: var(--orange);
+}
+
+.profilepicture-container.color3 {
+  background-color: var(--green);
+}
+
+.profilepicture-container.color4 {
+  background-color: var(--alert-red);
+}
+

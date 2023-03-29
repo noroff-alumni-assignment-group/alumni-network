@@ -127,11 +127,12 @@ function EventPage() {
                         className="profilebubble event-profile-pic"
                         key={participant.id}
                         style={{
-                          marginLeft: index === 0 ? 0 : -15, 
+                          marginLeft: index === 0 ? 0 : -15,
                           zIndex: participants.length - index,
                         }}
                       >
                         <Profilepicture
+                          profileTheme={user.theme}
                           author={participant}
                           showDetails={true}
                         />

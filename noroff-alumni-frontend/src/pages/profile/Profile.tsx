@@ -13,6 +13,7 @@ import { setUser } from "../../store/userSlice";
 import PostFeed from "../../components/post/PostFeed";
 import PostDTO from "../../models/PostDTO";
 import {getPosts, getPostsUser, searchPosts, searchPostsUser} from "../../services/postService";
+import Profilepicture from "../../components/profilepicture/Profilepicure";
 
 function Profile() {
 
@@ -25,6 +26,9 @@ function Profile() {
   let name = window.location.pathname.replace("/profile/", "");
   name = name.replace("/profile", "");
   const user = useSelector((state: any) => state.user);
+
+  console.log("user",user);
+  
 
   const [userProfile, setUserProfile] = useState({
     id:"",
@@ -105,10 +109,8 @@ function Profile() {
         </div>
         <div className="profiledata-head-cnt">
           <div className="profiledata-head">
-            <div className="profilebubble profilepicture-profile">
-              {userProfile?.firstName?.slice(0, 1).toUpperCase()}
-              {userProfile?.lastName?.slice(0, 1).toUpperCase()}
-            </div>
+            <Profilepicture author={user} large={true} />
+
             <h2 className="profile-name">
               {userProfile?.firstName?.slice(0, 1).toUpperCase()}
               {userProfile?.firstName?.slice(1)}{" "}
@@ -149,9 +151,9 @@ function Profile() {
       <div className="profile-posts">
         <div className="profile-posts-header">
           <h1>Posts</h1>
-          <Search onSearch={onSearch}/>
+          <Search onSearch={onSearch} />
         </div>
-        <PostFeed posts={posts}/>
+        <PostFeed posts={posts} />
       </div>
     </div>
   );
