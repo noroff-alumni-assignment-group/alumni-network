@@ -11,12 +11,14 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import PostFeed from "../../components/post/PostFeed";
 import {getPosts, searchPosts} from "../../services/postService";
+import LoadingIndicatorComponent from "../../components/LoadingIndicator/LoadingIndicatorComponent";
 
 const Timeline = () => {
 
   const [posts, setPosts] = useState<PostDTO[]>([]);
 
   const [selectedTopics, setSelectedTopics] = useState<string[]>([]);
+  const [isLoading, setLoading] = useState(true);
   const user = useSelector((state: RootState) => state.user);
 
   // Add state variable for post form popup visibility
@@ -26,6 +28,7 @@ const Timeline = () => {
   useEffect(() => {
     getPosts()
         .then(data => {
+          setLoading(false);
           setPosts(data);
         })
   }, [])
@@ -35,8 +38,10 @@ const Timeline = () => {
   }, [selectedTopics])
 
   function onSearch(searchWord: string){
+    setLoading(true);
     searchPosts(searchWord)
         .then(data => {
+          setLoading(false);
           setPosts(data);
         })
   }
@@ -106,7 +111,8 @@ const Timeline = () => {
             </button>
           </div>
         </div>
-        <PostFeed posts={selectedTopics.length > 0 ? filterOnTopics() : posts} update={formHandler}/>
+        {isLoading && <LoadingIndicatorComponent/>}
+        {!isLoading && <PostFeed posts={selectedTopics.length > 0 ? filterOnTopics() : posts} update={formHandler}/>}
       </div>
     </div>
   );

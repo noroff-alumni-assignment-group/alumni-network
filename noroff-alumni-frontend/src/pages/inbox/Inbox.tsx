@@ -12,11 +12,13 @@ import {
 } from "../../services/postService";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { faComment } from "@fortawesome/free-solid-svg-icons";
+import LoadingIndicatorComponent from "../../components/LoadingIndicator/LoadingIndicatorComponent";
 
 const Inbox = () => {
 
     const [posts, setPosts] = useState<PostDTO[]>([]);
 
+    const [isLoading, setIsLoading] = useState(true);
     // Add state variable for post form popup visibility
     const [showPostForm, setShowPostForm] = useState(false);
 
@@ -26,33 +28,40 @@ const Inbox = () => {
     useEffect(() => {
         getPostsForTargetUser()
             .then(data => {
+                setIsLoading(false);
                 setPosts(data);
             })
     }, [])
 
     useEffect(() => {
+        setIsLoading(true);
         if(showSent){
             getPostsToTargetUser()
                 .then(data => {
-                    setPosts(data)
+                    setIsLoading(false);
+                    setPosts(data);
                 })
         } else {
             getPostsForTargetUser()
                 .then(data => {
-                    setPosts(data)
+                    setIsLoading(false);
+                    setPosts(data);
                 })
         }
     }, [showSent])
 
     function onSearch(searchWord: string){
+        setIsLoading(true);
         if(showSent){
             searchPostsToTargetUser(searchWord)
                 .then(data => {
+                    setIsLoading(false);
                     setPosts(data);
                 })
         } else {
             searchPostsForTargetUser(searchWord)
                 .then(data => {
+                    setIsLoading(false);
                     setPosts(data);
                 })
         }
@@ -60,14 +69,17 @@ const Inbox = () => {
 
     const formHandler = (success: boolean) => {
         if(success) {
+            setIsLoading(true);
             if(showSent){
                 getPostsToTargetUser()
                     .then(data => {
+                        setIsLoading(false);
                         setPosts(data);
                     })
             }else {
                 getPostsForTargetUser()
                     .then(data => {
+                        setIsLoading(false);
                         setPosts(data);
                     })
             }
@@ -105,7 +117,8 @@ const Inbox = () => {
                 </div>
                 <div className="inbox-feed">
                     {posts.length <= 0 && <div className="no-content-tag"><p>No messages...</p></div>}
-                    <PostFeed posts={posts}/>
+                    {isLoading && <LoadingIndicatorComponent/>}
+                    {!isLoading && <PostFeed posts={posts}/>}
                 </div>
             </div>
         </div>
