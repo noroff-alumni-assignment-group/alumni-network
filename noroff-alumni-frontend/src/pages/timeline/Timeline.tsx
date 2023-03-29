@@ -56,7 +56,7 @@ const Timeline = () => {
   function filterOnTopics(){
     let filteredPosts: PostDTO[] = [];
     posts.forEach(post => {
-      if(post.target_topics?.some(topic => selectedTopics.includes(topic))){
+      if(post.target_topics?.some(topic => selectedTopics.includes(topic.name))){
         filteredPosts.push(post);
       }
     })

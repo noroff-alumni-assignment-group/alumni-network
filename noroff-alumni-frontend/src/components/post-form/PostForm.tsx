@@ -45,8 +45,8 @@ function PostForm (props: PostFormTypes) {
                     setText(data.body)
                     let arr: string[] = []
                     data.target_topics?.map(topic => {
-                        if(topics.includes(topic)){
-                            arr.push(topic)
+                        if(topics.includes(topic.name)){
+                            arr.push(topic.name)
                         }
                     })
                     setSelectedTopics(arr);

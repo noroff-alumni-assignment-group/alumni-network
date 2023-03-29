@@ -16,6 +16,7 @@ import { faPaperPlane, faEdit } from "@fortawesome/free-solid-svg-icons";
 import Popup from "../popup/Popup";
 import PostForm from "../post-form/PostForm";
 import {getPost} from "../../services/postService";
+import {NavLink} from "react-router-dom";
 
 type Props = {
   post:PostDTO,
@@ -79,14 +80,14 @@ function Post({post, update}: Props) {
         </div>
         <div className="post-tags">
           {post.target_topics?.map((topic) => (
-              <div className="topic" key={topic}>
-                {topic}
-              </div>
+              <NavLink className="topic" key={topic.name} to={"/topic/" + topic.id}>
+                {topic.name}
+              </NavLink>
             ))}
             {post.target_group?.map((group) => (
-              <div className="group" key={group}>
-                {group}
-              </div>
+              <NavLink className="group" key={group.name} to={"/groups/" + group.id}>
+                {group.name}
+              </NavLink>
           ))}
         </div>
 
