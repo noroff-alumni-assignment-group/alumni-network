@@ -31,7 +31,7 @@ public class User {
    private String title;
    private String biography;
    private String funfact;
-
+   private String profileTheme;
 
    @ManyToMany(mappedBy = "subscribers")
    private Set<Topic> topics;
