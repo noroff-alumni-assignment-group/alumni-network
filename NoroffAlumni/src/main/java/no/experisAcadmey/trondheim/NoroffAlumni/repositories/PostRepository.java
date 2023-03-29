@@ -50,5 +50,5 @@ public interface PostRepository extends JpaRepository<Post, Long> {
             nativeQuery = true)
     List<Post> findMessagesSentBySearchWord(String authorId, String searchWord);
 
-    List<Post> findAllByTargetGroupsIdOrderByLastUpdated(Long groupId);
+    List<Post> findAllByTargetGroupsIdOrderByLastUpdatedDesc(Long groupId);
 }

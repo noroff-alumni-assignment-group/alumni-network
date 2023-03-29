@@ -123,6 +123,16 @@ public class TopicService {
    public List<Post> findTopicPosts(Long topicId,Integer pageNumber,Integer pageSize){
       Pageable pageRequest = PageRequest.of(pageNumber != null ? pageNumber : 0,pageSize != null? pageSize : 10 );
       List<Post> foundPosts = postRepository.findAllByTargetTopicsIdOrderByLastUpdated(topicId,pageRequest).toList();
-      return foundPosts;
+      return removeDirectMessages(foundPosts);
+   }
+
+   public List<Post> removeDirectMessages(List<Post> posts){
+      List<Post> result = new ArrayList<>();
+      for(Post post : posts) {
+         if(post.getTargetUser() == null){
+            result.add(post);
+         }
+      }
+      return result;
    }
 }

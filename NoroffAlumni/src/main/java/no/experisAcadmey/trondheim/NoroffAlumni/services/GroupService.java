@@ -99,7 +99,17 @@ public class GroupService {
      * @return posts
      */
     public List<Post> getPostsInGroup(Long group_id) {
-        return postRepository.findAllByTargetGroupsIdOrderByLastUpdated(group_id);
+        return removeDirectMessages(postRepository.findAllByTargetGroupsIdOrderByLastUpdatedDesc(group_id));
+    }
+
+    public List<Post> removeDirectMessages(List<Post> posts){
+        List<Post> result = new ArrayList<>();
+        for(Post post : posts) {
+            if(post.getTargetUser() == null){
+                result.add(post);
+            }
+        }
+        return result;
     }
 
     public List<Group> findUserGroups(){
