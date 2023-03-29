@@ -12,16 +12,22 @@ import {createReply, getReply} from "../../services/replyService";
 import {setTimeSince} from "../../services/utilService";
 import ReplyDTO from "../../models/ReplyDTO";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
+import { faPaperPlane, faEdit } from "@fortawesome/free-solid-svg-icons";
+import Popup from "../popup/Popup";
+import PostForm from "../post-form/PostForm";
+import {getPost} from "../../services/postService";
+import {NavLink} from "react-router-dom";
 
-interface Props {
-  post:PostDTO;
+type Props = {
+  post:PostDTO,
+  update?: any
 }
 
-function Post({post}: Props) {
+function Post({post, update}: Props) {
   const [comments, setComments] = useState<ReplyDTO[] | undefined>([]);
   const [showComments, setShowComments] = useState(false);
   const [newCommentText, setNewCommentText] = useState("");
+  const [showEditForm, setShowEditForm] = useState(false);
 
   const maxLength: number = 255;
   const user = useSelector((state: any) => state.user);
@@ -48,27 +54,40 @@ function Post({post}: Props) {
     setShowComments(!showComments);
   };
 
+  function editHandler(edited: boolean) {
+    if(edited){
+      getPost(post.id)
+          .then(data => {
+            update(edited);
+            setShowEditForm(false);
+          })
+    } else {
+      setShowEditForm(false)
+    }
+  }
+
   // @ts-ignore
   return (
     <div className="post">
+      {showEditForm && <Popup child={<PostForm editing={true} handler={editHandler} postId={post.id}/>}/>}
       <div className="post-cnt">
         <div className="post-head">
           <h2>{post.title}</h2>
-          <p>{setTimeSince(new Date(post.last_updated ?? ""))}</p>
+          <p>{post.author.id === user.id && <button className="post-edit-button" onClick={() => setShowEditForm(true)}><FontAwesomeIcon icon={faEdit}/></button>}{setTimeSince(new Date(post.last_updated ?? ""))}</p>
         </div>
         <div className="post-body">
           <SnarkdownText text={post.body} />
         </div>
         <div className="post-tags">
           {post.target_topics?.map((topic) => (
-            <div className="topic" key={topic}>
-              {topic}
-            </div>
-          ))}
-          {post.target_group?.map((group) => (
-            <div className="group" key={group}>
-              {group}
-            </div>
+              <NavLink className="topic" key={topic.name} to={"/topic/" + topic.id}>
+                {topic.name}
+              </NavLink>
+            ))}
+            {post.target_group?.map((group) => (
+              <NavLink className="group" key={group.name} to={"/groups/" + group.id}>
+                {group.name}
+              </NavLink>
           ))}
         </div>
 

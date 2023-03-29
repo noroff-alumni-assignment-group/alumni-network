@@ -1,7 +1,10 @@
 package no.experisAcadmey.trondheim.NoroffAlumni.mappers;
 
+import no.experisAcadmey.trondheim.NoroffAlumni.models.DTOs.groupDTOs.GroupReducedDto;
 import no.experisAcadmey.trondheim.NoroffAlumni.models.DTOs.topicDTOs.TopicDto;
 import no.experisAcadmey.trondheim.NoroffAlumni.models.DTOs.topicDTOs.TopicListItem;
+import no.experisAcadmey.trondheim.NoroffAlumni.models.DTOs.topicDTOs.TopicReducedDto;
+import no.experisAcadmey.trondheim.NoroffAlumni.models.Group;
 import no.experisAcadmey.trondheim.NoroffAlumni.models.Post;
 import no.experisAcadmey.trondheim.NoroffAlumni.models.Topic;
 import no.experisAcadmey.trondheim.NoroffAlumni.models.User;
@@ -43,6 +46,9 @@ public abstract class TopicMapper {
     @Mapping(target = "subscribers", qualifiedByName = "mapSubscribersToId",source = "subscribers")
     @Mapping(target = "posts", qualifiedByName = "mapPostsToPostId", source = "posts")
     public abstract TopicDto topicToTopicDto(Topic topic);
+
+    public abstract TopicReducedDto toTopicReducedDto(Topic topic);
+    public abstract List<TopicReducedDto> toTopicReducedDto(List<Topic> topic);
 
     @Named("mapPostsToPostId")
     public List<Long> mapPostsToPostId(List<Post> posts){

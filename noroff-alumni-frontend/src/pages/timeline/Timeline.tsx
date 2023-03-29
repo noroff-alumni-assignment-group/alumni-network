@@ -56,17 +56,29 @@ const Timeline = () => {
   function filterOnTopics(){
     let filteredPosts: PostDTO[] = [];
     posts.forEach(post => {
-      if(post.target_topics?.some(topic => selectedTopics.includes(topic))){
+      if(post.target_topics?.some(topic => selectedTopics.includes(topic.name))){
         filteredPosts.push(post);
       }
     })
     return filteredPosts;
   }
 
+  const formHandler = (success: boolean) => {
+    if(success){
+      getPosts()
+          .then(data => {
+            setPosts(data);
+            setShowPostForm(false);
+          })
+    } else {
+      setShowPostForm(false);
+    }
+  }
+
   return (
     <div className="timeline">
 
-      {showPostForm && <Popup child={<PostForm editing={false} handler={setShowPostForm}/>}/>}
+      {showPostForm && <Popup child={<PostForm editing={false} handler={formHandler}/>}/>}
 
       <div className="timeline-content">
         <h1>Timeline</h1>
@@ -94,7 +106,7 @@ const Timeline = () => {
             </button>
           </div>
         </div>
-        <PostFeed posts={selectedTopics.length > 0 ? filterOnTopics() : posts}/>
+        <PostFeed posts={selectedTopics.length > 0 ? filterOnTopics() : posts} update={formHandler}/>
       </div>
     </div>
   );

@@ -2,6 +2,7 @@ package no.experisAcadmey.trondheim.NoroffAlumni.mappers;
 
 import no.experisAcadmey.trondheim.NoroffAlumni.models.DTOs.groupDTOs.GroupDto;
 import no.experisAcadmey.trondheim.NoroffAlumni.models.DTOs.groupDTOs.GroupPostDto;
+import no.experisAcadmey.trondheim.NoroffAlumni.models.DTOs.groupDTOs.GroupReducedDto;
 import no.experisAcadmey.trondheim.NoroffAlumni.models.Group;
 import no.experisAcadmey.trondheim.NoroffAlumni.models.Post;
 import no.experisAcadmey.trondheim.NoroffAlumni.models.User;
@@ -35,6 +36,9 @@ public abstract class GroupMapper {
      * @return collection of group DTOs
      */
     public abstract Collection<GroupDto> groupsToGroupDto(Collection<Group> groups);
+
+    public abstract GroupReducedDto toGroupReducedDto(Group group);
+    public abstract List<GroupReducedDto> toGroupReducedDto(List<Group> group);
 
     /**
      * Maps a created group from DTO to entity.

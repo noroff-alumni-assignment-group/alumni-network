@@ -4,7 +4,7 @@ type UserDisplayDTO = {
     username: string,
     firstName:string,
     lastName:string,
-    
+    title: string
 
 };
 

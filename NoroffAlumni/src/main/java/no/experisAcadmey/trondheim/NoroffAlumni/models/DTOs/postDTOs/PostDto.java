@@ -1,7 +1,9 @@
 package no.experisAcadmey.trondheim.NoroffAlumni.models.DTOs.postDTOs;
 
 import lombok.Data;
+import no.experisAcadmey.trondheim.NoroffAlumni.models.DTOs.groupDTOs.GroupReducedDto;
 import no.experisAcadmey.trondheim.NoroffAlumni.models.DTOs.replyDTOs.ReplyDto;
+import no.experisAcadmey.trondheim.NoroffAlumni.models.DTOs.topicDTOs.TopicReducedDto;
 import no.experisAcadmey.trondheim.NoroffAlumni.models.DTOs.userDTOs.UserDisplayDto;
 import no.experisAcadmey.trondheim.NoroffAlumni.models.DTOs.userDTOs.UserDto;
 
@@ -18,8 +20,8 @@ public class PostDto {
     private UserDisplayDto target_user;
     private String authorInitlas;
     
-    private List<String> target_topics;
-    private List<String> target_group;
+    private List<TopicReducedDto> target_topics;
+    private List<GroupReducedDto> target_group;
 
     private List<ReplyDto> replies;
 }

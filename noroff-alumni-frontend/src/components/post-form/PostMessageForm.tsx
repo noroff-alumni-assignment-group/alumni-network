@@ -44,16 +44,7 @@ function PostMessageForm (props: PostFormTypes) {
     }
 
     function onSearch(){
-        if(searchWord.length <= 0){setUsers([
-            {
-                id: "string",
-                email:"string",
-                username: "string",
-                firstName:"Emmanuel-derango",
-                lastName:"S. Throgdan billeoul",
-
-            }
-        ]); return;}
+        if(searchWord.length <= 0){setUsers([]); return;}
         service.getUsers(searchWord)
             .then(data => setUsers(data))
     }
@@ -80,13 +71,13 @@ function PostMessageForm (props: PostFormTypes) {
                 createPost(newPost)
                     .then(result => {
                         alert.success("Message sent");
-                        props.handler(false);
+                        props.handler(true);
                     })
             } else {
                 editPost({title: newPost.title, body: newPost.body}, postId)
                     .then(result => {
                         alert.success("Updated successfully");
-                        props.handler(false);
+                        props.handler(true);
                     })
             }
         }
