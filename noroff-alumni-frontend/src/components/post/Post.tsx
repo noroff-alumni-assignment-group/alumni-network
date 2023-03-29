@@ -17,11 +17,12 @@ import Popup from "../popup/Popup";
 import PostForm from "../post-form/PostForm";
 import {getPost} from "../../services/postService";
 
-interface Props {
-  post:PostDTO;
+type Props = {
+  post:PostDTO,
+  update?: any
 }
 
-function Post({post}: Props) {
+function Post({post, update}: Props) {
   const [comments, setComments] = useState<ReplyDTO[] | undefined>([]);
   const [showComments, setShowComments] = useState(false);
   const [newCommentText, setNewCommentText] = useState("");
@@ -56,7 +57,7 @@ function Post({post}: Props) {
     if(edited){
       getPost(post.id)
           .then(data => {
-            post = data;
+            update(edited);
             setShowEditForm(false);
           })
     } else {
@@ -67,7 +68,7 @@ function Post({post}: Props) {
   // @ts-ignore
   return (
     <div className="post">
-      {showEditForm && <Popup child={<PostForm editing={true} handler={setShowEditForm} postId={post.id}/>}/>}
+      {showEditForm && <Popup child={<PostForm editing={true} handler={editHandler} postId={post.id}/>}/>}
       <div className="post-cnt">
         <div className="post-head">
           <h2>{post.title}</h2>

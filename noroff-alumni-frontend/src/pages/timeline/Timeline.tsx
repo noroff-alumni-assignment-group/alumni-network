@@ -106,7 +106,7 @@ const Timeline = () => {
             </button>
           </div>
         </div>
-        <PostFeed posts={selectedTopics.length > 0 ? filterOnTopics() : posts}/>
+        <PostFeed posts={selectedTopics.length > 0 ? filterOnTopics() : posts} update={formHandler}/>
       </div>
     </div>
   );
