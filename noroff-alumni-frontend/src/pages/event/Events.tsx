@@ -49,12 +49,10 @@ function Events() {
   };
 
   return (
-    <div>
+    <div className="event-wrapper">
       {renderNewEvent ? <NewEvent setRenderNewEvent={setRenderNewEvent} /> : ""}
-
+      <h1>All Events</h1>
       <div className="event-header">
-        <h1>All Events</h1>
-
         <div className="event-action-btn-cnt">
           <button onClick={handleEventClick} className="activity-btn">
             NEW EVENT
@@ -71,7 +69,10 @@ function Events() {
       </div>
 
       <div className="your-event-cnt">
-        <h1>Your Events</h1>
+        <div className="event-header-your">
+          <h2>Your upcoming events</h2>
+        </div>
+
         <div className="your-events">
           {userEvents.length === 0 ? (
             <Placeholder text={"You dont have any upcoming events."}/>

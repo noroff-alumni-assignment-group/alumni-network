@@ -14,7 +14,7 @@
 	<name>NoroffAlumni</name>
 	<description>This project is for the case period in the Noroff Accelerate program.</description>
 	<properties>
-		<java.version>19</java.version>
+		<java.version>17</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
