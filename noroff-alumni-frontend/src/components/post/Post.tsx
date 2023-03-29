@@ -96,6 +96,10 @@ function Post({post, update}: Props) {
             <p onClick={handleToggleComments}>{comments?.length} comments</p>
           </div>
           <div className="post-author">
+            <div className="post-author-details">
+              <p className="author-name">{post.author.firstName + " " + post.author.lastName}</p>
+              <p className="author-title">{post.author.title}</p>
+            </div>
             <Profilepicture
               profileTheme={user.theme}
               author={post.author ?? { firstName: "", lastName: "" }}
