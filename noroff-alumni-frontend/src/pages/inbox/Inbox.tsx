@@ -69,17 +69,14 @@ const Inbox = () => {
 
     const formHandler = (success: boolean) => {
         if(success) {
-            setIsLoading(true);
             if(showSent){
                 getPostsToTargetUser()
                     .then(data => {
-                        setIsLoading(false);
                         setPosts(data);
                     })
             }else {
                 getPostsForTargetUser()
                     .then(data => {
-                        setIsLoading(false);
                         setPosts(data);
                     })
             }
