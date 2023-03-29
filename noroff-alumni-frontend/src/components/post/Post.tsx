@@ -15,6 +15,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { faPaperPlane, faEdit } from "@fortawesome/free-solid-svg-icons";
 import Popup from "../popup/Popup";
 import PostForm from "../post-form/PostForm";
+import {getPost} from "../../services/postService";
 
 interface Props {
   post:PostDTO;
@@ -51,15 +52,26 @@ function Post({post}: Props) {
     setShowComments(!showComments);
   };
 
+  function editHandler(edited: boolean) {
+    if(edited){
+      getPost(post.id)
+          .then(data => {
+            post = data;
+            setShowEditForm(false);
+          })
+    } else {
+      setShowEditForm(false)
+    }
+  }
+
   // @ts-ignore
   return (
     <div className="post">
       {showEditForm && <Popup child={<PostForm editing={true} handler={setShowEditForm} postId={post.id}/>}/>}
-      {/*post.author === user.id && <button><FontAwesomeIcon icon={faCog}/></button>*/}
       <div className="post-cnt">
         <div className="post-head">
           <h2>{post.title}</h2>
-          <p>{setTimeSince(new Date(post.last_updated ?? ""))}</p>
+          <p>{post.author.id === user.id && <button className="post-edit-button" onClick={() => setShowEditForm(true)}><FontAwesomeIcon icon={faEdit}/></button>}{setTimeSince(new Date(post.last_updated ?? ""))}</p>
         </div>
         <div className="post-body">
           <SnarkdownText text={post.body}/>
@@ -82,7 +94,10 @@ function Post({post}: Props) {
             <p onClick={handleToggleComments}>{comments?.length} comments</p>
           </div>
           <div className="post-author">
-            {post.author.id === user.id && <button className="post-edit-button" onClick={() => setShowEditForm(true)}><FontAwesomeIcon icon={faEdit}/></button>}
+            <div className="post-author-details">
+              <p className="author-name">{post.author.firstName + " " + post.author.lastName}</p>
+              <p className="author-title">{post.author.title}</p>
+            </div>
             <Profilepicture author={post.author ?? {firstName:"",lastName:""}} />
           </div>
         </div>

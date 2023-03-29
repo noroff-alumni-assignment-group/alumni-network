@@ -44,16 +44,7 @@ function PostMessageForm (props: PostFormTypes) {
     }
 
     function onSearch(){
-        if(searchWord.length <= 0){setUsers([
-            {
-                id: "string",
-                email:"string",
-                username: "string",
-                firstName:"Emmanuel-derango",
-                lastName:"S. Throgdan billeoul",
-
-            }
-        ]); return;}
+        if(searchWord.length <= 0){setUsers([]); return;}
         service.getUsers(searchWord)
             .then(data => setUsers(data))
     }
