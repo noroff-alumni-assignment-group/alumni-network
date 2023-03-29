@@ -80,12 +80,12 @@ function Post({post, update}: Props) {
         </div>
         <div className="post-tags">
           {post.target_topics?.map((topic) => (
-              <NavLink className="topic" key={topic.name} to={"/topic/" + topic.id}>
+              <NavLink className="nav-tag topic" key={topic.name} to={"/topic/" + topic.id}>
                 {topic.name}
               </NavLink>
             ))}
             {post.target_group?.map((group) => (
-              <NavLink className="group" key={group.name} to={"/groups/" + group.id}>
+              <NavLink className="nav-tag group" key={group.name} to={"/groups/" + group.id}>
                 {group.name}
               </NavLink>
           ))}
