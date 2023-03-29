@@ -23,6 +23,7 @@ public class UserDisplayDto {
     private String title;
     private String biography;
     private String funfact;
+    private String profileTheme;
 
 
 }

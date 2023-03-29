@@ -4,18 +4,28 @@ import UserDisplayDTO from "../../models/UserDisplayDTO";
 import { useNavigate } from "react-router-dom";
 
 interface Props {
-  author: UserDisplayDTO;
+  author: any;
   showDetails?: boolean;
+  profileTheme?: string;
+  large?: boolean;
 }
 
-function Profilepicture({ author, showDetails = true }: Props) {
+function Profilepicture({ author, showDetails = true, profileTheme, large }: Props) {
   let navigate = useNavigate();
 
   const handleClick = () => {
     navigate("/profile/" + author.username);
   };
+
+  const defaultProfileTheme = "3"
+  
   return (
-    <div className="profilepicture-container" onClick={handleClick}>
+    <div
+      className={`profilepicture-container color${
+        author.profileTheme ?? defaultProfileTheme
+      } ${large ? "large-profile" : ""}`}
+      onClick={handleClick}
+    >
       {/* Conditionally render the profile details based on the "showDetails" prop */}
       {showDetails && (
         <div className="profilepicture-details">
@@ -30,3 +40,4 @@ function Profilepicture({ author, showDetails = true }: Props) {
 }
 
 export default Profilepicture;
+

@@ -9,8 +9,7 @@
 }
 
 .group-list-header {
-    padding-top: 10px;
-    padding-bottom: 20px;
+    padding-bottom: 60px;
     width: fit-content;
 }
 
@@ -76,6 +75,10 @@
     text-align: right;
     display: flex;
     padding-right: 30px;
+}
+
+.group-item:hover {
+    background-color: rgb(231, 231, 231);
 }
 
 .invite-btn {

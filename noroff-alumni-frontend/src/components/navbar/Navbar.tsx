@@ -20,6 +20,7 @@ import User from "../../models/User";
 import UserService from "../../services/UserService";
 import api from "../../services/api";
 import EventDTO from "../../models/EventDTO";
+import Profilepicture from "../profilepicture/Profilepicure";
 
 function Navbar() {
   const user = useSelector((state: any) => state.user);
@@ -87,10 +88,7 @@ useEffect(() => {
       </button>
       <div className={"navbar " + (collapsed ? "navbar-collapsed" : "")}>
         <div className="nav-profile-cnt">
-          <div className="circleprofile" onClick={() => handleIconClick()}>
-            {(user.firstName ?? "").charAt(0).toUpperCase() +
-              (user.lastName ?? "").charAt(0).toUpperCase()}
-          </div>
+          <Profilepicture author={user} large={true} />
 
           <p>
             {(user.firstName ?? "").charAt(0).toUpperCase() +

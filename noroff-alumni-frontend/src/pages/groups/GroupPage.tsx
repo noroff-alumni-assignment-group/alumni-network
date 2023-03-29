@@ -117,7 +117,11 @@ const GroupPage = () => {
                     zIndex: groupMembers.length - index,
                   }}
                 >
-                  <Profilepicture author={participant} showDetails={true} />
+                  <Profilepicture
+                    profileTheme={user.theme}
+                    author={participant}
+                    showDetails={true}
+                  />
                 </div>
               ))}
             </div>

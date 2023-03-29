@@ -15,12 +15,26 @@
   margin-bottom: 1rem;
   }
 
+  .group-left {
+    display: flex;
+    align-items: center;
+  }
+
+  .group-left h3 {
+    margin-right: 30px;
+  }
+
+  .group-left p {
+    font-size: .8rem;
+    color: #848484;
+  }
 
 .private-item {
   
   margin-right: 40px;
   color: white;
-  padding: 8px;
+  padding: 2px 10px;
+  font-size: .6rem;
   border-radius: 20px;
   background-color: var(--blue);
 }

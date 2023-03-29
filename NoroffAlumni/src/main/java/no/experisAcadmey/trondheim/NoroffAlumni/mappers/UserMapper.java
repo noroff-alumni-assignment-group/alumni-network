@@ -22,6 +22,7 @@ public abstract class UserMapper {
      * @return mapped userDTO
      */
     @Mapping(target = "topics", qualifiedByName = "mapTopicToTopicId", source = "topics")
+    @Mapping(target = "profileTheme", source = "profileTheme")
     public abstract UserDto toUserDto(User user);
 
     public abstract UserDisplayDto toUserDisplayDto(User user);
@@ -29,6 +30,7 @@ public abstract class UserMapper {
     public abstract List<UserDisplayDto> toUserDisplayDto(List<User> users);
 
     @Mapping(target = "topics", qualifiedByName = "mapTopicIdToTopic", source = "topics")
+    @Mapping(target = "profileTheme", source = "profileTheme")
     public abstract User toUser(UserDto userDto);
 
     /**

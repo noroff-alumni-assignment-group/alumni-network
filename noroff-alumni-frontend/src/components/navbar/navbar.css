@@ -108,17 +108,7 @@
     font-size: .8rem;
 }
 
-.circleprofile {
-    background-color: var(--green);
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1.8rem;
-    font-weight: 800;
-    color: white;
-    margin-bottom: 10px;
-}
+
 
 .tag-cnt {
   cursor: pointer;

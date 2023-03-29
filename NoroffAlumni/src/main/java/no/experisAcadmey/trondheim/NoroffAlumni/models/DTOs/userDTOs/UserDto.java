@@ -20,6 +20,7 @@ public class UserDto {
     private String title;
     private String biography;
     private String funfact;
+    private String profileTheme;
 
 
     private Set<String> topics;
