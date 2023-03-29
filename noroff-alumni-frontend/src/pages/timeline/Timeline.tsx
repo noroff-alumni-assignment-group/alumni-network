@@ -77,8 +77,9 @@ const Timeline = () => {
 
   return (
     <div className="timeline">
-
-      {showPostForm && <Popup child={<PostForm editing={false} handler={formHandler}/>}/>}
+      {showPostForm && (
+        <Popup child={<PostForm editing={false} handler={formHandler} />} />
+      )}
 
       <div className="timeline-content">
         <h1>Timeline</h1>
@@ -97,7 +98,7 @@ const Timeline = () => {
             ))}
           </div>
           <div className="timeline-action-btn-cnt">
-            <Search onSearch={onSearch}/>
+            <Search onSearch={onSearch} />
             <button
               className="activity-btn"
               onClick={() => setShowPostForm(true)}
@@ -106,7 +107,13 @@ const Timeline = () => {
             </button>
           </div>
         </div>
-        <PostFeed posts={selectedTopics.length > 0 ? filterOnTopics() : posts} update={formHandler}/>
+        <PostFeed
+          posts={selectedTopics.length > 0 ? filterOnTopics() : posts}
+          update={formHandler}
+          text={
+            "You have to subscribe to topics or join a group to be able to see posts."
+          }
+        />
       </div>
     </div>
   );

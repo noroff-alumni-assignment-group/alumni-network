@@ -13,6 +13,10 @@
     width: fit-content;
 }
 
+.group-list-header h1 {
+    margin-top: 50px;
+}
+
 .groups-actions {
     display: flex;
     justify-content: space-between;

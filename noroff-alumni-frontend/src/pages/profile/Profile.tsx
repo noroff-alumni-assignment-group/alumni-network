@@ -148,7 +148,7 @@ function Profile() {
           <h1>Posts</h1>
           <Search onSearch={onSearch} />
         </div>
-        <PostFeed posts={posts} />
+        <PostFeed posts={posts} text={"You have no posts."} />
       </div>
     </div>
   );
