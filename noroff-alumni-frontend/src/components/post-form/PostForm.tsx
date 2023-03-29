@@ -13,12 +13,12 @@ import GroupListItem from "../../models/Group/GroupListItem";
 
 type PostFormTypes = {
     editing: boolean,
-    handler: any
+    handler: any,
+    postId?: number
 }
 
 function PostForm (props: PostFormTypes) {
 
-    let postId: number = 3;
     const maxLength: number = 1500;
 
     const [title, setTitle] = useState("");
@@ -38,8 +38,8 @@ function PostForm (props: PostFormTypes) {
     }, [])
 
     useEffect(() => {
-        if(props.editing){
-            getPost(postId)
+        if(props.editing && props.postId){
+            getPost(props.postId)
                 .then(data => {
                     setTitle(data.title)
                     setText(data.body)
@@ -85,8 +85,8 @@ function PostForm (props: PostFormTypes) {
                         alert.success("Published successfully");
                         props.handler(false);
                     })
-            } else {
-                editPost({title: newPost.title, body: newPost.body}, postId)
+            } else if (props.postId) {
+                editPost({title: newPost.title, body: newPost.body}, props.postId)
                     .then(result => {
                         alert.success("Updated successfully");
                         props.handler(false);

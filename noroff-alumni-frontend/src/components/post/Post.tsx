@@ -12,7 +12,9 @@ import {createReply, getReply} from "../../services/replyService";
 import {setTimeSince} from "../../services/utilService";
 import ReplyDTO from "../../models/ReplyDTO";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
+import { faPaperPlane, faEdit } from "@fortawesome/free-solid-svg-icons";
+import Popup from "../popup/Popup";
+import PostForm from "../post-form/PostForm";
 
 interface Props {
   post:PostDTO;
@@ -22,6 +24,7 @@ function Post({post}: Props) {
   const [comments, setComments] = useState<ReplyDTO[] | undefined>([]);
   const [showComments, setShowComments] = useState(false);
   const [newCommentText, setNewCommentText] = useState("");
+  const [showEditForm, setShowEditForm] = useState(false);
 
   const maxLength: number = 255;
   const user = useSelector((state: any) => state.user);
@@ -51,6 +54,8 @@ function Post({post}: Props) {
   // @ts-ignore
   return (
     <div className="post">
+      {showEditForm && <Popup child={<PostForm editing={true} handler={setShowEditForm} postId={post.id}/>}/>}
+      {/*post.author === user.id && <button><FontAwesomeIcon icon={faCog}/></button>*/}
       <div className="post-cnt">
         <div className="post-head">
           <h2>{post.title}</h2>
@@ -77,6 +82,7 @@ function Post({post}: Props) {
             <p onClick={handleToggleComments}>{comments?.length} comments</p>
           </div>
           <div className="post-author">
+            {post.author.id === user.id && <button className="post-edit-button" onClick={() => setShowEditForm(true)}><FontAwesomeIcon icon={faEdit}/></button>}
             <Profilepicture author={post.author ?? {firstName:"",lastName:""}} />
           </div>
         </div>

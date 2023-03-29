@@ -34,6 +34,22 @@
   color: var(--lightgray);
 }
 
+.post-edit-button {
+  background: none;
+  color: darkgray;
+  border: none;
+  border-radius: 100%;
+  height: 45px;
+  width: 45px;
+  transition: .1s ease-in-out;
+  font-size: 1.5rem;
+  margin-right: 15px;
+}
+.post-edit-button:hover {
+  cursor: pointer;
+  background: #e6e6e6;
+}
+
 .post-body {
   margin-bottom: 50px;
 }
