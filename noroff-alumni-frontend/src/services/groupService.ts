@@ -57,5 +57,10 @@ class GroupService {
             return response.data
         })
     }
+
+    async inviteToGroup(groupId: number, userId: string | undefined) {
+        return await api
+        .post("/group/" + groupId + "/invite/" + userId)
+    }
 }
 export default new GroupService()

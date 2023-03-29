@@ -10,10 +10,7 @@ import no.experisAcadmey.trondheim.NoroffAlumni.repositories.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 
 @Service
@@ -87,6 +84,13 @@ public class GroupService {
         Group group = groupRepository.findById(group_id).orElseThrow(GroupNotFoundException::new);
         group.removeMember(userService.getCurrentUser());
         groupRepository.save(group);
+    }
+
+    public Group inviteToGroup(Long group_id, UUID user_id) {
+        Group group = groupRepository.findById(group_id).orElseThrow(GroupNotFoundException::new);
+        User user = userService.getUserById(user_id);
+        group.addMember(user);
+        return groupRepository.save(group);
     }
 
     /**

@@ -11,6 +11,7 @@ import no.experisAcadmey.trondheim.NoroffAlumni.mappers.GroupMapper;
 import no.experisAcadmey.trondheim.NoroffAlumni.mappers.PostMapper;
 import no.experisAcadmey.trondheim.NoroffAlumni.models.DTOs.groupDTOs.GroupDto;
 import no.experisAcadmey.trondheim.NoroffAlumni.models.DTOs.groupDTOs.GroupPostDto;
+import no.experisAcadmey.trondheim.NoroffAlumni.models.User;
 import no.experisAcadmey.trondheim.NoroffAlumni.services.GroupService;
 import org.mapstruct.factory.Mappers;
 import org.springframework.http.ProblemDetail;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.Collection;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(path = "api/v1/group")
@@ -223,6 +225,39 @@ public class GroupController {
         try {
             groupService.leaveGroup(groupId);
             return ResponseEntity.ok().build();
+        } catch (GroupNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        } catch(Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @PostMapping("/{group_id}/invite/{user_id}")
+    @PreAuthorize("hasRole('ROLE_ALUMNI')")
+    @Operation(summary = "Invite a new member to a group")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Success",
+                    content = @Content
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Bad request",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ProblemDetail.class))
+                    }
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Group not Found",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ProblemDetail.class))
+                    })
+    })
+    public ResponseEntity inviteToGroup(@PathVariable("group_id") Long groupId, @PathVariable("user_id") UUID userId) {
+        try {
+            return ResponseEntity.ok(groupMapper.groupToGroupDto(groupService.inviteToGroup(groupId, userId)));
         } catch (GroupNotFoundException e) {
             return ResponseEntity.notFound().build();
         } catch(Exception e) {
