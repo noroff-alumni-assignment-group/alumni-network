@@ -44,6 +44,9 @@ public class Post {
         return this;
     }
 
-
+    public Post addGroup(Group group) {
+        targetGroups.add(group);
+        return this;
+    }
 
 }

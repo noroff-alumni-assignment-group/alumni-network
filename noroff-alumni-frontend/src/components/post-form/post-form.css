@@ -117,6 +117,10 @@
     color: lightgray;
 }
 
+.post-form-title {
+    margin-top: 20px;
+}
+
 .post-form .text-content-container {
     position: relative;
 }

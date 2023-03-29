@@ -3,6 +3,7 @@ package no.experisAcadmey.trondheim.NoroffAlumni.services;
 import no.experisAcadmey.trondheim.NoroffAlumni.exceptions.PostNotFoundException;
 import no.experisAcadmey.trondheim.NoroffAlumni.models.DTOs.postDTOs.EditPostDto;
 import no.experisAcadmey.trondheim.NoroffAlumni.models.DTOs.postDTOs.NewPostDto;
+import no.experisAcadmey.trondheim.NoroffAlumni.models.Group;
 import no.experisAcadmey.trondheim.NoroffAlumni.models.Post;
 import no.experisAcadmey.trondheim.NoroffAlumni.models.Topic;
 import no.experisAcadmey.trondheim.NoroffAlumni.repositories.PostRepository;
@@ -21,25 +22,51 @@ public class PostService {
     private UserService userService;
     @Autowired
     private TopicService topicService;
+    @Autowired
+    private GroupService groupService;
 
     public Post getPost(Long id) {
         return postRepository.findById(id).orElseThrow(PostNotFoundException::new);
     }
 
+    private List<Post> filterOnSubscriptions(List<Post> posts) {
+        List<Topic> userTopics = topicService.getSubscribedTopics();
+        List<Group> userGroups = groupService.findUserGroups();
+
+        List<Post> result = new ArrayList<>();
+        for(Post post : posts){
+            if(post.getTargetTopics().stream().anyMatch(userTopics::contains) ||
+                    post.getTargetGroups().stream().anyMatch(userGroups::contains)){
+                result.add(post);
+            }
+        }
+        return result;
+    }
+
+    public List<Post> removeDirectMessages(List<Post> posts){
+        List<Post> result = new ArrayList<>();
+        for(Post post : posts) {
+            if(post.getTargetUser() == null){
+                result.add(post);
+            }
+        }
+        return result;
+    }
+
     // TODO: Should return based on user's subscribed topics and groups, not "findAll"
     public List<Post> getPosts(Optional<String> searchWord){
         if(searchWord.isPresent()){
-            return postRepository.findAllByTitleContainingIgnoreCaseOrBodyContainingIgnoreCaseOrderByLastUpdatedDesc(searchWord.get(), searchWord.get());
+            return removeDirectMessages(filterOnSubscriptions(postRepository.findAllByTitleContainingIgnoreCaseOrBodyContainingIgnoreCaseOrderByLastUpdatedDesc(searchWord.get(), searchWord.get())));
         }else {
-            return postRepository.findAllByOrderByLastUpdatedDesc();
+            return removeDirectMessages(filterOnSubscriptions(postRepository.findAllByOrderByLastUpdatedDesc()));
         }
     }
 
     public List<Post> getPostsUser(String authorId, Optional<String> searchWord){
         if(searchWord.isPresent()){
-            return postRepository.findAllAuthoredBySearchWord("%" + searchWord.get() + "%", authorId);
+            return removeDirectMessages(postRepository.findAllAuthoredBySearchWord("%" + searchWord.get() + "%", authorId));
         }else {
-            return postRepository.findAllByAuthorIdOrderByLastUpdated(authorId);
+            return removeDirectMessages(postRepository.findAllByAuthorIdOrderByLastUpdated(authorId));
         }
     }
 
@@ -70,6 +97,9 @@ public class PostService {
         }
         for (String topicName : newPostDto.getTarget_topics()) {
             post.addTopic(topicService.getTopicByName(topicName));
+        }
+        for (String groupName : newPostDto.getTarget_groups()) {
+            post.addGroup(groupService.findGroupByName(groupName));
         }
 
         postRepository.save(post);

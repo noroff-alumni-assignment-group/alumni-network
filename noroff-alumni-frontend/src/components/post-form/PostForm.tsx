@@ -8,15 +8,17 @@ import {createPost, editPost, getPost} from "../../services/postService";
 import TopicService from "../../services/topicService";
 import TopicListItem from "../../models/TopicListItemDTO";
 import SnarkdownText from "../SnarkdownText/SnarkdownText";
+import GroupService from "../../services/groupService";
+import GroupListItem from "../../models/Group/GroupListItem";
 
 type PostFormTypes = {
     editing: boolean,
-    handler: any
+    handler: any,
+    postId?: number
 }
 
 function PostForm (props: PostFormTypes) {
 
-    let postId: number = 3;
     const maxLength: number = 1500;
 
     const [title, setTitle] = useState("");
@@ -36,15 +38,15 @@ function PostForm (props: PostFormTypes) {
     }, [])
 
     useEffect(() => {
-        if(props.editing){
-            getPost(postId)
+        if(props.editing && props.postId){
+            getPost(props.postId)
                 .then(data => {
                     setTitle(data.title)
                     setText(data.body)
                     let arr: string[] = []
                     data.target_topics?.map(topic => {
-                        if(topics.includes(topic)){
-                            arr.push(topic)
+                        if(topics.includes(topic.name)){
+                            arr.push(topic.name)
                         }
                     })
                     setSelectedTopics(arr);
@@ -56,6 +58,10 @@ function PostForm (props: PostFormTypes) {
         TopicService.getSubscribedTopics()
             .then(data => {
                 setTopics(data.map((topic: TopicListItem) => topic.name));
+            })
+        GroupService.getUserGroups()
+            .then(data => {
+                setGroups(data.map((group: GroupListItem) => group.name));
             })
     }
 
@@ -71,19 +77,19 @@ function PostForm (props: PostFormTypes) {
                 body: text,
                 target_user: "",
                 target_topics: selectedTopics,
-                target_groups: []
+                target_groups: selectedGroups
             }
             if(!props.editing) {
                 createPost(newPost)
                     .then(result => {
                         alert.success("Published successfully");
-                        props.handler(false);
+                        props.handler(true);
                     })
-            } else {
-                editPost({title: newPost.title, body: newPost.body}, postId)
+            } else if (props.postId) {
+                editPost({title: newPost.title, body: newPost.body}, props.postId)
                     .then(result => {
                         alert.success("Updated successfully");
-                        props.handler(false);
+                        props.handler(true);
                     })
             }
         }
@@ -94,7 +100,7 @@ function PostForm (props: PostFormTypes) {
         <div className="post-form">
             <div className="post-content">
                 <h1>{props.editing ? "Edit post" : "Write a new post"}</h1>
-                <input type="text" className={"input " + (erroneous && title === "" ? "border-blink" : "")}
+                <input type="text" className={"post-form-title input " + (erroneous && title === "" ? "border-blink" : "")}
                        placeholder="Title.." onChange={(e => setTitle(e.target.value))} value={title}/>
                 <div className="text-content-container">
                     <button type="button" className={"round-toggle " + (previewing ? "button-active" : "button-inactive")}
@@ -122,9 +128,9 @@ function PostForm (props: PostFormTypes) {
                         return <button type="button" disabled={props.editing} className={"entity-tag " +
                             (selectedGroups.includes(group) ? "group-tag-active" : "group-tag-inactive")} key={index}
                                onClick={() => {
-                                   let arr = selectedTopics.includes(group)
-                                       ? selectedTopics.filter(e => e !== group) : [...selectedTopics, group];
-                                   setSelectedTopics(arr);
+                                   let arr = selectedGroups.includes(group)
+                                       ? selectedGroups.filter(e => e !== group) : [...selectedGroups, group];
+                                   setSelectedGroups(arr);
                                }}>{group}</button>
                     })}
                 </div>
@@ -140,7 +146,6 @@ function PostForm (props: PostFormTypes) {
                                        }}>{topic}</button>
                     })}
                 </div>
-                <input type="text" className="input" placeholder="or create a topic..."/>
             </div>
             <div className="submit-row">
                 <button type="button" className="cancel-btn" onClick={() => props.handler(false)}>Cancel</button>
