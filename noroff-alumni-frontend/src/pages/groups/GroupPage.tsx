@@ -21,7 +21,7 @@ const GroupPage = () => {
   const [group, setGroup] = useState({} as Group);
   const [groupMembers, setGroupMembers] = useState<any[]>([]);
 
-  const [posts, setPosts] = useState<Array<PostDTO>>([]);
+  const [posts, setPosts] = useState<PostDTO[]>([])
   const [showPostForm, setShowPostForm] = useState(false);
   const [showInviteModulo, setShowInviteModulo] = useState(false);
 
@@ -30,12 +30,24 @@ const GroupPage = () => {
       if (id) {
         const fetchedGroup = await groupService.getGroup(parseInt(id));
         setGroup(fetchedGroup);
-        setPosts(await groupService.getGroupPosts(parseInt(id)));
       }
     }
-
     getGroup();
   }, [id]);
+
+
+  useEffect(() => {
+    async function getGroupPosts() {
+    if (id) {
+    await groupService.getGroupPosts(parseInt(id))
+        .then(data => {
+          setPosts(data);
+        })
+      }
+    }
+    getGroupPosts()
+  }, [])
+
 
   useEffect(() => {
     async function fetchGroupMembers(members: any[]) {
@@ -84,13 +96,26 @@ const GroupPage = () => {
 
   console.log("group", group);
 
+
+  const formHandler = (success: boolean) => {
+    if(success && id){
+      groupService.getGroupPosts(parseInt(id))
+          .then(data => {
+            setPosts(data);
+            setShowPostForm(false);
+          })
+    } else {
+      setShowPostForm(false);
+    }
+  }
+
   return (
     <div className="group-page">
       {showInviteModulo ? (
         <InviteModulo group={group} setHideInviteModulo={setShowInviteModulo} />
       ) : null}
       {showPostForm && (
-        <Popup child={<PostForm editing={false} handler={setShowPostForm} />} />
+        <Popup child={<PostForm editing={false} handler={formHandler} />} />
       )}
       <div className="page-header">
         <h1>{group?.name}</h1>
