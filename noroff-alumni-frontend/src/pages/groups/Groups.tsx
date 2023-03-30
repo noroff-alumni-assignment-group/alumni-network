@@ -5,7 +5,6 @@ import { useEffect, useState } from "react"
 import { useNavigate } from 'react-router-dom'
 import NewGroupModulo from "../../components/Group/NewGroupModulo"
 import GroupService from "../../services/groupService"
-import GroupListItem from "../../models/Group/GroupListItem"
 
 function Groups() {
 
@@ -16,7 +15,8 @@ function Groups() {
 
   useEffect(() => {
     async function getAllGroups() {
-      await GroupService.getGroups().then((data) => {
+      await GroupService.getGroups()
+      .then((data) => {
         setGroups(data)
       })
     }
@@ -25,7 +25,8 @@ function Groups() {
 
   useEffect(() => {
     async function getMyGroups() {
-      await GroupService.getUserGroups().then((data) => {
+      await GroupService.getUserGroups()
+      .then((data) => {
         setMyGroups(data)
       })
       
@@ -38,12 +39,26 @@ function Groups() {
     navigate(page)
   }
 
-
+  const formHandler = (success: boolean) => {
+    if(success){
+      GroupService.getGroups()
+          .then(data => {
+            setGroups(data);
+          })
+      GroupService.getUserGroups()
+          .then(data => {
+            setMyGroups(data);
+          })
+      setShowNewGroupModulo(false)
+    } else {
+      setShowNewGroupModulo(false);
+    }
+  }
 
   return (
       <>
         <div className="group-container">
-          {showNewGroupModulo ? <NewGroupModulo setHideModulo={setShowNewGroupModulo}/> : null}
+          {showNewGroupModulo ? <NewGroupModulo handler={formHandler}/> : null}
           <div className="groups-actions">
                 <div className="group-list-header">
                   <h1>All groups</h1>
