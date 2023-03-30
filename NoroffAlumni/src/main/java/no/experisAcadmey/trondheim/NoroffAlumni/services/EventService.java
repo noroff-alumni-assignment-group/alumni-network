@@ -55,6 +55,16 @@ public class EventService {
         }
     }
 
+    public void leaveEvent(Long eventId, UUID userId) throws UserNotFoundException, EventNotFoundException {
+        Event event = getEventById(eventId);
+        User user = userService.getUserById(userId);
+
+        if (!event.getParticipants().contains(user)) {
+            event.getParticipants().add(user);
+            eventRepository.delete(event);
+        }
+    }
+
     public List<Event> getEventsForUser(String userId) {
         User user = userRepository.findById(String.valueOf(UUID.fromString(userId))).orElseThrow(() -> new UserNotFoundException(userId));
         return new ArrayList<>(user.getEvents());
