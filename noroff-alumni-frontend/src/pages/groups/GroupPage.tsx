@@ -101,12 +101,6 @@ const GroupPage = () => {
 
   console.log("group", group);
 
-  function onSearch(searchWord: string){
-    searchPosts(searchWord)
-        .then(data => {
-          setPosts(data);
-        })
-  }
 
   const formHandler = (success: boolean) => {
     if(success && id){
@@ -182,7 +176,7 @@ const GroupPage = () => {
           <h3>Posts</h3>
         </div>
         <div className="feed-actions-right">
-          <Search onSearch={onSearch} />
+         
           <button className="activity-btn" onClick={() => setShowPostForm(true)}>
             NEW POST
           </button>
