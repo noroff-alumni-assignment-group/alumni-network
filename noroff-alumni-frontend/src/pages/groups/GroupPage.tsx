@@ -8,7 +8,6 @@ import PostDTO from "../../models/PostDTO";
 import InviteModulo from "../../components/Group/InviteModulo";
 import groupService from "../../services/groupService";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../store/store";
 import { setUser } from "../../store/userSlice";
 import PostFeed from "../../components/post/PostFeed";
 import api from "../../services/api";
