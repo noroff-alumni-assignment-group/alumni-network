@@ -12,6 +12,8 @@ import { setUser } from "../../store/userSlice";
 import PostFeed from "../../components/post/PostFeed";
 import api from "../../services/api";
 import Profilepicture from "../../components/profilepicture/Profilepicure";
+import { searchPosts } from "../../services/postService";
+import Search from "../../components/search/Search";
 
 const GroupPage = () => {
   let { id } = useParams();
@@ -95,6 +97,12 @@ const GroupPage = () => {
 
   console.log("group", group);
 
+  function onSearch(searchWord: string){
+    searchPosts(searchWord)
+        .then(data => {
+          setPosts(data);
+        })
+  }
 
   const formHandler = (success: boolean) => {
     if(success && id){
@@ -167,9 +175,12 @@ const GroupPage = () => {
         <div className="feed-header">
           <h3>Posts</h3>
         </div>
-        <button className="activity-btn" onClick={() => setShowPostForm(true)}>
-          NEW POST
-        </button>
+        <div className="feed-actions-right">
+          <Search onSearch={onSearch} />
+          <button className="activity-btn" onClick={() => setShowPostForm(true)}>
+            NEW POST
+          </button>
+        </div>
       </div>
       <div className="group-feed">
         <PostFeed posts={posts} text={"Be the first to post in " + `${group?.name}`} />
