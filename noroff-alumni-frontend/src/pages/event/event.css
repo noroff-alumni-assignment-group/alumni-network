@@ -5,6 +5,10 @@
   align-items: center;
 }
 
+.event-wrapper {
+
+}
+
 .all-event-cnt {
   display: flex;
   overflow-x: auto;
@@ -17,7 +21,7 @@
 }
 
 .your-event-cnt h1 {
-  margin-bottom: 50px;
+  
 }
 
 .your-events {
@@ -39,6 +43,7 @@
   flex-direction: column;
   transition: 0.2s;
   cursor: pointer;
+  
 }
 
 .event:hover {
@@ -195,6 +200,7 @@
   color: white;
   border-radius: 9px;
   margin-right: 20px;
+ 
   
 }
 
@@ -276,6 +282,21 @@
 
   
 
+}
+
+.event-header {
+  margin-top: 50px;
+  background-color: white;
+  padding: 15px 30px;
+  border-radius: 20px;
+  box-shadow: var(--box-shadow);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.event-header-your {
+  margin-bottom: 20px;
+  margin-top: -30px;
 }
 
 
