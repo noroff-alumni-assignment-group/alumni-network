@@ -114,7 +114,7 @@ const Inbox = () => {
                 </div>
                 <div className="inbox-feed">
                     {isLoading && <LoadingIndicatorComponent/>}
-                    {!isLoading && <PostFeed posts={posts}/>}
+                    {!isLoading && <PostFeed posts={posts} text={showSent ? "You have not sent any messages." : "You have not received any messages."}/>}
                 </div>
             </div>
         </div>

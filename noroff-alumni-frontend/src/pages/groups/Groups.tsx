@@ -77,7 +77,7 @@ function Groups() {
             </div>
             <div className="groupslist">
                 {myGroups.length === 0 ? (
-                    <Placeholder text={"You dont joined any groups yet. 🥲"} />
+                    <Placeholder text={"You are not a member of any group yet."} />
                 ) : (
                     myGroups.map((group) => (
                         <div key={group.id} onClick={() => handleGroupClick(group)}>
