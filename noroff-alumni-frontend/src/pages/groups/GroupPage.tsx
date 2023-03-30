@@ -172,7 +172,7 @@ const GroupPage = () => {
         </button>
       </div>
       <div className="group-feed">
-        <PostFeed posts={posts} />
+        <PostFeed posts={posts} text={"Be the first to post in " + `${group?.name}`} />
       </div>
     </div>
   );
