@@ -1,0 +1,13 @@
+.placeholder {
+    width: 100%;
+    padding: 2rem 4rem;
+    background-color: white;
+    box-shadow: var(--box-shadow);
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+    
+
+}

@@ -104,8 +104,8 @@ const Inbox = () => {
                     </div>
                 </div>
                 <div className="inbox-feed">
-                    {posts.length <= 0 && <div className="no-content-tag"><p>No messages...</p></div>}
-                    <PostFeed posts={posts}/>
+                
+                    <PostFeed posts={posts} text={"You have no messages."}/>
                 </div>
             </div>
         </div>
