@@ -45,7 +45,7 @@ function EventPage() {
   }, [event]);
 
   if (!event) {
-    return <div className="event-upcoming-cnt">Loading...</div>;
+    return <div className="event-page-header"><LoadingIndicatorComponent/></div>;
   }
 
   const fetchParticipants = async () => {
