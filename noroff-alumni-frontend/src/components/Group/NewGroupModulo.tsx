@@ -1,23 +1,29 @@
 import './group-comps.css'
 import { useState } from "react";
 import GroupService from "../../services/groupService";
+import {useAlert} from "react-alert";
 
 type NewGroupProps = {
-    setHideModulo: Function
+    handler: any
 }
 
 // Modulo component for creating a new group
-const NewGroupModulo = ({setHideModulo}: NewGroupProps) => {
+const NewGroupModulo = (props: NewGroupProps) => {
     
     const [name,setName] = useState("")
     const [description,setDescription] = useState("")
     const [isPrivate, setIsPrivate] = useState(false)
     const [isToggled, setToggled] = useState(false)
 
+    const alert = useAlert();
+
     async function submitNewGroup() {
         if (name && description) {
-            GroupService.createGroup({name: name, description: description, isPrivate: isPrivate});
-            setHideModulo(false)
+            GroupService.createGroup({name: name, description: description, isPrivate: isPrivate})
+            .then(result => {
+                alert.success("Created successfully");
+                props.handler(true);
+            })
         }
     }
 
@@ -54,8 +60,8 @@ const NewGroupModulo = ({setHideModulo}: NewGroupProps) => {
                     </label>
                 </div>
                 <div className="modulo-actions">
-                    <button className="cancel-btn" onClick={() => setHideModulo(false)}>Cancel</button>
-                    <button className="activity-btn" onClick={submitNewGroup}>Create</button>
+                    <button className="cancel-btn" onClick={() => props.handler(false)}>Cancel</button>
+                    <button className="activity-btn" onClick={() => submitNewGroup()}>Create</button>
                 </div>
             </div>
         </div>
