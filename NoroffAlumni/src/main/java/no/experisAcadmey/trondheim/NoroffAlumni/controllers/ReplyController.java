@@ -19,6 +19,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/api/v1/reply")
@@ -29,6 +30,30 @@ public class ReplyController {
     @Autowired
     private ReplyMapper replyMapper = Mappers.getMapper(ReplyMapper.class);
 
+
+    @GetMapping
+    @PreAuthorize("hasRole('ROLE_ALUMNI')")
+    @Operation(summary = "Retrieve all replies for a post")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "success", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = ReplyDto.class))
+            }),
+            @ApiResponse(responseCode = "400", description = "Bad Request", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class))
+            }),
+            @ApiResponse(responseCode = "404", description = "Post Not Found", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class))
+            }),
+    })
+    public ResponseEntity getReplies(@RequestParam Long postId) {
+        try {
+            return ResponseEntity.ok(replyMapper.toReplyDto(replyService.getReplies(postId)));
+        } catch (ReplyNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
 
     @GetMapping("/{reply_id}")
     @PreAuthorize("hasRole('ROLE_ALUMNI')")
@@ -65,9 +90,9 @@ public class ReplyController {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class))
             })
     })
-    public ResponseEntity createReply(@RequestParam Long postId, @RequestBody NewReplyDto newReplyDto){
+    public ResponseEntity createReply(@RequestParam Long postId, @RequestParam Optional<Long> parentId, @RequestBody NewReplyDto newReplyDto){
         try {
-            Long id = replyService.createReply(newReplyDto, postId);
+            Long id = replyService.createReply(newReplyDto, postId, parentId);
             return ResponseEntity.created(URI.create("/api/v1/reply/" + id)).body(id);
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();

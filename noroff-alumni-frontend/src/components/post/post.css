@@ -83,10 +83,6 @@
   margin-bottom: -2px;
 }
 
-.post-comments-list {
-  margin-bottom: 25px;
-}
-
 .post-comments img {
   width: 40px;
   margin-right: 10px;
@@ -193,6 +189,64 @@
   padding: 10px 20px;
   font-size: 1rem;
   outline: none;
+}
+
+.post-response-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.sub-replies {
+  width: 100%;
+}
+.sub-reply {
+  display: grid;
+  grid-template-columns: 8% 92%;
+}
+.sub-replies-indicator {
+  grid-column: 1;
+  border-left: solid 2px #e0e0e0;
+  border-bottom: solid 2px #e0e0e0;
+  margin-left: auto;
+  width: 50%;
+  height: 45px;
+  margin-top: 20px;
+}
+
+.reply-button {
+  border: none;
+  background: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  color: darkgrey;
+  transition: .1s ease-in-out;
+}
+.reply-button:hover {
+  background: #e8e8e8;
+  cursor: pointer;
+}
+
+.replying-button {
+  display: flex;
+  justify-content: space-between;
+  border-radius: 25px;
+  padding-left: 25px;
+  padding-right: 15px;
+  box-shadow: var(--box-shadow);
+  margin-left: auto;
+}
+.replying-button p {
+  margin: auto 15px auto 0;
+  color: var(--blue);
+}
+.replying-button button {
+  margin: auto auto auto 15px;
+  color: var(--blue) !important;
+  font-size: 1.2rem;
+}
+.replying-button .profilepicture-container {
+  margin: auto 0 auto 0;
 }
 
 .no-comments-tag {

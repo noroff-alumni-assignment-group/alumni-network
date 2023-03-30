@@ -5,6 +5,7 @@ type ReplyDTO = {
     body: string,
     last_updated: Date,
     author: UserDisplayDTO
+    child_replies?: ReplyDTO[]
 }
 
 export default ReplyDTO;
