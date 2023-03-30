@@ -2,18 +2,17 @@ import { useEffect, useState } from "react";
 import "./topics.css";
 import TopicListItemDTO from "../../models/TopicListItemDTO";
 import TopicListItem from "../../components/TopicListItem/TopicListItem";
-import { AiOutlineSearch } from "react-icons/ai";
 import { FaArrowCircleLeft, FaArrowCircleRight } from "react-icons/fa";
 import TopicService from "../../services/topicService";
 import CreateTopicModulo from "../../components/CreateTopicModulo/CreateTopicModulo";
 import {useAlert} from "react-alert";
 import LoadingIndicatorComponent from "../../components/LoadingIndicator/LoadingIndicatorComponent";
+import Search from "../../components/search/Search";
 
 function Topics() {
   const pageSize = 10;
-  const alert =useAlert();
+  const alert = useAlert();
   const [pageNumber, setPageNumber] = useState<number>(0);
-  const [searchWord, setSearchWord] = useState("");
   const [showNewTopicModulo, setShowNewTopicModulo] = useState(false);
   const [topics, setTopics] = useState<Array<TopicListItemDTO>>(
     [] as Array<TopicListItemDTO>
@@ -36,7 +35,7 @@ function Topics() {
     return await TopicService.joinTopic(topicId);
   }
 
-  async function onSearch() {
+  async function onSearch(searchWord: string) {
     setPageNumber(0);
     setTopics(await TopicService.searchTopics(searchWord,0,pageSize));
   }
@@ -56,16 +55,8 @@ function Topics() {
       <div className="topics-page-header">
         <h1>All Topics</h1>
         <div className="topics-page-header-right">
-          <AiOutlineSearch
-            className="topics-header-search-icon"
-            onClick={onSearch}
-          />
-          <input
-            type="text"
-            className={"topics-page-search-field"}
-            placeholder="Search topic..."
-            onChange={(event) => setSearchWord(event.target.value)}
-          />
+          
+          <Search onSearch={onSearch}/>
           <button
             className="activity-btn"
             onClick={() => setShowNewTopicModulo(true)}
