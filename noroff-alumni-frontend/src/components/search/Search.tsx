@@ -19,6 +19,7 @@ function Search (props: SearchProps) {
             type="text"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
+            onKeyDown={(event)=> event.key === "Enter"?props.onSearch(searchTerm):null}
             placeholder="Search..."
             className="search-input"
         />
