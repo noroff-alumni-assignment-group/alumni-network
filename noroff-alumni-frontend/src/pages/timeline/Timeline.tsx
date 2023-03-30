@@ -82,8 +82,9 @@ const Timeline = () => {
 
   return (
     <div className="timeline">
-
-      {showPostForm && <Popup child={<PostForm editing={false} handler={formHandler}/>}/>}
+      {showPostForm && (
+        <Popup child={<PostForm editing={false} handler={formHandler} />} />
+      )}
 
       <div className="timeline-content">
         <h1>Timeline</h1>
@@ -112,7 +113,15 @@ const Timeline = () => {
           </div>
         </div>
         {isLoading && <LoadingIndicatorComponent/>}
-        {!isLoading && <PostFeed posts={selectedTopics.length > 0 ? filterOnTopics() : posts} update={formHandler}/>}
+        {!isLoading && (
+            <PostFeed
+                posts={selectedTopics.length > 0 ? filterOnTopics() : posts}
+                update={formHandler}
+                text={
+                  "You have to subscribe to topics or join a group to be able to see posts."
+                }
+            />
+        )}
       </div>
     </div>
   );

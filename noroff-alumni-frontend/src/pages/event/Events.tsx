@@ -6,6 +6,7 @@ import api from "../../services/api";
 import { useSelector } from "react-redux";
 import User from "../../models/User";
 import { RootState } from "../../store/store";
+import Placeholder from "../../components/placeholder/Placeholder";
 
 function Events() {
   const [events, setEvents] = useState([]);
@@ -74,9 +75,7 @@ function Events() {
 
         <div className="your-events">
           {userEvents.length === 0 ? (
-            <div className="event-upcoming-cnt">
-              You dont have any upcoming events.
-            </div>
+            <Placeholder text={"You dont have any upcoming events."}/>
           ) : (
             userEvents.map((event, i) => (
               <div key={i}>

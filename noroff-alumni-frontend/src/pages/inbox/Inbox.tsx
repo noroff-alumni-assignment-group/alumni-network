@@ -113,7 +113,6 @@ const Inbox = () => {
                     </div>
                 </div>
                 <div className="inbox-feed">
-                    {posts.length <= 0 && <div className="no-content-tag"><p>No messages...</p></div>}
                     {isLoading && <LoadingIndicatorComponent/>}
                     {!isLoading && <PostFeed posts={posts}/>}
                 </div>
