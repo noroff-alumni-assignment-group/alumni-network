@@ -7,6 +7,7 @@ import { FaArrowCircleLeft, FaArrowCircleRight } from "react-icons/fa";
 import TopicService from "../../services/topicService";
 import CreateTopicModulo from "../../components/CreateTopicModulo/CreateTopicModulo";
 import {useAlert} from "react-alert";
+import LoadingIndicatorComponent from "../../components/LoadingIndicator/LoadingIndicatorComponent";
 
 function Topics() {
   const pageSize = 10;
@@ -17,10 +18,12 @@ function Topics() {
   const [topics, setTopics] = useState<Array<TopicListItemDTO>>(
     [] as Array<TopicListItemDTO>
   );
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     async function getPageOfTopics() {
       await TopicService.getTopics(pageNumber, pageSize).then((data)=>{
+        setIsLoading(false);
         setTopics(data);
       }).catch((error)=>{
         alert.error("Failed to get topics");
@@ -72,8 +75,8 @@ function Topics() {
         </div>
       </div>
       <div className="topic-list-wrapper">
-    
-        {topics.map((topic) => (
+        {isLoading && <LoadingIndicatorComponent/>}
+        {!isLoading && topics.map((topic) => (
           <TopicListItem
             topic={topic}
             key={"Topic-" + topic.name}

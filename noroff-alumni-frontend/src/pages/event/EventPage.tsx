@@ -9,6 +9,7 @@ import "./event.css";
 import { useSelector } from "react-redux";
 import UserDisplayDTO from "../../models/UserDisplayDTO";
 import Profilepicture from "../../components/profilepicture/Profilepicure";
+import LoadingIndicatorComponent from "../../components/LoadingIndicator/LoadingIndicatorComponent";
 
 type RouteParams = {
   id: string;
@@ -21,12 +22,14 @@ function EventPage() {
   const { id } = useParams<RouteParams>();
   const user = useSelector((state: any) => state.user);
 
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     async function fetchEvent() {
       try {
         const response = await api.get(`/event/${id}`);
         setEvent(response.data);
-        console.log("event", response.data);
+        setIsLoading(false);
       } catch (error) {
         console.error(error);
       }
@@ -42,7 +45,7 @@ function EventPage() {
   }, [event]);
 
   if (!event) {
-    return <div className="event-upcoming-cnt">Loading...</div>;
+    return <div className="event-page-header"><LoadingIndicatorComponent/></div>;
   }
 
   const fetchParticipants = async () => {
@@ -97,7 +100,8 @@ function EventPage() {
   return (
     <div className="event-page">
       <div className="event-page-header">
-        <div className="event-page-data">
+        {isLoading && <LoadingIndicatorComponent/>}
+        {!isLoading && <div className="event-page-data">
           <div className={`event-page-banner ${colorClass}`}>
             <h1>{event.title}</h1>
             <p>{event.location}</p>
@@ -159,6 +163,7 @@ function EventPage() {
             </div>
           </div>
         </div>
+        }
       </div>
     </div>
   );

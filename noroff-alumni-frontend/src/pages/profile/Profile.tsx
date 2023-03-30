@@ -19,6 +19,7 @@ import {
   searchPostsUser,
 } from "../../services/postService";
 import Profilepicture from "../../components/profilepicture/Profilepicure";
+import LoadingIndicatorComponent from "../../components/LoadingIndicator/LoadingIndicatorComponent";
 
 function Profile() {
   const [posts, setPosts] = useState<PostDTO[]>([]);
@@ -26,6 +27,9 @@ function Profile() {
   const [showSearchField, setShowSearchField] = useState(false);
   const [showEditProfile, setShowEditProfile] = useState(false);
   const navigate = useNavigate();
+
+  const [isProfileLoading, setIsProfileLoading] = useState(true);
+  const [isPostsLoading, setIsPostsLoading] = useState(true);
 
   let name = window.location.pathname.replace("/profile/", "");
   name = name.replace("/profile", "");
@@ -58,8 +62,10 @@ function Profile() {
           lastName: userData.lastName,
           profileTheme: userData.profileTheme,
         });
+        setIsProfileLoading(false);
 
         await getPostsUser(userData.id).then((data) => {
+          setIsPostsLoading(false);
           setPosts(data);
         });
       } catch (error) {
@@ -76,7 +82,9 @@ function Profile() {
   };
 
   function onSearch(searchWord: string) {
+    setIsPostsLoading(true);
     searchPostsUser(userProfile.id, searchWord).then((data) => {
+      setIsPostsLoading(false);
       setPosts(data);
     });
   }
@@ -102,53 +110,57 @@ function Profile() {
             />
           )}
         </div>
-        <div className="profiledata-head-cnt">
-          <div className="profiledata-head">
-            <Profilepicture author={userProfile} large={true} />
+        {isProfileLoading && <LoadingIndicatorComponent/>}
+        {!isProfileLoading &&
+          <div className="profiledata-head-cnt">
+            <div className="profiledata-head">
+              <Profilepicture author={userProfile} large={true} />
 
-            <h2 className="profile-name">
-              {userProfile?.firstName?.slice(0, 1).toUpperCase()}
-              {userProfile?.firstName?.slice(1)}{" "}
-              {userProfile?.lastName?.slice(0, 1).toUpperCase()}
-              {userProfile?.lastName?.slice(1)}
-            </h2>
+              <h2 className="profile-name">
+                {userProfile?.firstName?.slice(0, 1).toUpperCase()}
+                {userProfile?.firstName?.slice(1)}{" "}
+                {userProfile?.lastName?.slice(0, 1).toUpperCase()}
+                {userProfile?.lastName?.slice(1)}
+              </h2>
 
-            <div className="profile-title">
-              {userProfile.title ? (
-                <p className="bio-text">{userProfile.title}</p>
-              ) : (
-                <p>There is no title 💀</p>
-              )}
+              <div className="profile-title">
+                {userProfile.title ? (
+                  <p className="bio-text">{userProfile.title}</p>
+                ) : (
+                  <p>There is no title 💀</p>
+                )}
+              </div>
+            </div>
+            <div className="profile-data">
+              <div className="biography">
+                <p className="bio-p">Biography</p>
+                {userProfile.biography ? (
+                  <p className="bio-text">{userProfile.biography}</p>
+                ) : (
+                  <p>There is no bio 💀</p>
+                )}
+              </div>
+
+              <div className="funfact">
+                <p className="funfact-p">Funfact</p>
+                {userProfile.funfact ? (
+                  <p className="funfact-text">{userProfile.funfact}</p>
+                ) : (
+                  <p>There is no funfact 💀</p>
+                )}
+              </div>
             </div>
           </div>
-          <div className="profile-data">
-            <div className="biography">
-              <p className="bio-p">Biography</p>
-              {userProfile.biography ? (
-                <p className="bio-text">{userProfile.biography}</p>
-              ) : (
-                <p>There is no bio 💀</p>
-              )}
-            </div>
-
-            <div className="funfact">
-              <p className="funfact-p">Funfact</p>
-              {userProfile.funfact ? (
-                <p className="funfact-text">{userProfile.funfact}</p>
-              ) : (
-                <p>There is no funfact 💀</p>
-              )}
-            </div>
-          </div>
+        }
         </div>
-      </div>
 
       <div className="profile-posts">
         <div className="profile-posts-header">
           <h1>Posts</h1>
           <Search onSearch={onSearch} />
         </div>
-        <PostFeed posts={posts} text={"You have no posts."} />
+        {isPostsLoading && <LoadingIndicatorComponent/>}
+        {!isPostsLoading && <PostFeed posts={posts} text={"You have no posts."} />}
       </div>
     </div>
   );
