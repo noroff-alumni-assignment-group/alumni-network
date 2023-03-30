@@ -82,7 +82,26 @@ INSERT INTO post(title,body,last_updated,author_id)
 VALUES ('Introduction to IT Development','IT Development is a field that involves the creation of software and applications for various devices such as computers, smartphones, and tablets. It involves programming languages such as Java, Python, and C++. IT Development is an exciting and rewarding field to work in.','2022-01-01','48cec1a0-ffd8-465b-97f1-b6cbcd07ab8d');
 
 INSERT INTO post(title,body,last_updated,author_id)
-VALUES ('Agile Development Methodologies','Agile development is a methodology that emphasizes iterative development, collaboration, and flexibility. It is often used in software development to improve efficiency and responsiveness to changes. Some popular Agile methodologies include Scrum, Kanban, and Lean.','2022-01-02','6b51d04c-f880-4ac9-93b5-bc53e81bc50b');
+VALUES ('Agile Development Methodologies','## Agile is back!
+Agile development is a methodology that emphasizes iterative development, collaboration, and flexibility. It is often used in software development to improve efficiency and responsiveness to changes. Some popular Agile methodologies include Scrum, Kanban, and Lean.
+
+Agile development is an iterative software-development methodology which teams use in projects. Self-organized, cross-functional teams frequently analyze circumstances and user needs to adapt projects. Scrum teams constantly improve quality in sprints with short-term deliverables. They show Agile development in action.
+
+### The Manifesto
+We are uncovering better ways of developing
+software by doing it and helping others do it.
+Through this work we have come to value:
+
+Individuals and interactions over processes and tools
+Working software over comprehensive documentation
+Customer collaboration over contract negotiation
+Responding to change over following a plan
+
+That is, while there is value in the items on
+the right, we value the items on the left more.
+
+### Relevancy today?
+With the ever-changing landscape of technology, it is important to be able to adapt quickly. Agile development offers this ability with its emphasis on short cycles and frequent releases, which enables companies to keep up by creating new products or fixing previous ones in an ever-changing marketplace.','2022-01-02','6b51d04c-f880-4ac9-93b5-bc53e81bc50b');
 
 INSERT INTO post(title,body,last_updated,author_id)
 VALUES ('Object-Oriented Programming','Object-oriented programming (OOP) is a programming paradigm that focuses on the creation of objects that can be manipulated and interacted with. OOP is commonly used in software development because it allows for better organization and abstraction of code. Some popular OOP languages include Java and C#.','2022-01-03','73a0dc81-2416-469c-9f75-e13d75bd5f34');
@@ -112,7 +131,15 @@ INSERT INTO post(title,body,last_updated,author_id)
 VALUES ('Artificial Intelligence and Machine Learning','Artificial intelligence (AI) and machine learning (ML) involve the use of computer algorithms to analyze data and make predictions or decisions. AI and ML are used in a wide range of applications, from autonomous vehicles to natural language processing. Popular programming languages for AI and ML include Python, R, and MATLAB.','2022-01-11','48cec1a0-ffd8-465b-97f1-b6cbcd07ab8d');
 
 INSERT INTO post(title,body,last_updated,author_id)
-VALUES ('Full-Stack Development','Full-stack development involves working on both the frontend and backend of a web application. This includes developing the user interface, server-side logic, and database integration. Full-stack developers need to have a wide range of skills and be comfortable with multiple programming languages and frameworks.','2022-01-12','6b51d04c-f880-4ac9-93b5-bc53e81bc50b');
+VALUES ('Full-Stack Development',
+        '## Understanding Full-stack today
+Full-stack development involves working on both the frontend and backend of a web application. This includes developing the user interface, server-side logic, and database integration. Full-stack developers need to have a wide range of skills and be comfortable with multiple programming languages and frameworks.
+## Moving forward
+Java full stack developers are extremely in demand.
+
+Tech companies and website development agencies need developers who can code, build and design in both front-end and back-end. With today’s tech industry’s rapid growth, developers are more in-demand than they’ve ever been. And that’s not projected to slow down.
+
+Just choose online or onsite, full-time or part-time, accelerated or flex course programs. We have online info sessions, an abundance of resources, and a free course packet to provide you with more info.','2022-01-12','6b51d04c-f880-4ac9-93b5-bc53e81bc50b');
 
 
 INSERT INTO topic_posts(topic_id, post_id) VALUES (1, 1);
@@ -155,3 +182,10 @@ INSERT INTO topic_posts(topic_id, post_id) VALUES (12, 2);
 INSERT INTO group_posts(group_id, post_id) VALUES(1, 1);
 INSERT INTO group_posts(group_id, post_id) VALUES(1, 3);
 INSERT INTO group_posts(group_id, post_id) VALUES(4, 2);
+
+INSERT INTO reply(body, last_updated, author_id, target_post_id) VALUES ('This approach also makes communication easier since anyone can talk directly about their part in creating something without worrying if they''ll step out from beneath someone else''s feet when making changes.', '2022-01-12', '1aa307ac-5018-4e91-926e-8496617d2d54', 12);
+INSERT INTO reply(body, last_updated, author_id, target_post_id) VALUES ('These meetings are a great way to keep everyone on schedule and create an environment where everyone can learn from others.', '2022-01-12', '48cec1a0-ffd8-465b-97f1-b6cbcd07ab8d', 12);
+
+INSERT INTO reply(body, last_updated, author_id, parent_reply_id) VALUES ('Stakeholders and product owners can see how their investment will be spent while developers work for them instead of against the customer''s needs', '2022-01-12', '28250440-c5d2-453e-a0c2-31c150277e92', 1);
+INSERT INTO reply(body, last_updated, author_id, parent_reply_id) VALUES ('Read why we believe Agile software development is still relevant today in our new article.', '2022-01-12', '6b51d04c-f880-4ac9-93b5-bc53e81bc50b', 2);
+INSERT INTO reply(body, last_updated, author_id, parent_reply_id) VALUES ('Because String is a child class of Object class. As per inheritance child class can inherit fields, methods and constructor of the parent class. Object is a root class for all other objects in Java.', '2022-01-12', '1aa307ac-5018-4e91-926e-8496617d2d54', 3);

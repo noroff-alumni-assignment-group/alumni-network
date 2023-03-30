@@ -18,9 +18,7 @@ function PostResponse(props: Props) {
       <div className="post-response-container">
         <div className="post-response">
           <div className="post-author-cnt">
-            <div className="profilebubble post-profile-pic">{
-                props.reply.author.firstName && props.reply.author.lastName
-                ? (props.reply.author.firstName[0]+props.reply.author.lastName[0]).toUpperCase():"OO"}</div>
+            <Profilepicture author={props.reply.author} profileTheme={props.reply.author.profileTheme}/>
             <div className="response-author">
               <p className="post-time">{setTimeSince(new Date(props.reply.last_updated))}</p>
               <div className="post-response-author">
