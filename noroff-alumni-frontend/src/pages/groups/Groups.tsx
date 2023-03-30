@@ -103,7 +103,6 @@ function Groups() {
             ))
           )}
         </div>
-      </div>
     </>
   );
 }
