@@ -7,6 +7,7 @@ import NewGroupModulo from "../../components/Group/NewGroupModulo";
 import GroupService from "../../services/groupService";
 import GroupListItem from "../../models/Group/GroupListItem";
 import Placeholder from "../../components/placeholder/Placeholder";
+import LoadingIndicatorComponent from "../../components/LoadingIndicator/LoadingIndicatorComponent";
 
 
 function Groups() {
@@ -15,9 +16,13 @@ function Groups() {
   const [showNewGroupModulo, setShowNewGroupModulo] = useState(false);
   const navigate = useNavigate();
 
+  const [isGroupsLoading, setIsGroupsLoading] = useState(true);
+  const [isUserGroupsLoading, setIsUserGroupsLoading] = useState(true);
+
   useEffect(() => {
     async function getAllGroups() {
       await GroupService.getGroups().then((data) => {
+        setIsGroupsLoading(false);
         setGroups(data);
       });
     }
@@ -27,6 +32,7 @@ function Groups() {
   useEffect(() => {
     async function getMyGroups() {
       await GroupService.getUserGroups().then((data) => {
+        setIsUserGroupsLoading(false);
         setMyGroups(data);
       });
     }
@@ -40,12 +46,16 @@ function Groups() {
 
   const formHandler = (success: boolean) => {
     if(success){
+      setIsGroupsLoading(true);
       GroupService.getGroups()
           .then(data => {
+            setIsGroupsLoading(false);
             setGroups(data);
           })
+      setIsUserGroupsLoading(true);
       GroupService.getUserGroups()
           .then(data => {
+            setIsUserGroupsLoading(false);
             setMyGroups(data);
           })
       setShowNewGroupModulo(false)
@@ -65,7 +75,8 @@ function Groups() {
                 <button className="activity-btn" onClick={() => setShowNewGroupModulo(true)}>NEW GROUP</button>
             </div>
             <div className="groupslist">
-                {groups.map(group => (
+                {isGroupsLoading && <LoadingIndicatorComponent/>}
+                {!isGroupsLoading && groups.map(group => (
                     <div key={group.id} onClick={() => handleGroupClick(group)}>
                         <GroupItem key={group.id} group={group} />
                     </div>
@@ -76,7 +87,8 @@ function Groups() {
                 <h1>My groups</h1>
             </div>
             <div className="groupslist">
-                {myGroups.length === 0 ? (
+                {isUserGroupsLoading && <LoadingIndicatorComponent/>}
+                {!isUserGroupsLoading && myGroups.length === 0 ? (
                     <Placeholder text={"You are not a member of any group yet."} />
                 ) : (
                     myGroups.map((group) => (
