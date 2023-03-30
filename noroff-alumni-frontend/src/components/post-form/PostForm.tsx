@@ -10,6 +10,7 @@ import TopicListItem from "../../models/TopicListItemDTO";
 import SnarkdownText from "../SnarkdownText/SnarkdownText";
 import GroupService from "../../services/groupService";
 import GroupListItem from "../../models/Group/GroupListItem";
+import LoadingIndicator from "../LoadingIndicator/LoadingIndicator";
 
 type PostFormTypes = {
     editing: boolean,
@@ -27,6 +28,8 @@ function PostForm (props: PostFormTypes) {
     const [groups, setGroups] = useState<string[]>([]);
     const [selectedGroups, setSelectedGroups] = useState<string[]>([]);
     const [selectedTopics, setSelectedTopics] = useState<string[]>([]);
+
+    const [isLoading, setIsLoading] = useState(false);
 
     const [previewing, setPreviewing] = useState(false);
     const [erroneous, setErroneous] = useState(false);
@@ -80,14 +83,18 @@ function PostForm (props: PostFormTypes) {
                 target_groups: selectedGroups
             }
             if(!props.editing) {
+                setIsLoading(true);
                 createPost(newPost)
                     .then(result => {
+                        setIsLoading(false);
                         alert.success("Published successfully");
                         props.handler(true);
                     })
             } else if (props.postId) {
+                setIsLoading(true);
                 editPost({title: newPost.title, body: newPost.body}, props.postId)
                     .then(result => {
+                        setIsLoading(false);
                         alert.success("Updated successfully");
                         props.handler(true);
                     })
@@ -98,6 +105,9 @@ function PostForm (props: PostFormTypes) {
 
     return (
         <div className="post-form">
+
+            {isLoading && <LoadingIndicator/>}
+
             <div className="post-content">
                 <h1>{props.editing ? "Edit post" : "Write a new post"}</h1>
                 <input type="text" className={"post-form-title input " + (erroneous && title === "" ? "border-blink" : "")}
@@ -149,7 +159,7 @@ function PostForm (props: PostFormTypes) {
             </div>
             <div className="submit-row">
                 <button type="button" className="cancel-btn" onClick={() => props.handler(false)}>Cancel</button>
-                <button type="button" className="activity-btn" onClick={() => handleSubmit()}>Publish</button>
+                <button type="button" className="activity-btn" onClick={() => handleSubmit()}>{!props.editing ? "Publish" : "Update"}</button>
             </div>
         </div>
     )

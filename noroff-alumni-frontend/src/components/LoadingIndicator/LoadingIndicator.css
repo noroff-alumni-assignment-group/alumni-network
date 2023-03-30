@@ -11,6 +11,16 @@
   background: rgba(0, 0, 0, 0.4);
 }
 
+.loading-indicator-component {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+}
+.loading-indicator-component div {
+  margin: auto;
+}
+
 .lds-roller {
   display: inline-block;
   position: relative;
@@ -30,6 +40,10 @@
   border-radius: 50%;
   background: #fff;
   margin: -4px 0 0 -4px;
+}
+.loading-indicator-component .lds-roller div:after {
+  background: var(--blue) !important;
+  opacity: .75;
 }
 .lds-roller div:nth-child(1) {
   animation-delay: -0.036s;

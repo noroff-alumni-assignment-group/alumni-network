@@ -12,6 +12,7 @@ import { setUser } from "../../store/userSlice";
 import PostFeed from "../../components/post/PostFeed";
 import api from "../../services/api";
 import Profilepicture from "../../components/profilepicture/Profilepicure";
+import LoadingIndicatorComponent from "../../components/LoadingIndicator/LoadingIndicatorComponent";
 
 const GroupPage = () => {
   let { id } = useParams();
@@ -19,6 +20,8 @@ const GroupPage = () => {
   const user = useSelector((state: any) => state.user);
   const [group, setGroup] = useState({} as Group);
   const [groupMembers, setGroupMembers] = useState<any[]>([]);
+
+  const [isLoading, setIsLoading] = useState(true);
 
   const [posts, setPosts] = useState<PostDTO[]>([])
   const [showPostForm, setShowPostForm] = useState(false);
@@ -40,11 +43,12 @@ const GroupPage = () => {
     if (id) {
     await groupService.getGroupPosts(parseInt(id))
         .then(data => {
+          setIsLoading(false);
           setPosts(data);
         })
       }
     }
-    getGroupPosts()
+    getGroupPosts();
   }, [])
 
 
@@ -98,8 +102,10 @@ const GroupPage = () => {
 
   const formHandler = (success: boolean) => {
     if(success && id){
+      setIsLoading(true);
       groupService.getGroupPosts(parseInt(id))
           .then(data => {
+            setIsLoading(false);
             setPosts(data);
             setShowPostForm(false);
           })
@@ -172,7 +178,8 @@ const GroupPage = () => {
         </button>
       </div>
       <div className="group-feed">
-        <PostFeed posts={posts} />
+        {isLoading && <LoadingIndicatorComponent/>}
+        {!isLoading && <PostFeed posts={posts} text={"There are no posts for this group."}/>}
       </div>
     </div>
   );
