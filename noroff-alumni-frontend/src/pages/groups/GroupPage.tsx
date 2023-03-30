@@ -93,7 +93,6 @@ const GroupPage = () => {
         })
   }
 
-
   const formHandler = (success: boolean) => {
     if(success && id){
       setIsLoading(true);
