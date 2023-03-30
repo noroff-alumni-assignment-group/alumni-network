@@ -57,53 +57,38 @@ function Groups() {
   return (
       <>
         <div className="group-container">
-          {showNewGroupModulo ? <NewGroupModulo handler={formHandler}/> : null}
-          <div className="groups-actions">
+            {showNewGroupModulo ? <NewGroupModulo handler={formHandler}/> : null}
+            <div className="groups-actions">
                 <div className="group-list-header">
-                  <h1>All groups</h1>
+                    <h1>All groups</h1>
                 </div>
                 <button className="activity-btn" onClick={() => setShowNewGroupModulo(true)}>NEW GROUP</button>
-          </div>
-          <div className="groupslist">
-                {groups.map(group => (
-                  <div key={group.id} onClick={() => handleGroupClick(group)}>
-                    <GroupItem key={group.id} group={group} />
-                  </div>
-                ))}
-          </div>
-          <div className="group-list-header">
-            <h1>All groups</h1>
-          </div>
-          <button
-            className="activity-btn"
-            onClick={() => setShowNewGroupModulo(true)}
-          >
-            NEW GROUP
-          </button>
-        </div>
-        <div className="groupslist">
-          {groups.map((group) => (
-            <div key={group.id} onClick={() => handleGroupClick(group)}>
-              <GroupItem key={group.id} group={group} />
             </div>
-          ))}
-        </div>
+            <div className="groupslist">
+                {groups.map(group => (
+                    <div key={group.id} onClick={() => handleGroupClick(group)}>
+                        <GroupItem key={group.id} group={group} />
+                    </div>
+                ))}
+            </div>
 
-        <div className="group-list-header">
-          <h1>My groups</h1>
+            <div className="group-list-header">
+                <h1>My groups</h1>
+            </div>
+            <div className="groupslist">
+                {myGroups.length === 0 ? (
+                    <Placeholder text={"You dont joined any groups yet. 🥲"} />
+                ) : (
+                    myGroups.map((group) => (
+                        <div key={group.id} onClick={() => handleGroupClick(group)}>
+                            <GroupItem key={group.id} group={group} />
+                        </div>
+                    ))
+                )}
+            </div>
+
         </div>
-        <div className="groupslist">
-          {myGroups.length === 0 ? (
-            <Placeholder text={"You dont joined any groups yet. 🥲"} />
-          ) : (
-            myGroups.map((group) => (
-              <div key={group.id} onClick={() => handleGroupClick(group)}>
-                <GroupItem key={group.id} group={group} />
-              </div>
-            ))
-          )}
-        </div>
-    </>
+        </>
   );
 }
 export default Groups;
