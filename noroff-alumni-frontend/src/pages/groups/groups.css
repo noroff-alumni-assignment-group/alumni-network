@@ -6,15 +6,12 @@
 
 .groupslist {
     min-width: 100%;
+    margin-bottom: 40px;
 }
 
 .group-list-header {
-    padding-bottom: 60px;
+    padding-bottom: 20px;
     width: fit-content;
-}
-
-.group-list-header h1 {
-    margin-top: 50px;
 }
 
 .groups-actions {
@@ -110,8 +107,13 @@
     padding-bottom: 10px;
 }
 
+.feed-actions-right {
+    display: flex;
+}
+
 .feed-actions button {
-    height: 45px;
+    height: 50px;
+    margin-left: 1rem;
 }
 
 .feed-header {
