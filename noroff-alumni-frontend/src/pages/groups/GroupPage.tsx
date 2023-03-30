@@ -13,6 +13,8 @@ import PostFeed from "../../components/post/PostFeed";
 import api from "../../services/api";
 import Profilepicture from "../../components/profilepicture/Profilepicure";
 import LoadingIndicatorComponent from "../../components/LoadingIndicator/LoadingIndicatorComponent";
+import { searchPosts } from "../../services/postService";
+import Search from "../../components/search/Search";
 
 const GroupPage = () => {
   let { id } = useParams();
@@ -166,13 +168,15 @@ const GroupPage = () => {
         <div className="feed-header">
           <h3>Posts</h3>
         </div>
-        <button className="activity-btn" onClick={() => setShowPostForm(true)}>
-          NEW POST
-        </button>
+        <div className="feed-actions-right">
+         
+          <button className="activity-btn" onClick={() => setShowPostForm(true)}>
+            NEW POST
+          </button>
+        </div>
       </div>
       <div className="group-feed">
-        {isLoading && <LoadingIndicatorComponent/>}
-        {!isLoading && <PostFeed posts={posts} text={"There are no posts for this group."}/>}
+        <PostFeed posts={posts} text={"Be the first to post in " + `${group?.name}`} />
       </div>
     </div>
   );
