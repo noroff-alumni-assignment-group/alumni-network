@@ -7,17 +7,22 @@ import { useSelector } from "react-redux";
 import User from "../../models/User";
 import { RootState } from "../../store/store";
 import Placeholder from "../../components/placeholder/Placeholder";
+import LoadingIndicatorComponent from "../../components/LoadingIndicator/LoadingIndicatorComponent";
 
 function Events() {
   const [events, setEvents] = useState([]);
   const [userEvents, setUserEvents] = useState([]);
   const user = useSelector((state: any) => state.user);
 
+  const [isEventsLoading, setIsEventsLoading] = useState(true);
+  const [isUserEventsLoading, setIsUserEventsLoading] = useState(true);
+
   useEffect(() => {
     async function fetchEvents() {
       try {
         const response = await api.get("/event");
         setEvents(response.data);
+        setIsEventsLoading(false);
       } catch (error) {
         console.error(error);
       }
@@ -35,6 +40,7 @@ function Events() {
     try {
       const response = await api.get(`/event/user/${user.id}`);
       setUserEvents(response.data);
+      setIsUserEventsLoading(false);
     } catch (error) {
       console.error(error);
     }
@@ -61,7 +67,8 @@ function Events() {
       </div>
 
       <div className="all-event-cnt">
-        {events.map((event, i) => (
+        {isEventsLoading && <LoadingIndicatorComponent/>}
+        {!isEventsLoading && events.map((event, i) => (
           <div key={i}>
             <Event event={event} />
           </div>
@@ -74,7 +81,8 @@ function Events() {
         </div>
 
         <div className="your-events">
-          {userEvents.length === 0 ? (
+          {isUserEventsLoading && <LoadingIndicatorComponent/>}
+          {!isUserEventsLoading && userEvents.length === 0 ? (
             <Placeholder text={"You dont have any upcoming events."}/>
           ) : (
             userEvents.map((event, i) => (
