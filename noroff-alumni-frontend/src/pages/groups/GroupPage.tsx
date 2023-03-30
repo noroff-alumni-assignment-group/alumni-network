@@ -116,6 +116,13 @@ const GroupPage = () => {
     }
   }
 
+  function onSearch(searchWord: string) {
+    groupService.searchGroupPosts(group.id, searchWord)
+    .then((data) => {
+      setPosts(data);
+    });
+  }
+
   return (
     <div className="group-page">
       {showInviteModulo ? (
@@ -176,7 +183,7 @@ const GroupPage = () => {
           <h3>Posts</h3>
         </div>
         <div className="feed-actions-right">
-         
+          <Search onSearch={onSearch} />
           <button className="activity-btn" onClick={() => setShowPostForm(true)}>
             NEW POST
           </button>

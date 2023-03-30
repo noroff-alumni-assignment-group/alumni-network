@@ -32,6 +32,12 @@ public interface PostRepository extends JpaRepository<Post, Long> {
             nativeQuery = true)
     List<Post> findAllAuthoredBySearchWord(String searchWord, String authorId);
 
+    @Query( value = "select * from post join group_posts on post.id = group_posts.post_id where group_posts.group_id = ?2\n" +
+            "and (upper(post.body) like upper(?1) or upper(post.title) like upper(?1))",
+            nativeQuery = true)
+    List<Post> findAllByTargetGroupsIdAndSearchWord(String searchWord, Long groupId);
+
+
     // Retrieves direct messages received by a user
     List<Post> findAllByTargetUserIdOrderByLastUpdatedDesc(String targetUser);
 
