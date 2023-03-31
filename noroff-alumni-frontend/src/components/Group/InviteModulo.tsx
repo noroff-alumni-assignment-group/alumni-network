@@ -31,8 +31,10 @@ const InviteModulo = ({setHideInviteModulo, group, handler}: InviteProps) => {
     async function submitInvite() {
         await groupService.inviteToGroup(group.id, recipient?.id)
             .then(response => {
-                const newMemberList = [...group.members, recipient?.id];
-                handler({ ...group, members: newMemberList });
+                if(recipient && !group.members.includes(recipient.id)){
+                    const newMemberList = [...group.members, recipient.id];
+                    handler({ ...group, members: newMemberList });
+                }
             })
         setHideInviteModulo(false)
     }
