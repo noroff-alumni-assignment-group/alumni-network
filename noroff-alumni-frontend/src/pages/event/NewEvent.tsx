@@ -150,12 +150,8 @@ export default function NewEvent(props: any) {
             </div>
           </div>
           <div className="event-group-cnt">
-            <p>Specify if the event is for one of your groups</p>
-            <div className="group-tag-event">
-              <div className="group">Test</div>
-              <div className="group">Test</div>
-              <div className="group">Test</div>
-            </div>
+      
+           
           </div>
           <div className="editprofile-buttons">
             <button
