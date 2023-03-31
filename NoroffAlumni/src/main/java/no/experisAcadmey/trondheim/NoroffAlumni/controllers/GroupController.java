@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.Collection;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -288,9 +289,9 @@ public class GroupController {
                             schema = @Schema(implementation = ProblemDetail.class))
                     })
     })
-    public ResponseEntity getGroupPosts(@PathVariable("group_id") Long groupId){
+    public ResponseEntity getGroupPosts(@PathVariable("group_id") Long groupId, @RequestParam Optional<String> searchWord){
         try {
-            return ResponseEntity.ok(postMapper.postToPostDto(groupService.getPostsInGroup(groupId)));
+            return ResponseEntity.ok(postMapper.postToPostDto(groupService.getPostsInGroup(groupId, searchWord)));
         } catch (GroupNotFoundException e) {
             return ResponseEntity.notFound().build();
         } catch(Exception e) {

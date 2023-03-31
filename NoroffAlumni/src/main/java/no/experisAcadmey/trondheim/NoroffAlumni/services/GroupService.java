@@ -102,8 +102,12 @@ public class GroupService {
      * @param group_id the ID of the group to get all posts for
      * @return posts
      */
-    public List<Post> getPostsInGroup(Long group_id) {
-        return removeDirectMessages(postRepository.findAllByTargetGroupsIdOrderByLastUpdatedDesc(group_id));
+    public List<Post> getPostsInGroup(Long group_id, Optional<String> searchWord) {
+        if(searchWord.isPresent()){
+            return removeDirectMessages(postRepository.findAllByTargetGroupsIdAndSearchWord("%" + searchWord.get() + "%", group_id));
+        }else {
+            return removeDirectMessages(postRepository.findAllByTargetGroupsIdOrderByLastUpdatedDesc(group_id));
+        }
     }
 
     public List<Post> removeDirectMessages(List<Post> posts){

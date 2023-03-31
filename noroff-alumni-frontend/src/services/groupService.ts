@@ -34,6 +34,18 @@ class GroupService {
         })
     }
 
+    async searchGroupPosts(groupId: number, searchWord: string) {
+        return await api
+        .get("/group/" + groupId + "/posts", {
+            params: {
+                searchWord: searchWord
+            }
+        })
+        .then((response) => {
+            return response.data
+        })
+    }
+
     async createGroup(newGroup: NewGroup) {
         await api
         .post("/group", newGroup)
