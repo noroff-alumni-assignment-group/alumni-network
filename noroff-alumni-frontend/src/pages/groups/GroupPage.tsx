@@ -55,6 +55,7 @@ const GroupPage = () => {
 
 
   useEffect(() => {
+
     async function fetchGroupMembers(members: any[]) {
       try {
         const memberPromises = members.map(async (memberId: string) => {
@@ -64,7 +65,6 @@ const GroupPage = () => {
 
         const fetchedMembers = await Promise.all(memberPromises);
         setGroupMembers(fetchedMembers);
-        console.log("groupmembers:", fetchedMembers);
       } catch (error) {
         console.error(error);
       }
@@ -76,31 +76,24 @@ const GroupPage = () => {
   }, [group, user]);
 
   async function joinGroup() {
-    await groupService.joinGroup(group.id);
-    let userGroups = Array.isArray(user.groups) ? [...user.groups!] : [];
-    userGroups.push(group.name);
-    dispatch(setUser({ ...user, groups: userGroups }));
-
-    // Update the members list after joining the group
-    const newMemberList = [...group.members, user.id];
-    setGroup({ ...group, members: newMemberList });
+    groupService.joinGroup(group.id)
+        .then(response => {
+          // Update the members list after joining the group
+          const newMemberList = [...group.members, user.id];
+          setGroup({ ...group, members: newMemberList });
+        })
   }
 
   async function leaveGroup() {
-    await groupService.leaveGroup(group.id);
-    let userGroups = [...user.groups!];
-    userGroups = userGroups.filter((g) => g !== group.name);
-    dispatch(setUser({ ...user, groups: userGroups }));
-
-    // Update the members list after leaving the group
-    const newMemberList = group.members.filter(
-      (memberId) => memberId !== user.id
-    );
-    setGroup({ ...group, members: newMemberList });
+    groupService.leaveGroup(group.id)
+        .then(response => {
+          // Update the members list after leaving the group
+          const newMemberList = group.members.filter(
+              (memberId) => memberId !== user.id
+          );
+          setGroup({ ...group, members: newMemberList });
+        })
   }
-
-  console.log("group", group);
-
 
   const formHandler = (success: boolean) => {
     if(success && id){
@@ -126,7 +119,7 @@ const GroupPage = () => {
   return (
     <div className="group-page">
       {showInviteModulo ? (
-        <InviteModulo group={group} setHideInviteModulo={setShowInviteModulo} />
+        <InviteModulo group={group} setHideInviteModulo={setShowInviteModulo} handler={setGroup} />
       ) : null}
       {showPostForm && (
         <Popup child={<PostForm editing={false} handler={formHandler} />} />
@@ -135,9 +128,9 @@ const GroupPage = () => {
         <h1>{group?.name}</h1>
         <button
           className="activity-btn group-join"
-          onClick={user.groups?.includes(group.name) ? leaveGroup : joinGroup}
+          onClick={group.members?.some(member => member === user.id) ? leaveGroup : joinGroup}
         >
-          {user.groups?.includes(group.name) ? "Leave" : "Join"}
+          {group.members?.some(member => member === user.id) ? "Leave" : "Join"}
         </button>
       </div>
       <div className="group-desc">

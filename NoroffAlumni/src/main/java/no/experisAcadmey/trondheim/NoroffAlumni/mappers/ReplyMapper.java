@@ -20,6 +20,7 @@ public abstract class ReplyMapper {
 
     @Mapping(target = "author", qualifiedByName = "mapUserToUserDisplayDto", source = "author")
     @Mapping(target = "last_updated", source = "lastUpdated")
+    @Mapping(target = "child_replies", qualifiedByName = "mapChildReplies", source = "childReplies")
     public abstract ReplyDto toReplyDto(Reply reply);
 
     public abstract List<ReplyDto> toReplyDto(List<Reply> reply);
@@ -27,6 +28,11 @@ public abstract class ReplyMapper {
     @Named("mapUserToUserDisplayDto")
     public UserDisplayDto mapUserToUserDisplayDto(User user){
         return userMapper.toUserDisplayDto(user);
+    }
+
+    @Named("mapChildReplies")
+    public List<ReplyDto> mapChildReplies(List<Reply> replies){
+        return toReplyDto(replies);
     }
 
 }

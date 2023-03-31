@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -18,4 +19,8 @@ public class Reply {
     private User author;
     @ManyToOne
     private Post targetPost;
+    @OneToMany(mappedBy = "parentReply")
+    private List<Reply> childReplies;
+    @ManyToOne
+    private Reply parentReply;
 }

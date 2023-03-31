@@ -37,7 +37,9 @@ function Topics() {
 
   async function onSearch(searchWord: string) {
     setPageNumber(0);
+    setIsLoading(true);
     setTopics(await TopicService.searchTopics(searchWord,0,pageSize));
+    setIsLoading(false);
   }
 
   function toNextPage() {

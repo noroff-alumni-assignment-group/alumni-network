@@ -7,10 +7,20 @@ export async function getReply(id: number) {
         .then(response => response.data);
 }
 
-export async function createReply(newReply: NewReply, postId: number) {
+export async function getReplies(postId: number) {
+    return await api.get("/reply", {
+            params: {
+                postId: postId
+            }
+        })
+        .then(response => response.data)
+}
+
+export async function createReply(newReply: NewReply, postId: number, replyId?: number) {
     return await api.post("/reply", newReply, {
         params: {
-            postId: postId
+            postId: postId,
+            parentId: replyId
         }
     })
         .then(response => response.data);

@@ -8,11 +8,11 @@ import "./post.css";
 import PostResponse from "./PostResponse";
 import PostDTO from "../../models/PostDTO";
 import SnarkdownText from "../SnarkdownText/SnarkdownText";
-import {createReply, getReply} from "../../services/replyService";
+import {createReply, getReplies, getReply} from "../../services/replyService";
 import {setTimeSince} from "../../services/utilService";
 import ReplyDTO from "../../models/ReplyDTO";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import { faPaperPlane, faEdit } from "@fortawesome/free-solid-svg-icons";
+import { faPaperPlane, faEdit, faTimes } from "@fortawesome/free-solid-svg-icons";
 import Popup from "../popup/Popup";
 import PostForm from "../post-form/PostForm";
 import {getPost} from "../../services/postService";
@@ -28,24 +28,27 @@ function Post({post, update}: Props) {
   const [showComments, setShowComments] = useState(false);
   const [newCommentText, setNewCommentText] = useState("");
   const [showEditForm, setShowEditForm] = useState(false);
+  const [replying, setReplying] = useState<ReplyDTO>();
 
   const maxLength: number = 255;
   const user = useSelector((state: any) => state.user);
 
   useEffect(() => {
-    setComments(post.replies);
+    getReplies(post.id)
+        .then(data => {
+          setComments(data);
+        })
   }, [post])
 
   const handleAddComment = () => {
     if(newCommentText.length <= 0){return;}
-    createReply({body: newCommentText}, post.id)
-        .then(data => {
-          getReply(data)
+    createReply({body: newCommentText}, post.id, replying?.id)
+        .then(response => {
+          getReplies(post.id)
               .then(data => {
-                // @ts-ignore
-                setComments([...comments, data]);
-                post.replies?.push(data)
+                setComments(data);
                 setNewCommentText("");
+                setReplying(undefined);
               })
         })
   };
@@ -64,6 +67,21 @@ function Post({post, update}: Props) {
     } else {
       setShowEditForm(false)
     }
+  }
+
+  function replyHandler(reply: ReplyDTO){
+    setReplying(reply);
+  }
+
+  // Recursively counts comments/replies
+  function countComments(comments: ReplyDTO[]){
+      let numOfComments = comments.length;
+      comments.map(comment => {
+          if(comment.child_replies && comment.child_replies.length > 0){
+              numOfComments += countComments(comment.child_replies);
+          }
+      })
+      return numOfComments;
   }
 
   // @ts-ignore
@@ -93,7 +111,7 @@ function Post({post, update}: Props) {
 
         <div className="post-footer">
           <div className="post-comments">
-            <p onClick={handleToggleComments}>{comments?.length} comments</p>
+            <p onClick={handleToggleComments}>{comments ? countComments(comments) : "0"} comments</p>
           </div>
           <div className="post-author">
             <div className="post-author-details">
@@ -118,7 +136,7 @@ function Post({post, update}: Props) {
           )}
           {comments?.map((reply, i) => (
             <div className="post-comments-list" key={i}>
-              <PostResponse reply={reply} />
+              <PostResponse reply={reply} replyHandler={replyHandler}/>
             </div>
           ))}
           <div className="post-response-form">
@@ -151,6 +169,17 @@ function Post({post, update}: Props) {
             >
               {newCommentText.length + "/" + maxLength}
             </p>
+            {replying &&
+              <div className="replying-button">
+                <p>Replying to: </p>
+                <Profilepicture author={replying.author}/>
+                <button className="reply-button" onClick={() => {
+                    setReplying(undefined);
+                  }
+                }>
+                  <FontAwesomeIcon icon={faTimes} className="replying-cancel"/>
+                </button>
+              </div>}
           </div>
         </div>
       )}

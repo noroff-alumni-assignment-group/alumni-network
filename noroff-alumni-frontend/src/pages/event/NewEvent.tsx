@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import api from "../../services/api";
+import {useAlert} from "react-alert";
 
 export default function NewEvent(props: any) {
   const user = useSelector((state: any) => state.user);
@@ -12,6 +13,8 @@ export default function NewEvent(props: any) {
   const [location, setLocation] = useState("");
   const [startTime, setStartTime] = useState("");
   const [description, setDescription] = useState("");
+
+  const alert = useAlert();
 
   const handleColorThemeSelect = (theme: number) => {
     setSelectedColorTheme(theme);
@@ -43,6 +46,7 @@ export default function NewEvent(props: any) {
       setDescription("");
       setSelectedColorTheme(1);
 
+      alert.success("Event created");
       props.setRenderNewEvent(false);
   
     } catch (error) {

@@ -47,7 +47,7 @@ public abstract class PostMapper {
     }
 
     @Named("mapUserToUserDisplayDto")
-    public UserDisplayDto maptUserToUserDisplayDto(User user) {
+    public UserDisplayDto mapUserToUserDisplayDto(User user) {
         return userMapper.toUserDisplayDto(user);
     }
 

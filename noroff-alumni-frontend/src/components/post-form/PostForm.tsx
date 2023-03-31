@@ -46,6 +46,7 @@ function PostForm (props: PostFormTypes) {
                 .then(data => {
                     setTitle(data.title)
                     setText(data.body)
+
                     let arr: string[] = []
                     data.target_topics?.map(topic => {
                         if(topics.includes(topic.name)){
@@ -53,6 +54,14 @@ function PostForm (props: PostFormTypes) {
                         }
                     })
                     setSelectedTopics(arr);
+
+                    let arr2: string[] = [];
+                    data.target_group?.map(group => {
+                        if(groups.includes(group.name)) {
+                            arr2.push(group.name)
+                        }
+                    })
+                    setSelectedGroups(arr2);
                 })
         }
     }, [topics])
