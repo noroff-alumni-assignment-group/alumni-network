@@ -11,9 +11,10 @@ import Group from '../../models/Group/Group';
 type InviteProps = {
     setHideInviteModulo: Function
     group: Group
+    handler: any
 }
 
-const InviteModulo = ({setHideInviteModulo, group}: InviteProps) => {
+const InviteModulo = ({setHideInviteModulo, group, handler}: InviteProps) => {
     
     const [recipient, setRecipient] = useState<UserDisplayDTO>()
     const [users, setUsers] = useState<UserDisplayDTO[]>([]);
@@ -29,6 +30,10 @@ const InviteModulo = ({setHideInviteModulo, group}: InviteProps) => {
 
     async function submitInvite() {
         await groupService.inviteToGroup(group.id, recipient?.id)
+            .then(response => {
+                const newMemberList = [...group.members, recipient?.id];
+                handler({ ...group, members: newMemberList });
+            })
         setHideInviteModulo(false)
     }
     

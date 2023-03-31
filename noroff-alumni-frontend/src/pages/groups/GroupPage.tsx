@@ -112,7 +112,7 @@ const GroupPage = () => {
   return (
     <div className="group-page">
       {showInviteModulo ? (
-        <InviteModulo group={group} setHideInviteModulo={setShowInviteModulo} />
+        <InviteModulo group={group} setHideInviteModulo={setShowInviteModulo} handler={setGroup} />
       ) : null}
       {showPostForm && (
         <Popup child={<PostForm editing={false} handler={formHandler} />} />
