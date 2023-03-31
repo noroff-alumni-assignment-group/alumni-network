@@ -36,7 +36,6 @@ function Post({post, update}: Props) {
   useEffect(() => {
     getReplies(post.id)
         .then(data => {
-          console.log(data[0].child_replies);
           setComments(data);
         })
   }, [post])
