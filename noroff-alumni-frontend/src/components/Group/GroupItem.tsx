@@ -39,6 +39,10 @@ const GroupItem = ({ group }: propsGroup) => {
       <div className="group-item">
         <div className="group-left">
           <h3>{group.name}</h3>
+          <div className={group.isPrivate ? "private-item" : ""}>
+            {group.isPrivate && <p>Private</p>}
+          </div>
+        </div>
           <div className="participants-event-pic-group">
             {remainingMembers > 0 && (
               <p className="remaining">+ {remainingMembers}</p>
@@ -58,11 +62,6 @@ const GroupItem = ({ group }: propsGroup) => {
               </div>
             ))}
           </div>
-        </div>
-
-        <div className={group.isPrivate ? "private-item" : ""}>
-          {group.isPrivate && <p>Private</p>}
-        </div>
       </div>
     </>
   );
