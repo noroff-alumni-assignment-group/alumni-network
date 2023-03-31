@@ -14,20 +14,18 @@
   max-height: 5.5rem;
   }
 
-  .group-left h3 {
-    margin-right: 30px;
+  .group-left {
     display: flex;
-    align-items: center;
+    max-width: fit-content;
   }
 
   .group-left p {
     font-size: .8rem;
-    color: #848484;
   }
 
 .private-item {
-  
   margin-right: 40px;
+  margin-left: 30px;
   color: white;
   padding: 2px 10px;
   font-size: .6rem;
