@@ -206,9 +206,33 @@ public class EventController {
         }
     }
 
-
-
-
+    @DeleteMapping("/{id}/leave")
+    @PreAuthorize("hasRole('ROLE_ALUMNI')")
+    @Operation(summary = "Leave an event")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Left event",
+                    content = @Content
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Bad Request",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ProblemDetail.class))
+                    }
+            )
+    })
+    public ResponseEntity leaveEvent(@PathVariable Long id, @RequestParam UUID userId) {
+        try {
+            eventService.leaveEvent(id, userId);
+            return ResponseEntity.ok().build();
+        } catch (UserNotFoundException | EventNotFoundException e) {
+            // Log the error message for better understanding
+            System.err.println("Error: " + e.getMessage());
+            return ResponseEntity.badRequest().build();
+        }
+    }
 }
 
 
