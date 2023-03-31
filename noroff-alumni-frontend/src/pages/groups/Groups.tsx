@@ -8,6 +8,7 @@ import GroupService from "../../services/groupService";
 import GroupListItem from "../../models/Group/GroupListItem";
 import Placeholder from "../../components/placeholder/Placeholder";
 import LoadingIndicatorComponent from "../../components/LoadingIndicator/LoadingIndicatorComponent";
+import api from "../../services/api"
 
 
 function Groups() {
@@ -63,6 +64,8 @@ function Groups() {
       setShowNewGroupModulo(false);
     }
   }
+
+  
 
   return (
       <>

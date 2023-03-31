@@ -26,6 +26,14 @@
     height: 50px;
 }
 
+
+.group-left {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
 /* Group page */
 
 
@@ -51,20 +59,30 @@
     margin-bottom: 50px;
 }
 
+.groups-actions {
+    align-items: center;
+}
+
 .member-card {
-    margin-bottom: 10px;
-    padding: 15px;
+    
+    padding: 25px;
     background-color: white;
     border-radius: 15px;
     display: flex;
     box-shadow: var(--box-shadow);
     justify-content: space-between;
+    align-items: center;
 }
 
+
+.participant-event-pic {
+    height: 100%;
+}
 .member-card-left {
     display: flex;
     align-items: center;
     padding-left: 30px;
+    margin-top: -10px;
 }
 
 .member-icons {
@@ -73,6 +91,10 @@
 
 .members-count {
     margin-left: 30px;
+}
+
+.members-count {
+    margin-top: 10px;
 }
 
 .member-card-right {
